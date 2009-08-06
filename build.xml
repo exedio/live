@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+
+<project name="copelive" default="build" basedir=".">
+
+	<property file="local.properties" />
+	<property name="build.file.tag" value="unlabeled" />
+	
+	<taskdef name="LoadFile" classname="org.apache.tools.ant.taskdefs.LoadFile" />
+
+	<taskdef
+			resource="com/exedio/jspm/ant.properties"
+			classpath="lib/exedio-jspm.jar" />
+
+	<taskdef resource="com/exedio/cope/instrument/ant.properties">
+		<classpath>
+			<pathelement location="lib/servlet-api.jar" />
+			<pathelement location="lib/exedio-cope-instrument.jar" />
+		</classpath>
+	</taskdef>
+	
+	<macrodef name="ljavac">
+		<attribute name="srcdir" />
+		<attribute name="destdir" />
+		<element name="classpath" optional="true" implicit="true" />
+		<sequential>
+			<!--echo message="local compile @{srcdir} to @{destdir}" /-->
+			<mkdir dir="@{destdir}" />
+			<javac srcdir="@{srcdir}"
+					 destdir="@{destdir}"
+					 includeAntRuntime="false"
+					 source="1.5"
+					 deprecation="on"
+					 debug="on"
+					 optimize="off">
+				<classpath />
+				<compilerarg value="-Xlint" />
+				<compilerarg value="-encoding" />
+				<compilerarg value="ascii" />
+			</javac>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="ljar">
+		<attribute name="jarfile" />
+		<attribute name="name" />
+		<attribute name="classpath" />
+		<element name="fileset" optional="true" implicit="true" />
+		<sequential>
+			<!--echo message="local jar @{jarfile}" /-->
+			<jar jarfile="@{jarfile}" filesonly="true" duplicate="fail" level="9">
+				<fileset />
+				<manifest>
+					<attribute name="Specification-Title" value="exedio @{name}" />
+					<attribute name="Specification-Version" value="${build.tag}" />
+					<attribute name="Specification-Vendor" value="exedio GmbH" />
+					<attribute name="Implementation-Title" value="exedio @{name}" />
+					<attribute name="Implementation-Version" value="${build.tag}" />
+					<attribute name="Implementation-Vendor" value="exedio GmbH" />
+					<attribute name="Class-Path" value="@{classpath}" />
+				</manifest>
+			</jar>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="ljunit">
+		<attribute name="test" />
+		<attribute name="env" default="N" />
+		<element name="classpath" optional="true" implicit="true" />
+		<sequential>
+			<mkdir dir="build/testresults" />
+			<junit fork="yes"
+					haltonerror="true" haltonfailure="true"
+					showoutput="true" printsummary="true">
+				<formatter type="brief" usefile="false" />
+				<formatter type="xml" />
+				<classpath />
+				<test name="@{test}" todir="build/testresults" outfile="@{test}-@{env}" />
+				<assertions><enable/></assertions>
+			</junit>
+		</sequential>
+	</macrodef>
+	
+	<target name="catalina">
+		<property name="catalina.root" value="apache-tomcat-6.0.16" />
+		<untar src="lib/apache-tomcat.tar.gz"
+				 compression="gzip"
+				 dest="${basedir}">
+			<patternset>
+				<exclude name="${catalina.root}/conf/server.xml" />
+				<exclude name="${catalina.root}/conf/tomcat-users.xml" />
+				<exclude name="${catalina.root}/webapps/ROOT/**" />
+				<exclude name="${catalina.root}/webapps/docs/**" />
+				<exclude name="${catalina.root}/webapps/examples/**" />
+			</patternset>
+			<mapper type="glob" from="${catalina.root}/*" to="tomcat/*" />
+		</untar>
+		<chmod dir="tomcat/bin" perm="ugo+x" includes="*.sh" />
+		<copy todir="tomcat/conf">
+			<fileset dir="${basedir}">
+				<include name="server.xml" />
+				<include name="tomcat-users.xml" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="core.jspm">
+		<jspm>
+			<fileset dir="src" includes="**/*.jspm" />
+		</jspm>
+	</target>
+	
+	<target name="core.compile" depends="core.jspm">
+		<ljavac srcdir="src" destdir="build/classes">
+			<classpath>
+				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/commons-fileupload.jar" />
+				<pathelement location="lib/exedio-cops.jar" />
+				<pathelement location="lib/exedio-cope.jar" />
+			</classpath>
+		</ljavac>
+	</target>
+	
+	<target name="test.compile" depends="core.compile">
+		<ljavac srcdir="testsrc" destdir="build/testclasses">
+			<classpath>
+				<pathelement location="build/classes" />
+				<pathelement location="lib/exedio-cope.jar" />
+				<pathelement location="lib/commons-fileupload.jar" />
+				<pathelement location="lib/junit.jar" />
+			</classpath>
+		</ljavac>
+	</target>
+	
+	<target name="jar" depends="core.compile">
+		<ljar name="cope live" jarfile="build/exedio-cope-live.jar" classpath="exedio-cope.jar">
+			<fileset dir="build/classes" />
+		</ljar>
+	</target>
+	
+	<target name="jar.src">
+		<mkdir dir="build" />
+		<zip destfile="build/exedio-cope-live.jar-src.zip" filesonly="true" whenempty="fail" duplicate="fail" level="9">
+			<zipfileset dir="${basedir}/src"><include name="**/*.java"/><exclude name="**/*_Jspm.java" /></zipfileset>
+		</zip>
+	</target>
+	
+	<target name="webtest.compile"
+			depends="webtest.instrument, core.compile">
+		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
+			<classpath>
+				<pathelement location="build/classes" />
+				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/exedio-cope.jar" />
+			</classpath>
+		</ljavac>
+	</target>
+	
+	<target name="test" depends="test.compile">
+		<mkdir dir="build/testresults" />
+				<junit taskname="junit" fork="yes"
+						 haltonerror="true" haltonfailure="true"
+						 dir="${basedir}"
+						 showoutput="true" printsummary="true">
+					<formatter type="brief" usefile="false" />
+					<formatter type="xml" />
+					<classpath>
+						<pathelement location="build/classes" />
+						<pathelement location="build/testclasses" />
+						<pathelement location="lib/servlet-api.jar" />
+						<pathelement location="lib/jdbc/hsqldb.jar" />
+						<pathelement location="lib/junit.jar" />
+						<pathelement location="lib/exedio-cope.jar" />
+					</classpath>
+					<test name="com.exedio.cope.editor.PackageTest" todir="build/testresults" outfile="editor" />
+					<assertions><enable/></assertions>
+				</junit>
+	</target>
+	
+	<target name="webtest.instrument" unless="skip.instrument">
+		<instrument verbose="false">
+			<fileset dir="webtestsrc">
+				<include name="**/*.java" />
+				<exclude name="**/EditedServlet_Jspm.java" />
+			</fileset>
+		</instrument>
+	</target>
+
+	<target name="webtest.jspm">
+		<jspm method="print">
+			<fileset dir="webtestsrc" includes="**/*.jspm" />
+		</jspm>
+	</target>
+
+	<target name="webtest.web"
+			  depends="webtest.instrument, webtest.jspm">
+		<copy todir="webtestweb/WEB-INF/classes">
+			<fileset dir="build/classes" />
+		</copy>
+		<ljavac srcdir="webtestsrc" destdir="webtestweb/WEB-INF/classes">
+			<classpath>
+				<pathelement location="lib/exedio-cope.jar" />
+				<pathelement location="lib/servlet-api.jar" />
+			</classpath>
+		</ljavac>
+		<copy todir="webtestweb/WEB-INF/classes">
+			<fileset dir="webtestsrc">
+				<include name="**/*.jpg" />
+				<include name="**/*.png" />
+			</fileset>
+		</copy>
+		<copy todir="webtestweb/WEB-INF/lib">
+			<fileset file="lib/trove.jar" />
+			<fileset file="lib/exedio-cope-util.jar" />
+			<fileset file="lib/exedio-cops.jar" />
+			<fileset file="lib/exedio-cope.jar" />
+			<fileset file="lib/exedio-cope-console.jar" />
+			<fileset file="lib/commons-fileupload.jar" />
+			<fileset file="lib/commons-io.jar" />
+			<fileset file="lib/jdbc/hsqldb.jar" />
+		</copy>
+	</target>
+	
+	<target name="webtest.tomcat" depends="webtest.web, catalina">
+		<copy tofile="tomcat/conf/Catalina/localhost/copelive.xml"
+				file="context.xml" />
+	</target>
+	
+	<target name="clean">
+		<delete>
+			<fileset dir="src">
+				<include name="**/*_Jspm.java" />
+			</fileset>
+			<fileset dir="webtestsrc">
+				<include name="**/*_Jspm.java" />
+			</fileset>
+		</delete>
+		<delete dir="build" />
+		<delete dir="webtestweb/WEB-INF/classes" />
+		<delete dir="webtestweb/WEB-INF/lib" />
+		<delete dir="tomcat" />
+	</target>
+	
+	<!-- instrument -->
+	<!-- common -->
+	
+	<target name="jspm" depends="core.jspm, webtest.jspm" />
+	
+	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
+	
+	<target name="instrument" depends="webtest.instrument" />
+	
+	<target name="compile" depends="core.compile, webtest.web, test.compile" />
+	
+	<target name="web" depends="webtest.web" />
+	
+	<target name="tomcat" depends="webtest.tomcat" />
+	
+	<target name="home.api">
+
+		<javadoc
+				destdir="build/api"
+				maxmemory="60m"
+				source="1.5"
+				private="true"
+				author="on"
+				use="on"
+				version="on"
+				windowtitle="exedio cope"
+				splitindex="on"
+				failonerror="true"
+			>
+			<doctitle><![CDATA[Cope with Object Persistence<br>API Specification]]></doctitle>
+			<header><![CDATA[<a href="http://cope.sourceforge.net/" target="_top">exedio cope</a>]]></header>
+			<footer><![CDATA[Cope with<br>Object<br>Persistence]]></footer>
+			<bottom><![CDATA[<a href="http://sourceforge.net/" target="_top"><img src="http://sourceforge.net/sflogo.php?group_id=152867&amp;type=1" width="88" height="31" border="0" align="right" alt="SourceForge.net&nbsp;Logo" /></a><small>Copyright &copy; 2004-2008 <a href="http://www.exedio.com/" target="_top">exedio</a> Gesellschaft f&uuml;r Softwareentwicklung mbH. All rights reserved.</small><br><font size="-3">${build.tag}</font>]]></bottom>
+			<fileset dir="src" includes="**/*.java" />
+			<classpath>
+				<pathelement location="lib/exedio-cope.jar" />
+				<pathelement location="lib/exedio-cops.jar" />
+				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/commons-fileupload.jar" />
+			</classpath>
+		</javadoc>
+	</target>
+	
+	<target name="api" depends="home.api" />
+	
+	<target name="build"
+			depends="compile, test, jar, tomcat" />
+	
+	<target name="dist.tar">
+		<mkdir dir="build" />
+		<echo file="build/build.number" message="${build.tag}" />
+		<tar destfile="build/exedio-cope-live-src-${build.file.tag}.tar.gz"
+			  compression="gzip">
+			<tarfileset file="${basedir}/build/build.number" />
+			<tarfileset dir="${basedir}">
+				<exclude name="getlib/**" />
+				<exclude name="getlib.xml" />
+				<exclude name="getlib.properties" />
+				<exclude name="log.xml" /><!-- created by cruise -->
+				<exclude name=".eclipse-output/**" />
+				<exclude name="build/**" />
+				<exclude name="tomcat/**" />
+				<exclude name="cruise/**" />
+				<exclude name="**/*_Jspm.java" />
+				<exclude name="local.properties" />
+				<exclude name="webtestweb/WEB-INF/classes/**" />
+				<exclude name="webtestweb/WEB-INF/lib/**" />
+			</tarfileset>
+		</tar>
+	</target>
+	
+	<target name="dist.test" depends="dist.tar">
+		<delete dir="build/dist-test" />
+		<mkdir dir="build/dist-test" />
+		<untar src="build/exedio-cope-live-src-${build.file.tag}.tar.gz"
+				 dest="build/dist-test"
+				 compression="gzip" />
+		<ant dir="build/dist-test" target="build" />
+	</target>
+	
+	<target name="dist" depends="dist.tar, dist.test" />
+	
+	<target name="all" depends="build, jar.src, dist" />
+
+	<target name="cruise" depends="clean, all">
+		<copy todir="${basedir}/cruise">
+			<fileset file="${basedir}/getlib.properties" />
+			<fileset file="${basedir}/build/exedio-cope-live.jar" />
+			<fileset file="${basedir}/build/exedio-cope-live.jar-src.zip" />
+			<fileset file="${basedir}/build/exedio-cope-live-src-${build.file.tag}.tar.gz" />
+		</copy>
+		<copy file="CHANGELOG" tofile="${basedir}/cruise/exedio-cope-live.jar-CHANGELOG" />
+	</target>
+	
+</project>

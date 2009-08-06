@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<project name="cope live editor getlib" default="getlib" basedir=".">
+
+	<import file="getlib/getlib-contrib.xml"/>
+
+
+	<target name="getlib" depends="hsqldb, commons-io, commons-fileupload, exedio-jspm, exedio-cope" />
+	
+</project>
