@@ -55,7 +55,7 @@ public final class EditorFilter extends Editor
 		{
 			return "toString(" + user + ')';
 		}
-	};
+	}
 	
 	@Override
 	protected Session login(final String user, final String password)
