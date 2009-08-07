@@ -124,23 +124,23 @@
 	
 	<target name="test" depends="test.compile">
 		<mkdir dir="build/testresults" />
-				<junit taskname="junit" fork="yes"
-						 haltonerror="true" haltonfailure="true"
-						 dir="${basedir}"
-						 showoutput="true" printsummary="true">
-					<formatter type="brief" usefile="false" />
-					<formatter type="xml" />
-					<classpath>
-						<pathelement location="build/classes" />
-						<pathelement location="build/testclasses" />
-						<pathelement location="lib/servlet-api.jar" />
-						<pathelement location="lib/jdbc/hsqldb.jar" />
-						<pathelement location="lib/junit.jar" />
-						<pathelement location="lib/exedio-cope.jar" />
-					</classpath>
-					<test name="com.exedio.cope.editor.PackageTest" todir="build/testresults" outfile="editor" />
-					<assertions><enable/></assertions>
-				</junit>
+		<junit taskname="junit" fork="yes"
+					haltonerror="true" haltonfailure="true"
+					dir="${basedir}"
+					showoutput="true" printsummary="true">
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
+			<classpath>
+				<pathelement location="build/classes" />
+				<pathelement location="build/testclasses" />
+				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/jdbc/hsqldb.jar" />
+				<pathelement location="lib/junit.jar" />
+				<pathelement location="lib/exedio-cope.jar" />
+			</classpath>
+			<test name="com.exedio.cope.editor.PackageTest" todir="build/testresults" outfile="editor" />
+			<assertions><enable/></assertions>
+		</junit>
 	</target>
 	
 	<target name="webtest.instrument" unless="skip.instrument">
