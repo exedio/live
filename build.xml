@@ -192,7 +192,7 @@
 	</target>
 
 	<target name="webtest.web"
-			  depends="webtest.instrument, webtest.jspm">
+			  depends="core.compile, webtest.instrument, webtest.jspm">
 		<copy todir="webtestweb/WEB-INF/classes">
 			<fileset dir="build/classes" />
 		</copy>
