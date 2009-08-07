@@ -33,7 +33,7 @@
 	</filter-mapping>
 	
 	<servlet>
-		<servlet-name>editorMedia</servlet-name>
+		<servlet-name>media</servlet-name>
 		<servlet-class>com.exedio.cope.pattern.MediaServlet</servlet-class>
 		<init-param>
 			<param-name>model</param-name>
@@ -45,12 +45,12 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>editorMedia</servlet-name>
-		<url-pattern>/editorMedia/*</url-pattern>
+		<servlet-name>media</servlet-name>
+		<url-pattern>/media/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>editedConsole</servlet-name>
+		<servlet-name>console</servlet-name>
 		<servlet-class>com.exedio.cope.console.ConsoleServlet</servlet-class>
 		<init-param>
 			<param-name>model</param-name>
@@ -62,8 +62,8 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>editedConsole</servlet-name>
-		<url-pattern>/editedConsole/*</url-pattern>
+		<servlet-name>console</servlet-name>
+		<url-pattern>/console/*</url-pattern>
 	</servlet-mapping>
 	
 	<description>Cope Live Test</description>
