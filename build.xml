@@ -207,9 +207,6 @@
 		<delete dir="tomcat" />
 	</target>
 	
-	<!-- instrument -->
-	<!-- common -->
-	
 	<target name="jspm" depends="core.jspm, webtest.jspm" />
 	
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
