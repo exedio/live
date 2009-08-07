@@ -5,8 +5,6 @@
 	<property file="local.properties" />
 	<property name="build.file.tag" value="unlabeled" />
 	
-	<taskdef name="LoadFile" classname="org.apache.tools.ant.taskdefs.LoadFile" />
-
 	<taskdef
 			resource="com/exedio/jspm/ant.properties"
 			classpath="lib/exedio-jspm.jar" />
