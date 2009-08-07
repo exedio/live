@@ -1137,14 +1137,15 @@ public abstract class Editor implements Filter
 				targets.add(new TargetDraft(draft));
 			targets.add(TargetNewDraft.INSTANCE);
 		}
+		final boolean borders = tl.anchor.borders;
 		Bar_Jspm.write(out,
 				tl.anchor.getTarget(),
 				targets,
 				action(request, tl.response),
 				referer(request),
-				tl.anchor.borders,
-				tl.anchor.borders ? BAR_BORDERS_OFF : BAR_BORDERS_ON,
-				tl.filter.getBorderButtonURL(request, tl.response, tl.anchor.borders),
+				borders,
+				borders ? BAR_BORDERS_OFF : BAR_BORDERS_ON,
+				tl.filter.getBorderButtonURL(request, tl.response, borders),
 				tl.filter.getHideButtonURL (request, tl.response),
 				tl.filter.getCloseButtonURL(request, tl.response),
 				tl.anchor.getModificationsCount(),
