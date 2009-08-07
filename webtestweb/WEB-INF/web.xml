@@ -66,8 +66,8 @@
 		<url-pattern>/editedConsole/*</url-pattern>
 	</servlet-mapping>
 	
-	<description>Cope Runtime Servlet Test</description>
-	<display-name>Cope Runtime Servlet Test</display-name>
+	<description>Cope Live Test</description>
+	<display-name>Cope Live Test</display-name>
 	
 	<session-config>
 		<session-timeout>30<!--minutes--></session-timeout>
