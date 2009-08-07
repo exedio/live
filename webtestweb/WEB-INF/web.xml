@@ -5,6 +5,11 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
+	<context-param>
+		<param-name>model</param-name>
+		<param-value>com.exedio.cope.util.EditedServlet#model</param-value>
+	</context-param>
+	
 	<servlet>
 		<servlet-name>edited</servlet-name>
 		<servlet-class>com.exedio.cope.util.EditedServlet</servlet-class>
@@ -27,10 +32,6 @@
 	<servlet>
 		<servlet-name>media</servlet-name>
 		<servlet-class>com.exedio.cope.pattern.MediaServlet</servlet-class>
-		<init-param>
-			<param-name>model</param-name>
-			<param-value>com.exedio.cope.util.EditedServlet#model</param-value>
-		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>media</servlet-name>
@@ -40,10 +41,6 @@
 	<servlet>
 		<servlet-name>console</servlet-name>
 		<servlet-class>com.exedio.cope.console.ConsoleServlet</servlet-class>
-		<init-param>
-			<param-name>model</param-name>
-			<param-value>com.exedio.cope.util.EditedServlet#model</param-value>
-		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>console</servlet-name>
