@@ -38,28 +38,6 @@
 		</sequential>
 	</macrodef>
 	
-	<macrodef name="ljar">
-		<attribute name="jarfile" />
-		<attribute name="name" />
-		<attribute name="classpath" />
-		<element name="fileset" optional="true" implicit="true" />
-		<sequential>
-			<!--echo message="local jar @{jarfile}" /-->
-			<jar jarfile="@{jarfile}" filesonly="true" duplicate="fail" level="9">
-				<fileset />
-				<manifest>
-					<attribute name="Specification-Title" value="exedio @{name}" />
-					<attribute name="Specification-Version" value="${build.tag}" />
-					<attribute name="Specification-Vendor" value="exedio GmbH" />
-					<attribute name="Implementation-Title" value="exedio @{name}" />
-					<attribute name="Implementation-Version" value="${build.tag}" />
-					<attribute name="Implementation-Vendor" value="exedio GmbH" />
-					<attribute name="Class-Path" value="@{classpath}" />
-				</manifest>
-			</jar>
-		</sequential>
-	</macrodef>
-	
 	<macrodef name="ljunit">
 		<attribute name="test" />
 		<attribute name="env" default="N" />
@@ -130,9 +108,18 @@
 	</target>
 	
 	<target name="jar" depends="core.compile">
-		<ljar name="cope live" jarfile="build/exedio-cope-live.jar" classpath="exedio-cope.jar">
+		<jar jarfile="build/exedio-cope-live.jar" filesonly="true" duplicate="fail" level="9">
 			<fileset dir="build/classes" />
-		</ljar>
+			<manifest>
+				<attribute name="Specification-Title" value="exedio cope live" />
+				<attribute name="Specification-Version" value="${build.tag}" />
+				<attribute name="Specification-Vendor" value="exedio GmbH" />
+				<attribute name="Implementation-Title" value="exedio cope live" />
+				<attribute name="Implementation-Version" value="${build.tag}" />
+				<attribute name="Implementation-Vendor" value="exedio GmbH" />
+				<attribute name="Class-Path" value="exedio-cope.jar" />
+			</manifest>
+		</jar>
 	</target>
 	
 	<target name="jar.src">
