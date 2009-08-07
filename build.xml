@@ -219,7 +219,7 @@
 	
 	<target name="tomcat" depends="webtest.tomcat" />
 	
-	<target name="home.api">
+	<target name="api">
 
 		<javadoc
 				destdir="build/api"
@@ -246,8 +246,6 @@
 			</classpath>
 		</javadoc>
 	</target>
-	
-	<target name="api" depends="home.api" />
 	
 	<target name="build"
 			depends="compile, test, jar, tomcat" />
