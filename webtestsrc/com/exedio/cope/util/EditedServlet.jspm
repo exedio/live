@@ -21,7 +21,6 @@ package com.exedio.cope.util;
 
 import static com.exedio.cope.editor.Editor.edit;
 
-import java.io.PrintStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +31,7 @@ import com.exedio.cope.pattern.History;
 final class EditedServlet_Jspm
 {
 	static final void write(
-			final PrintStream out,
+			final Out out,
 			final HttpServletResponse response,
 			final String loginURL,
 			final List<EditedItem> items)
@@ -75,11 +74,11 @@ final class EditedServlet_Jspm
 			
 		</style><%
 		}
-		Editor.writeHead(out);
+		out.writeEditorHead();
 		%>
 	</head>
 	<body><%
-		Editor.writeBar(out);
+		out.writeEditorBar();
 		%>
 		isLoggedIn:<%=Editor.isLoggedIn()%>
 		isBordersEnabled:<%=Editor.isBordersEnabled()%>

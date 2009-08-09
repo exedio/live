@@ -109,7 +109,7 @@ public final class EditedServlet extends HttpServlet
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", System.currentTimeMillis());
 		
-		final PrintStream out = new PrintStream(response.getOutputStream(), false, ENCODING);
+		final Out out = new Out(new PrintStream(response.getOutputStream(), false, ENCODING));
 		try
 		{
 			model.startTransaction("EditedServlet");
