@@ -188,7 +188,7 @@ public abstract class Editor implements Filter
 			{
 				try
 				{
-					tls.set(new LiveRequest(this, request, (HttpServletResponse)servletResponse, (Anchor)anchor));
+					tls.set(new LiveRequest(this, draftsEnabled, request, (HttpServletResponse)servletResponse, (Anchor)anchor));
 					chain.doFilter(request, servletResponse);
 				}
 				finally
@@ -215,8 +215,8 @@ public abstract class Editor implements Filter
 	
 	static final String AVOID_COLLISION = "contentEditorBar823658617";
 	static final String BAR_REFERER = "referer";
-	private static final String BAR_BORDERS_ON  = "borders.on";
-	private static final String BAR_BORDERS_OFF = "borders.off";
+	static final String BAR_BORDERS_ON  = "borders.on";
+	static final String BAR_BORDERS_OFF = "borders.off";
 	static final String BAR_CLOSE = "close";
 	static final String BAR_SWITCH_TARGET = "target.switch";
 	static final String BAR_SAVE_TARGET   = "target.save";
@@ -917,9 +917,7 @@ public abstract class Editor implements Filter
 		if(tl==null)
 			return;
 		
-		final StringBuilder bf = new StringBuilder();
-		writeHead(bf);
-		out.print(bf);
+		tl.writeHead(out);
 	}
 	
 	public static final void writeBar(final PrintStream out)
@@ -928,9 +926,7 @@ public abstract class Editor implements Filter
 		if(tl==null)
 			return;
 		
-		final StringBuilder bf = new StringBuilder();
-		writeBar(bf);
-		out.print(bf);
+		tl.writeBar(out);
 	}
 	
 	public static final void writeHead(final StringBuilder out)
@@ -939,7 +935,7 @@ public abstract class Editor implements Filter
 		if(tl==null)
 			return;
 		
-		Bar_Jspm.writeHead(out, tl.anchor.borders);
+		tl.writeHead(out);
 	}
 	
 	public static final void writeBar(final StringBuilder out)
@@ -948,40 +944,7 @@ public abstract class Editor implements Filter
 		if(tl==null)
 			return;
 		
-		final HttpServletRequest request = tl.request;
-		final ArrayList<Target> targets = new ArrayList<Target>();
-		targets.add(TargetLive.INSTANCE);
-		if(tl.filter.draftsEnabled)
-		{
-			final List<Draft> drafts = Draft.TYPE.search(null, Draft.date, true);
-			for(final Draft draft : drafts)
-				targets.add(new TargetDraft(draft));
-			targets.add(TargetNewDraft.INSTANCE);
-		}
-		final boolean borders = tl.anchor.borders;
-		Bar_Jspm.write(out,
-				tl.anchor.getTarget(),
-				targets,
-				action(request, tl.response),
-				referer(request),
-				borders,
-				borders ? BAR_BORDERS_OFF : BAR_BORDERS_ON,
-				tl.filter.getBorderButtonURL(request, tl.response, borders),
-				tl.filter.getHideButtonURL (request, tl.response),
-				tl.filter.getCloseButtonURL(request, tl.response),
-				tl.anchor.getModificationsCount(),
-				tl.anchor.sessionName);
-	}
-	
-	private static final String action(final HttpServletRequest request, final HttpServletResponse response)
-	{
-		return response.encodeURL(request.getContextPath() + request.getServletPath() + LOGIN_PATH_INFO);
-	}
-	
-	private static final String referer(final HttpServletRequest request)
-	{
-		final String queryString = request.getQueryString();
-		return queryString!=null ? (request.getPathInfo() + '?' + request.getQueryString()) : request.getPathInfo();
+		tl.writeBar(out);
 	}
 	
 	private static final void writeBody(

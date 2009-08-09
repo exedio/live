@@ -18,7 +18,10 @@
 
 package com.exedio.cope.editor;
 
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +39,7 @@ import com.exedio.cops.XMLEncoder;
 final class LiveRequest
 {
 	final Editor filter;
+	private final boolean draftsEnabled;
 	final HttpServletRequest request;
 	final HttpServletResponse response;
 	final Anchor anchor;
@@ -43,11 +47,13 @@ final class LiveRequest
 	
 	LiveRequest(
 			final Editor filter,
+			final boolean draftsEnabled,
 			final HttpServletRequest request,
 			final HttpServletResponse response,
 			final Anchor anchor)
 	{
 		this.filter = filter;
+		this.draftsEnabled = draftsEnabled;
 		this.request = request;
 		this.response = response;
 		this.anchor = anchor;
@@ -249,6 +255,51 @@ final class LiveRequest
 					: ("<input type=\"submit\" value=\"Up\">")
 				) +
 			"</form>";
+	}
+	
+	void writeHead(final PrintStream out)
+	{
+		final StringBuilder bf = new StringBuilder();
+		writeHead(bf);
+		out.print(bf);
+	}
+	
+	void writeBar(final PrintStream out)
+	{
+		final StringBuilder bf = new StringBuilder();
+		writeBar(bf);
+		out.print(bf);
+	}
+	
+	void writeHead(final StringBuilder out)
+	{
+		Bar_Jspm.writeHead(out, anchor.borders);
+	}
+	
+	void writeBar(final StringBuilder out)
+	{
+		final ArrayList<Target> targets = new ArrayList<Target>();
+		targets.add(TargetLive.INSTANCE);
+		if(draftsEnabled)
+		{
+			final List<Draft> drafts = Draft.TYPE.search(null, Draft.date, true);
+			for(final Draft draft : drafts)
+				targets.add(new TargetDraft(draft));
+			targets.add(TargetNewDraft.INSTANCE);
+		}
+		final boolean borders = anchor.borders;
+		Bar_Jspm.write(out,
+				anchor.getTarget(),
+				targets,
+				action(request, response),
+				referer(request),
+				borders,
+				borders ? Editor.BAR_BORDERS_OFF : Editor.BAR_BORDERS_ON,
+				filter.getBorderButtonURL(request, response, borders),
+				filter.getHideButtonURL (request, response),
+				filter.getCloseButtonURL(request, response),
+				anchor.getModificationsCount(),
+				anchor.sessionName);
 	}
 	
 	private static final String action(final HttpServletRequest request, final HttpServletResponse response)
