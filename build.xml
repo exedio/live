@@ -148,6 +148,7 @@
 			<fileset dir="webtestsrc">
 				<include name="**/*.java" />
 				<exclude name="**/EditedServlet_Jspm.java" />
+				<exclude name="**/Out.java" />
 			</fileset>
 		</instrument>
 	</target>

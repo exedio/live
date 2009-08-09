@@ -19,8 +19,6 @@
 
 package com.exedio.cope.util;
 
-import static com.exedio.cope.editor.Editor.edit;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +40,7 @@ final class EditedServlet_Jspm
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=<%=EditedServlet.ENCODING%>">
 		<title>Live Edit Test</title><%
-		if(Editor.isBordersEnabled())
+		if(out.isEditorBordersEnabled())
 		{
 		%>
 		<style type="text/css">
@@ -81,9 +79,9 @@ final class EditedServlet_Jspm
 		out.writeEditorBar();
 		%>
 		isLoggedIn:<%=Editor.isLoggedIn()%>
-		isBordersEnabled:<%=Editor.isBordersEnabled()%>
+		isBordersEnabled:<%=out.isEditorBordersEnabled()%>
 		getSession:<%=Editor.getSession()%>
-		duplicate: <%=item1.getCopeID()%>, <a href="<%=response.encodeURL("duplicate.html")%>"><%=edit(item1.getField(), item1.field, item1)%></a> (<%=item1.getField()%>)
+		duplicate: <%=item1.getCopeID()%>, <a href="<%=response.encodeURL("duplicate.html")%>"><%= item1.getField(), item1.field, item1 %></a> (<%=item1.getField()%>)
 		<br>
 		to login page:
 		<a href="<%=loginURL%>">get</a>
@@ -99,15 +97,15 @@ final class EditedServlet_Jspm
 			%>
 			<li>
 				<%=item.getCopeID()%>
-				p(<%=item.getPosition()%>,<%=edit(item.position, item)%>)
+				p(<%=item.getPosition()%>,<% out.swap(item.position, item); %>)
 				<ul>
-					<li>field: <%=edit(item.getField(), item.field, item)%> (<%=item.getField()%>) {<%=edit("---"+item.getField()+"---", item.field, item)%>}</li>
-					<li>fieldBlock: <pre><%=edit(item.getFieldBlock(), item.fieldBlock, item)%></pre> <pre><%=item.getFieldBlock()%></pre></li>
-					<li>map(1): <%=edit(item.getMap(1), item.map, item, 1)%> (<%=item.getMap(1)%>) {<%=edit("---"+item.getMap(1)+"---", item.map, item, 1)%>}</li>
-					<li>map(2): <%=edit(item.getMap(2), item.map, item, 2)%> (<%=item.getMap(2)%>)</li>
-					<li>mapBlock(1): <pre><%=edit(item.getMapBlock(1), item.mapBlock, item, 1)%></pre> <pre><%=item.getMapBlock(1)%></pre></li>
-					<li>image: <a href="<%=response.encodeURL("image" + item.getPosition() + ".html")%>"><img src="<%=item.getImageURL()%>"<%=edit(item.image, item)%> height="50"></a><%=item.getImageContentType()%></li>
-					<li>thumbnail: <img src="<%=item.getThumbnailURL()%>"<%=edit(item.thumbnail, item)%>><%=item.getThumbnailContentType()%></li>
+					<li>field: <%= item.getField(), item.field, item %> (<%=item.getField()%>) {<%= "---"+item.getField()+"---", item.field, item %>}</li>
+					<li>fieldBlock: <pre><%= item.getFieldBlock(), item.fieldBlock, item %></pre> <pre><%=item.getFieldBlock()%></pre></li>
+					<li>map(1): <%= item.getMap(1), item.map, item, 1 %> (<%=item.getMap(1)%>) {<%= "---"+item.getMap(1)+"---", item.map, item, 1 %>}</li>
+					<li>map(2): <%= item.getMap(2), item.map, item, 2 %> (<%=item.getMap(2)%>)</li>
+					<li>mapBlock(1): <pre><%= item.getMapBlock(1), item.mapBlock, item, 1 %></pre> <pre><%=item.getMapBlock(1)%></pre></li>
+					<li>image: <a href="<%=response.encodeURL("image" + item.getPosition() + ".html")%>"><img src="<%=item.getImageURL()%>"<% out.edit(item.image, item); %> height="50"></a><%=item.getImageContentType()%></li>
+					<li>thumbnail: <img src="<%=item.getThumbnailURL()%>"<% out.edit(item.thumbnail, item); %>><%=item.getThumbnailContentType()%></li>
 					<%
 					for(final History.Event event : item.getHistoryEvents())
 					{
