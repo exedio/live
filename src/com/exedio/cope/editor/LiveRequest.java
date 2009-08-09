@@ -29,6 +29,8 @@ import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
 import com.exedio.cope.pattern.MapField;
+import com.exedio.cope.pattern.Media;
+import com.exedio.cope.pattern.MediaFilter;
 import com.exedio.cops.XMLEncoder;
 
 final class LiveRequest
@@ -166,5 +168,51 @@ final class LiveRequest
 			append('>');
 		
 		return bf.toString();
+	}
+	
+	String edit(final Media feature, final Item item)
+	{
+		return edit(feature, item, true);
+	}
+	
+	private String edit(final Media feature, final Item item, final boolean modifiable)
+	{
+		checkEdit(feature, item);
+		if(feature.isFinal())
+			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
+		
+		final String modificationURL = modifiable ? anchor.getModificationURL(feature, item, request, response) : null;
+		final String onload =
+			modificationURL!=null
+				? (" onload=\"this.src='" + XMLEncoder.encode(response.encodeURL(modificationURL)) + "';\"")
+				: "";
+		
+		if(!anchor.borders)
+			return onload;
+		
+		final StringBuilder bf = new StringBuilder();
+		bf.append(
+				" class=\"contentEditorLink\"" +
+				onload +
+				" onclick=\"" +
+					"return " + Editor.EDIT_METHOD_FILE + "(this,'").
+						append(feature.getID()).
+						append("','").
+						append(item.getCopeID()).
+						append("','").
+						append(XMLEncoder.encode(feature.getURL(item))).
+					append("'," + modifiable + ");\"");
+		
+		return bf.toString();
+	}
+	
+	String edit(final MediaFilter feature, final Item item)
+	{
+		if(!anchor.borders)
+			return "";
+		
+		checkEdit(feature, item);
+		
+		return edit(feature.getSource(), item, false);
 	}
 }

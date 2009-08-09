@@ -60,7 +60,6 @@ import com.exedio.cope.util.ConnectToken;
 import com.exedio.cope.util.ServletUtil;
 import com.exedio.cops.Cop;
 import com.exedio.cops.CopsServlet;
-import com.exedio.cops.XMLEncoder;
 
 public abstract class Editor implements Filter
 {
@@ -882,49 +881,16 @@ public abstract class Editor implements Filter
 		if(tl==null)
 			return "";
 		
-		return edit(tl, feature, item, true);
-	}
-	
-	private static final String edit(final LiveRequest tl, final Media feature, final Item item, final boolean modifiable)
-	{
-		checkEdit(feature, item);
-		if(feature.isFinal())
-			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
-		
-		final String modificationURL = modifiable ? tl.anchor.getModificationURL(feature, item, tl.request, tl.response) : null;
-		final String onload =
-			modificationURL!=null
-				? (" onload=\"this.src='" + XMLEncoder.encode(tl.response.encodeURL(modificationURL)) + "';\"")
-				: "";
-		
-		if(!tl.anchor.borders)
-			return onload;
-		
-		final StringBuilder bf = new StringBuilder();
-		bf.append(
-				" class=\"contentEditorLink\"" +
-				onload +
-				" onclick=\"" +
-					"return " + EDIT_METHOD_FILE + "(this,'").
-						append(feature.getID()).
-						append("','").
-						append(item.getCopeID()).
-						append("','").
-						append(XMLEncoder.encode(feature.getURL(item))).
-					append("'," + modifiable + ");\"");
-		
-		return bf.toString();
+		return tl.edit(feature, item);
 	}
 	
 	public static final String edit(final MediaFilter feature, final Item item)
 	{
 		final LiveRequest tl = tls.get();
-		if(tl==null || !tl.anchor.borders)
+		if(tl==null)
 			return "";
 		
-		checkEdit(feature, item);
-		
-		return edit(tl, feature.getSource(), item, false);
+		return tl.edit(feature, item);
 	}
 	
 	public static final String edit(final IntegerField feature, final Item item)
