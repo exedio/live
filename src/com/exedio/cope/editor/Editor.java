@@ -180,7 +180,7 @@ public abstract class Editor implements Filter
 			return;
 		}
 
-		final LiveRequest liveRequest = LiveRequest.get(this, draftsEnabled, request, response);
+		final LiveRequest liveRequest = LiveRequest.get(this, request, response);
 		if(liveRequest!=null)
 		{
 			try
@@ -802,7 +802,7 @@ public abstract class Editor implements Filter
 				final Session session = login(user, password);
 				if(session!=null)
 				{
-					httpSession.setAttribute(ANCHOR, new Anchor(defaultTarget, user, session, session.getName()));
+					httpSession.setAttribute(ANCHOR, new Anchor(defaultTarget, draftsEnabled, user, session, session.getName()));
 					redirectHome(request, response);
 				}
 				else

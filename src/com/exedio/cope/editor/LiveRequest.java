@@ -41,7 +41,6 @@ final class LiveRequest
 {
 	static LiveRequest get(
 			final Editor filter,
-			final boolean draftsEnabled,
 			final HttpServletRequest request,
 			final HttpServletResponse response)
 	{
@@ -50,7 +49,7 @@ final class LiveRequest
 		{
 			final Object anchor = httpSession.getAttribute(Editor.ANCHOR);
 			if(anchor!=null)
-				return new LiveRequest(filter, draftsEnabled, request, response, (Anchor)anchor);
+				return new LiveRequest(filter, request, response, (Anchor)anchor);
 			else
 				return null;
 		}
@@ -61,7 +60,6 @@ final class LiveRequest
 	}
 	
 	private final Editor filter;
-	private final boolean draftsEnabled;
 	private final HttpServletRequest request;
 	private final HttpServletResponse response;
 	private final Anchor anchor;
@@ -69,13 +67,11 @@ final class LiveRequest
 	
 	private LiveRequest(
 			final Editor filter,
-			final boolean draftsEnabled,
 			final HttpServletRequest request,
 			final HttpServletResponse response,
 			final Anchor anchor)
 	{
 		this.filter = filter;
-		this.draftsEnabled = draftsEnabled;
 		this.request = request;
 		this.response = response;
 		this.anchor = anchor;
@@ -302,7 +298,7 @@ final class LiveRequest
 	{
 		final ArrayList<Target> targets = new ArrayList<Target>();
 		targets.add(TargetLive.INSTANCE);
-		if(draftsEnabled)
+		if(anchor.draftsEnabled)
 		{
 			final List<Draft> drafts = Draft.TYPE.search(null, Draft.date, true);
 			for(final Draft draft : drafts)

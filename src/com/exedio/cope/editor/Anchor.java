@@ -36,6 +36,7 @@ final class Anchor implements Serializable // for session persistence
 	private static final long serialVersionUID = 1l;
 	
 	private final Target defaultTarget;
+	final boolean draftsEnabled;
 	final String user;
 	final Session session;
 	final String sessionName;
@@ -43,9 +44,10 @@ final class Anchor implements Serializable // for session persistence
 	boolean borders = false;
 	final GetterSet<Modification> modifications = new GetterSet<Modification>();
 	
-	Anchor(final Target defaultTarget, final String user, final Session session, final String sessionName)
+	Anchor(final Target defaultTarget, final boolean draftsEnabled, final String user, final Session session, final String sessionName)
 	{
 		this.defaultTarget = defaultTarget;
+		this.draftsEnabled = draftsEnabled;
 		this.user = user;
 		this.session = session;
 		this.sessionName = sessionName;
