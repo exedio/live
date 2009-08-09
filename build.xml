@@ -154,7 +154,7 @@
 	</target>
 
 	<target name="webtest.jspm">
-		<jspm method="print">
+		<jspm method="write">
 			<fileset dir="webtestsrc" includes="**/*.jspm" />
 		</jspm>
 	</target>

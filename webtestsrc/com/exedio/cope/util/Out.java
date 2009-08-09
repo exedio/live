@@ -42,27 +42,27 @@ final class Out
 		this.bf = new PrintStream(response.getOutputStream(), false, EditedServlet.ENCODING);
 	}
 	
-	void print(final String s)
+	void write(final String s)
 	{
 		bf.print(s);
 	}
 	
-	void print(final Date d)
+	void write(final Date d)
 	{
 		bf.print(d);
 	}
 	
-	void print(final Session s)
+	void write(final Session s)
 	{
 		bf.print(s);
 	}
 	
-	void print(final boolean b)
+	void write(final boolean b)
 	{
 		bf.print(b);
 	}
 	
-	void print(final int i)
+	void write(final int i)
 	{
 		bf.print(i);
 	}
@@ -92,12 +92,12 @@ final class Out
 		Editor.writeBar(bf);
 	}
 	
-	void print(final String s, final StringField feature, final Item item)
+	void write(final String s, final StringField feature, final Item item)
 	{
 		bf.print(Editor.edit(s, feature, item));
 	}
 	
-	<K> void print(final String s, final MapField<K, String> feature, final Item item, final K key)
+	<K> void write(final String s, final MapField<K, String> feature, final Item item, final K key)
 	{
 		bf.print(Editor.edit(s, feature, item, key));
 	}
