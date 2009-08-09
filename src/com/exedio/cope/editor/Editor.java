@@ -846,13 +846,13 @@ public abstract class Editor implements Filter
 	public static final boolean isBordersEnabled()
 	{
 		final LiveRequest tl = tls.get();
-		return tl!=null && tl.anchor.borders;
+		return tl!=null && tl.isBordersEnabled();
 	}
 	
 	public static final Session getSession()
 	{
 		final LiveRequest tl = tls.get();
-		return tl!=null ? tl.anchor.session : null;
+		return tl!=null ? tl.getSession() : null;
 	}
 	
 	private static final <K> Item getItem(final MapField<K, String> feature, final K key, final Item item)

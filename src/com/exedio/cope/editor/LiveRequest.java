@@ -67,4 +67,14 @@ final class LiveRequest
 		final Integer previous = feature.get(result);
 		return (previous!=null && previous.intValue()<next.intValue()) ? result : null;
 	}
+	
+	boolean isBordersEnabled()
+	{
+		return anchor.borders;
+	}
+	
+	Session getSession()
+	{
+		return anchor.session;
+	}
 }
