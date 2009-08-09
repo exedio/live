@@ -215,4 +215,50 @@ final class LiveRequest
 		
 		return edit(feature.getSource(), item, false);
 	}
+	
+	String edit(final IntegerField feature, final Item item)
+	{
+		if(!anchor.borders)
+			return "";
+		
+		return edit(feature, item, filter.getPreviousPositionButtonURL(request, response));
+	}
+	
+	String edit(final IntegerField feature, final Item item, final String buttonURL)
+	{
+		if(!anchor.borders)
+			return "";
+		
+		checkEdit(feature, item);
+		if(feature.isFinal())
+			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
+		
+		final Item previousItem = registerPositionItem(feature, item);
+		if(previousItem==null)
+			return "";
+		
+		return
+			"<form action=\"" + action(request, response) + "\" method=\"POST\" class=\"contentEditorPosition\">" +
+				"<input type=\"hidden\" name=\"" + Editor.BAR_REFERER   + "\" value=\"" + referer(request)         + "\">" +
+				"<input type=\"hidden\" name=\"" + Editor.BAR_FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
+				"<input type=\"hidden\" name=\"" + Editor.BAR_ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
+				"<input type=\"hidden\" name=\"" + Editor.BAR_ITEM      + "\" value=\"" + item.getCopeID()         + "\">" +
+				(
+					buttonURL!=null
+					? ("<input type=\"image\" src=\"" + buttonURL + "\" alt=\"Swap with previous item\">")
+					: ("<input type=\"submit\" value=\"Up\">")
+				) +
+			"</form>";
+	}
+	
+	private static final String action(final HttpServletRequest request, final HttpServletResponse response)
+	{
+		return response.encodeURL(request.getContextPath() + request.getServletPath() + Editor.LOGIN_PATH_INFO);
+	}
+	
+	private static final String referer(final HttpServletRequest request)
+	{
+		final String queryString = request.getQueryString();
+		return queryString!=null ? (request.getPathInfo() + '?' + request.getQueryString()) : request.getPathInfo();
+	}
 }

@@ -896,49 +896,19 @@ public abstract class Editor implements Filter
 	public static final String edit(final IntegerField feature, final Item item)
 	{
 		final LiveRequest tl = tls.get();
-		if(tl==null || !tl.anchor.borders)
+		if(tl==null)
 			return "";
 		
-		return edit(feature, item, tl.filter.getPreviousPositionButtonURL(tl.request, tl.response));
+		return tl.edit(feature, item);
 	}
 	
 	public static final String edit(final IntegerField feature, final Item item, final String buttonURL)
 	{
 		final LiveRequest tl = tls.get();
-		if(tl==null || !tl.anchor.borders)
+		if(tl==null)
 			return "";
 		
-		checkEdit(feature, item);
-		if(feature.isFinal())
-			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
-		
-		final Item previousItem = tl.registerPositionItem(feature, item);
-		if(previousItem==null)
-			return "";
-		
-		final HttpServletRequest request = tl.request;
-		return
-			"<form action=\"" + action(request, tl.response) + "\" method=\"POST\" class=\"contentEditorPosition\">" +
-				"<input type=\"hidden\" name=\"" + BAR_REFERER   + "\" value=\"" + referer(request)         + "\">" +
-				"<input type=\"hidden\" name=\"" + BAR_FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
-				"<input type=\"hidden\" name=\"" + BAR_ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
-				"<input type=\"hidden\" name=\"" + BAR_ITEM      + "\" value=\"" + item.getCopeID()         + "\">" +
-				(
-					buttonURL!=null
-					? ("<input type=\"image\" src=\"" + buttonURL + "\" alt=\"Swap with previous item\">")
-					: ("<input type=\"submit\" value=\"Up\">")
-				) +
-			"</form>";
-	}
-	
-	private static final void checkEdit(final Feature feature, final Item item)
-	{
-		if(feature==null)
-			throw new NullPointerException("feature");
-		if(item==null)
-			throw new NullPointerException("item");
-		if(!feature.getType().isAssignableFrom(item.getCopeType()))
-			throw new IllegalArgumentException("item " + item.getCopeID() + " does not belong to type of feature " + feature.getID());
+		return tl.edit(feature, item, buttonURL);
 	}
 	
 	public static final void writeHead(final PrintStream out)
