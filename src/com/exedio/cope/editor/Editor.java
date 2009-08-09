@@ -1009,7 +1009,7 @@ public abstract class Editor implements Filter
 		final String modificationURL = modifiable ? tl.anchor.getModificationURL(feature, item, tl.request, tl.response) : null;
 		final String onload =
 			modificationURL!=null
-				? (" onload=\"this.src='" + XMLEncoder.encode(modificationURL) + "';\"")
+				? (" onload=\"this.src='" + XMLEncoder.encode(tl.response.encodeURL(modificationURL)) + "';\"")
 				: "";
 		
 		if(!tl.anchor.borders)
