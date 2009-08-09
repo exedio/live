@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.exedio.cope.editor.Editor;
 import com.exedio.cope.pattern.History;
 
 final class EditedServlet_Jspm
@@ -78,9 +77,9 @@ final class EditedServlet_Jspm
 	<body><%
 		out.writeEditorBar();
 		%>
-		isLoggedIn:<%=Editor.isLoggedIn()%>
+		isLoggedIn:<%=out.isEditorLoggedIn()%>
 		isBordersEnabled:<%=out.isEditorBordersEnabled()%>
-		getSession:<%=Editor.getSession()%>
+		getSession:<%=out.getEditorSession()%>
 		duplicate: <%=item1.getCopeID()%>, <a href="<%=response.encodeURL("duplicate.html")%>"><%= item1.getField(), item1.field, item1 %></a> (<%=item1.getField()%>)
 		<br>
 		to login page:

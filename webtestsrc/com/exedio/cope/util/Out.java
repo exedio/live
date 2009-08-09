@@ -67,9 +67,19 @@ final class Out
 		bf.print(i);
 	}
 	
+	boolean isEditorLoggedIn()
+	{
+		return Editor.isLoggedIn();
+	}
+	
 	boolean isEditorBordersEnabled()
 	{
 		return Editor.isBordersEnabled();
+	}
+	
+	Session getEditorSession()
+	{
+		return Editor.getSession();
 	}
 	
 	void writeEditorHead()
