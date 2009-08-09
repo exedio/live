@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 
-final class TL
+final class LiveRequest
 {
 	final Editor filter;
 	final HttpServletRequest request;
@@ -34,7 +34,7 @@ final class TL
 	final Anchor anchor;
 	private HashMap<IntegerField, Item> positionItems = null;
 	
-	TL(
+	LiveRequest(
 			final Editor filter,
 			final HttpServletRequest request,
 			final HttpServletResponse response,

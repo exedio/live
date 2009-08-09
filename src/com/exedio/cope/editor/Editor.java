@@ -190,7 +190,7 @@ public abstract class Editor implements Filter
 			{
 				try
 				{
-					tls.set(new TL(this, request, (HttpServletResponse)servletResponse, (Anchor)anchor));
+					tls.set(new LiveRequest(this, request, (HttpServletResponse)servletResponse, (Anchor)anchor));
 					chain.doFilter(request, servletResponse);
 				}
 				finally
@@ -836,7 +836,7 @@ public abstract class Editor implements Filter
 	
 	private static final String ANCHOR = Session.class.getName();
 	
-	private static final ThreadLocal<TL> tls = new ThreadLocal<TL>();
+	private static final ThreadLocal<LiveRequest> tls = new ThreadLocal<LiveRequest>();
 	
 	public static final boolean isLoggedIn()
 	{
@@ -845,13 +845,13 @@ public abstract class Editor implements Filter
 	
 	public static final boolean isBordersEnabled()
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		return tl!=null && tl.anchor.borders;
 	}
 	
 	public static final Session getSession()
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		return tl!=null ? tl.anchor.session : null;
 	}
 	
@@ -865,7 +865,7 @@ public abstract class Editor implements Filter
 	
 	public static final <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return content;
 		
@@ -880,7 +880,7 @@ public abstract class Editor implements Filter
 	
 	public static final String edit(final String content, final StringField feature, final Item item)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return content;
 		
@@ -891,7 +891,7 @@ public abstract class Editor implements Filter
 	static final String EDIT_METHOD_FILE = AVOID_COLLISION + "file";
 	static final String EDIT_METHOD_AREA = AVOID_COLLISION + "area";
 	
-	private static final String edit(final TL tl, final String content, final StringField feature, final Item item)
+	private static final String edit(final LiveRequest tl, final String content, final StringField feature, final Item item)
 	{
 		checkEdit(feature, item);
 		if(feature.isFinal())
@@ -950,14 +950,14 @@ public abstract class Editor implements Filter
 	
 	public static final String edit(final Media feature, final Item item)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return "";
 		
 		return edit(tl, feature, item, true);
 	}
 	
-	private static final String edit(final TL tl, final Media feature, final Item item, final boolean modifiable)
+	private static final String edit(final LiveRequest tl, final Media feature, final Item item, final boolean modifiable)
 	{
 		checkEdit(feature, item);
 		if(feature.isFinal())
@@ -990,7 +990,7 @@ public abstract class Editor implements Filter
 	
 	public static final String edit(final MediaFilter feature, final Item item)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null || !tl.anchor.borders)
 			return "";
 		
@@ -1001,7 +1001,7 @@ public abstract class Editor implements Filter
 	
 	public static final String edit(final IntegerField feature, final Item item)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null || !tl.anchor.borders)
 			return "";
 		
@@ -1010,7 +1010,7 @@ public abstract class Editor implements Filter
 	
 	public static final String edit(final IntegerField feature, final Item item, final String buttonURL)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null || !tl.anchor.borders)
 			return "";
 		
@@ -1049,7 +1049,7 @@ public abstract class Editor implements Filter
 	
 	public static final void writeHead(final PrintStream out)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return;
 		
@@ -1060,7 +1060,7 @@ public abstract class Editor implements Filter
 	
 	public static final void writeBar(final PrintStream out)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return;
 		
@@ -1071,7 +1071,7 @@ public abstract class Editor implements Filter
 	
 	public static final void writeHead(final StringBuilder out)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return;
 		
@@ -1080,7 +1080,7 @@ public abstract class Editor implements Filter
 	
 	public static final void writeBar(final StringBuilder out)
 	{
-		final TL tl = tls.get();
+		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return;
 		
