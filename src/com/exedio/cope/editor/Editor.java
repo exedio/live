@@ -836,49 +836,6 @@ public abstract class Editor implements Filter
 	
 	private static final String ANCHOR = Session.class.getName();
 	
-	private static final class TL
-	{
-		final Editor filter;
-		final HttpServletRequest request;
-		final HttpServletResponse response;
-		final Anchor anchor;
-		private HashMap<IntegerField, Item> positionItems = null;
-		
-		TL(
-				final Editor filter,
-				final HttpServletRequest request,
-				final HttpServletResponse response,
-				final Anchor anchor)
-		{
-			this.filter = filter;
-			this.request = request;
-			this.response = response;
-			this.anchor = anchor;
-			
-			assert filter!=null;
-			assert request!=null;
-			assert response!=null;
-			assert anchor!=null;
-		}
-		
-		Item registerPositionItem(final IntegerField feature, final Item item)
-		{
-			final Integer next = feature.get(item);
-			if(next==null)
-				return null;
-			
-			if(positionItems==null)
-				positionItems = new HashMap<IntegerField, Item>();
-			
-			final Item result = positionItems.put(feature, item);
-			if(result==null)
-				return null;
-			
-			final Integer previous = feature.get(result);
-			return (previous!=null && previous.intValue()<next.intValue()) ? result : null;
-		}
-	}
-	
 	private static final ThreadLocal<TL> tls = new ThreadLocal<TL>();
 	
 	public static final boolean isLoggedIn()
