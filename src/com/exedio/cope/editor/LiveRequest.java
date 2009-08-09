@@ -44,11 +44,11 @@ final class LiveRequest
 			final HttpServletRequest request,
 			final HttpServletResponse response)
 	{
-		final HttpSession httpSession = request.getSession(false);
-		if(httpSession==null)
+		final HttpSession session = request.getSession(false);
+		if(session==null)
 			return null;
 		
-		final Object anchor = httpSession.getAttribute(Editor.ANCHOR);
+		final Object anchor = session.getAttribute(Editor.ANCHOR);
 		if(anchor==null)
 			return null;
 		
