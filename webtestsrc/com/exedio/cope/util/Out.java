@@ -18,8 +18,11 @@
 
 package com.exedio.cope.util;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Date;
+
+import javax.servlet.http.HttpServletResponse;
 
 import com.exedio.cope.editor.Editor;
 import com.exedio.cope.editor.Session;
@@ -28,9 +31,9 @@ final class Out
 {
 	private final PrintStream bf;
 	
-	Out(final PrintStream bf)
+	Out(final HttpServletResponse response) throws IOException
 	{
-		this.bf = bf;
+		this.bf = new PrintStream(response.getOutputStream(), false, EditedServlet.ENCODING);
 	}
 	
 	void print(final String s)

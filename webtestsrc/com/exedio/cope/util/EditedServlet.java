@@ -19,7 +19,6 @@
 package com.exedio.cope.util;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -109,7 +108,7 @@ public final class EditedServlet extends HttpServlet
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", System.currentTimeMillis());
 		
-		final Out out = new Out(new PrintStream(response.getOutputStream(), false, ENCODING));
+		final Out out = new Out(response);
 		try
 		{
 			model.startTransaction("EditedServlet");
