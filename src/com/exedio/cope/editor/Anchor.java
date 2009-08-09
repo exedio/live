@@ -37,9 +37,17 @@ final class Anchor implements Serializable // for session persistence
 	
 	private final Target defaultTarget;
 	final boolean draftsEnabled;
+	
+	final String borderDisableButtonURL;
+	final String borderEnableButtonURL;
+	final String hideButtonURL;
+	final String closeButtonURL;
+	final String previousPositionButtonURL;
+	
 	final String user;
 	final Session session;
 	final String sessionName;
+	
 	private Target target;
 	boolean borders = false;
 	final GetterSet<Modification> modifications = new GetterSet<Modification>();
@@ -47,12 +55,22 @@ final class Anchor implements Serializable // for session persistence
 	Anchor(
 			final Target defaultTarget,
 			final boolean draftsEnabled,
+			final Editor filter,
+			final HttpServletRequest request,
+			final HttpServletResponse response,
 			final String user,
 			final Session session,
 			final String sessionName)
 	{
 		this.defaultTarget = defaultTarget;
 		this.draftsEnabled = draftsEnabled;
+		
+		this.borderDisableButtonURL = filter!=null ? filter.getBorderButtonURL(request, response, true) : null;
+		this.borderEnableButtonURL  = filter!=null ? filter.getBorderButtonURL(request, response, false) : null;
+		this.hideButtonURL          = filter!=null ? filter.getHideButtonURL  (request, response) : null;
+		this.closeButtonURL         = filter!=null ? filter.getCloseButtonURL (request, response) : null;
+		this.previousPositionButtonURL = filter!=null ? filter.getPreviousPositionButtonURL(request, response) : null;
+		
 		this.user = user;
 		this.session = session;
 		this.sessionName = sessionName;

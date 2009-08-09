@@ -40,7 +40,6 @@ import com.exedio.cops.XMLEncoder;
 final class LiveRequest
 {
 	static LiveRequest get(
-			final Editor filter,
 			final HttpServletRequest request,
 			final HttpServletResponse response)
 	{
@@ -52,27 +51,23 @@ final class LiveRequest
 		if(anchor==null)
 			return null;
 		
-		return new LiveRequest(filter, request, response, (Anchor)anchor);
+		return new LiveRequest(request, response, (Anchor)anchor);
 	}
 	
-	private final Editor filter;
 	private final HttpServletRequest request;
 	private final HttpServletResponse response;
 	private final Anchor anchor;
 	private HashMap<IntegerField, Item> positionItems = null;
 	
 	private LiveRequest(
-			final Editor filter,
 			final HttpServletRequest request,
 			final HttpServletResponse response,
 			final Anchor anchor)
 	{
-		this.filter = filter;
 		this.request = request;
 		this.response = response;
 		this.anchor = anchor;
 		
-		assert filter!=null;
 		assert request!=null;
 		assert response!=null;
 		assert anchor!=null;
@@ -241,7 +236,7 @@ final class LiveRequest
 		if(!anchor.borders)
 			return "";
 		
-		return edit(feature, item, filter.getPreviousPositionButtonURL(request, response));
+		return edit(feature, item, anchor.previousPositionButtonURL);
 	}
 	
 	String edit(final IntegerField feature, final Item item, final String buttonURL)
@@ -309,9 +304,9 @@ final class LiveRequest
 				referer(request),
 				borders,
 				borders ? Editor.BAR_BORDERS_OFF : Editor.BAR_BORDERS_ON,
-				filter.getBorderButtonURL(request, response, borders),
-				filter.getHideButtonURL (request, response),
-				filter.getCloseButtonURL(request, response),
+				borders ? anchor.borderDisableButtonURL : anchor.borderEnableButtonURL,
+				anchor.hideButtonURL,
+				anchor.closeButtonURL,
 				anchor.getModificationsCount(),
 				anchor.sessionName);
 	}

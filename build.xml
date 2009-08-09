@@ -84,6 +84,7 @@
 				<pathelement location="build/classes" />
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
+				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/junit.jar" />
 			</classpath>
 		</ljavac>
