@@ -45,18 +45,14 @@ final class LiveRequest
 			final HttpServletResponse response)
 	{
 		final HttpSession httpSession = request.getSession(false);
-		if(httpSession!=null)
-		{
-			final Object anchor = httpSession.getAttribute(Editor.ANCHOR);
-			if(anchor!=null)
-				return new LiveRequest(filter, request, response, (Anchor)anchor);
-			else
-				return null;
-		}
-		else
-		{
+		if(httpSession==null)
 			return null;
-		}
+		
+		final Object anchor = httpSession.getAttribute(Editor.ANCHOR);
+		if(anchor==null)
+			return null;
+		
+		return new LiveRequest(filter, request, response, (Anchor)anchor);
 	}
 	
 	private final Editor filter;
