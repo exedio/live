@@ -38,11 +38,11 @@ import com.exedio.cops.XMLEncoder;
 
 final class LiveRequest
 {
-	final Editor filter;
+	private final Editor filter;
 	private final boolean draftsEnabled;
-	final HttpServletRequest request;
-	final HttpServletResponse response;
-	final Anchor anchor;
+	private final HttpServletRequest request;
+	private final HttpServletResponse response;
+	private final Anchor anchor;
 	private HashMap<IntegerField, Item> positionItems = null;
 	
 	LiveRequest(
