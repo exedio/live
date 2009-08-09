@@ -45,7 +45,6 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.exedio.cope.Cope;
 import com.exedio.cope.Feature;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
@@ -855,27 +854,13 @@ public abstract class Editor implements Filter
 		return tl!=null ? tl.getSession() : null;
 	}
 	
-	private static final <K> Item getItem(final MapField<K, String> feature, final K key, final Item item)
-	{
-		return
-				feature.getRelationType().searchSingletonStrict(
-						feature.getKey().equal(key).and(
-						Cope.equalAndCast(feature.getParent(), item)));
-	}
-	
 	public static final <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
 	{
 		final LiveRequest tl = tls.get();
 		if(tl==null)
 			return content;
 		
-		checkEdit(feature, item);
-		
-		return edit(
-				tl,
-				content,
-				(StringField)feature.getValue(),
-				getItem(feature, key, item));
+		return tl.edit(content, feature, item, key);
 	}
 	
 	public static final String edit(final String content, final StringField feature, final Item item)
@@ -884,69 +869,12 @@ public abstract class Editor implements Filter
 		if(tl==null)
 			return content;
 		
-		return edit(tl, content, feature, item);
+		return tl.edit(content, feature, item);
 	}
 	
 	static final String EDIT_METHOD_LINE = AVOID_COLLISION + "line";
 	static final String EDIT_METHOD_FILE = AVOID_COLLISION + "file";
 	static final String EDIT_METHOD_AREA = AVOID_COLLISION + "area";
-	
-	private static final String edit(final LiveRequest tl, final String content, final StringField feature, final Item item)
-	{
-		checkEdit(feature, item);
-		if(feature.isFinal())
-			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
-		
-		if(!tl.anchor.borders)
-		{
-			final String modification = tl.anchor.getModification(feature, item);
-			return (modification!=null) ? modification : content;
-		}
-		
-		final boolean block = feature.getMaximumLength()>StringField.DEFAULT_LENGTH;
-		final String savedContent = feature.get(item);
-		final String pageContent;
-		final String editorContent;
-		final boolean modifiable;
-		if(content!=null ? content.equals(savedContent) : (savedContent==null))
-		{
-			modifiable = true;
-			final String modification = tl.anchor.getModification(feature, item);
-			if(modification!=null)
-				pageContent = editorContent = modification;
-			else
-				pageContent = editorContent = savedContent; // equals content anyway
-		}
-		else
-		{
-			modifiable = false;
-			pageContent = content;
-			editorContent = savedContent;
-		}
-		
-		final String tag = block ? "div" : "span";
-		final String editorContentEncoded = XMLEncoder.encode(editorContent);
-		final StringBuilder bf = new StringBuilder();
-		bf.append('<').
-			append(tag).
-			append(
-				" class=\"contentEditorLink\"" +
-				" onclick=\"" +
-					"return " + (block ? EDIT_METHOD_AREA : EDIT_METHOD_LINE) + "(this,'").
-						append(feature.getID()).
-						append("','").
-						append(item.getCopeID()).
-						append("','").
-						append(block ? editorContentEncoded.replaceAll("\n", "\\\\n").replaceAll("\r", "\\\\r") : editorContentEncoded).
-					append("'," + modifiable + ");\"").
-			append('>').
-			append(pageContent).
-			append("</").
-			append(tag).
-			append('>');
-		
-		return bf.toString();
-	}
 	
 	public static final String edit(final Media feature, final Item item)
 	{

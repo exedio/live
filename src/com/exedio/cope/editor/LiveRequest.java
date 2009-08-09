@@ -23,8 +23,13 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.exedio.cope.Cope;
+import com.exedio.cope.Feature;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
+import com.exedio.cope.StringField;
+import com.exedio.cope.pattern.MapField;
+import com.exedio.cops.XMLEncoder;
 
 final class LiveRequest
 {
@@ -76,5 +81,90 @@ final class LiveRequest
 	Session getSession()
 	{
 		return anchor.session;
+	}
+	
+	private static final void checkEdit(final Feature feature, final Item item)
+	{
+		if(feature==null)
+			throw new NullPointerException("feature");
+		if(item==null)
+			throw new NullPointerException("item");
+		if(!feature.getType().isAssignableFrom(item.getCopeType()))
+			throw new IllegalArgumentException("item " + item.getCopeID() + " does not belong to type of feature " + feature.getID());
+	}
+	
+	private static final <K> Item getItem(final MapField<K, String> feature, final K key, final Item item)
+	{
+		return
+				feature.getRelationType().searchSingletonStrict(
+						feature.getKey().equal(key).and(
+						Cope.equalAndCast(feature.getParent(), item)));
+	}
+	
+	<K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
+	{
+		checkEdit(feature, item);
+		
+		return edit(
+				content,
+				(StringField)feature.getValue(),
+				getItem(feature, key, item));
+	}
+	
+	String edit(final String content, final StringField feature, final Item item)
+	{
+		checkEdit(feature, item);
+		if(feature.isFinal())
+			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
+		
+		if(!anchor.borders)
+		{
+			final String modification = anchor.getModification(feature, item);
+			return (modification!=null) ? modification : content;
+		}
+		
+		final boolean block = feature.getMaximumLength()>StringField.DEFAULT_LENGTH;
+		final String savedContent = feature.get(item);
+		final String pageContent;
+		final String editorContent;
+		final boolean modifiable;
+		if(content!=null ? content.equals(savedContent) : (savedContent==null))
+		{
+			modifiable = true;
+			final String modification = anchor.getModification(feature, item);
+			if(modification!=null)
+				pageContent = editorContent = modification;
+			else
+				pageContent = editorContent = savedContent; // equals content anyway
+		}
+		else
+		{
+			modifiable = false;
+			pageContent = content;
+			editorContent = savedContent;
+		}
+		
+		final String tag = block ? "div" : "span";
+		final String editorContentEncoded = XMLEncoder.encode(editorContent);
+		final StringBuilder bf = new StringBuilder();
+		bf.append('<').
+			append(tag).
+			append(
+				" class=\"contentEditorLink\"" +
+				" onclick=\"" +
+					"return " + (block ? Editor.EDIT_METHOD_AREA : Editor.EDIT_METHOD_LINE) + "(this,'").
+						append(feature.getID()).
+						append("','").
+						append(item.getCopeID()).
+						append("','").
+						append(block ? editorContentEncoded.replaceAll("\n", "\\\\n").replaceAll("\r", "\\\\r") : editorContentEncoded).
+					append("'," + modifiable + ");\"").
+			append('>').
+			append(pageContent).
+			append("</").
+			append(tag).
+			append('>');
+		
+		return bf.toString();
 	}
 }
