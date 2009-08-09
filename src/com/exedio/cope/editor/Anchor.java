@@ -44,7 +44,12 @@ final class Anchor implements Serializable // for session persistence
 	boolean borders = false;
 	final GetterSet<Modification> modifications = new GetterSet<Modification>();
 	
-	Anchor(final Target defaultTarget, final boolean draftsEnabled, final String user, final Session session, final String sessionName)
+	Anchor(
+			final Target defaultTarget,
+			final boolean draftsEnabled,
+			final String user,
+			final Session session,
+			final String sessionName)
 	{
 		this.defaultTarget = defaultTarget;
 		this.draftsEnabled = draftsEnabled;
