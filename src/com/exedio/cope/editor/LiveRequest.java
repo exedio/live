@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.exedio.cope.Cope;
 import com.exedio.cope.Feature;
@@ -38,6 +39,27 @@ import com.exedio.cops.XMLEncoder;
 
 final class LiveRequest
 {
+	static LiveRequest get(
+			final Editor filter,
+			final boolean draftsEnabled,
+			final HttpServletRequest request,
+			final HttpServletResponse response)
+	{
+		final HttpSession httpSession = request.getSession(false);
+		if(httpSession!=null)
+		{
+			final Object anchor = httpSession.getAttribute(Editor.ANCHOR);
+			if(anchor!=null)
+				return new LiveRequest(filter, draftsEnabled, request, response, (Anchor)anchor);
+			else
+				return null;
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	private final Editor filter;
 	private final boolean draftsEnabled;
 	private final HttpServletRequest request;
@@ -45,7 +67,7 @@ final class LiveRequest
 	private final Anchor anchor;
 	private HashMap<IntegerField, Item> positionItems = null;
 	
-	LiveRequest(
+	private LiveRequest(
 			final Editor filter,
 			final boolean draftsEnabled,
 			final HttpServletRequest request,

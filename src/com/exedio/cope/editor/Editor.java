@@ -180,24 +180,18 @@ public abstract class Editor implements Filter
 			return;
 		}
 
-		final HttpSession httpSession = request.getSession(false);
-		if(httpSession!=null)
+		final LiveRequest liveRequest = LiveRequest.get(this, draftsEnabled, request, response);
+		if(liveRequest!=null)
 		{
-			final Object anchor = httpSession.getAttribute(ANCHOR);
-			if(anchor!=null)
+			try
 			{
-				try
-				{
-					tls.set(new LiveRequest(this, draftsEnabled, request, response, (Anchor)anchor));
-					chain.doFilter(request, servletResponse);
-				}
-				finally
-				{
-					tls.remove();
-				}
-			}
-			else
+				tls.set(liveRequest);
 				chain.doFilter(request, servletResponse);
+			}
+			finally
+			{
+				tls.remove();
+			}
 		}
 		else
 		{
@@ -832,7 +826,7 @@ public abstract class Editor implements Filter
 		}
 	}
 	
-	private static final String ANCHOR = Session.class.getName();
+	static final String ANCHOR = Session.class.getName();
 	
 	private static final ThreadLocal<LiveRequest> tls = new ThreadLocal<LiveRequest>();
 	
