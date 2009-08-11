@@ -253,7 +253,7 @@ final class LiveRequest
 			return "";
 		
 		return
-			"<form action=\"" + action(request, response) + "\" method=\"POST\" class=\"contentEditorPosition\">" +
+			"<form action=\"" + action() + "\" method=\"POST\" class=\"contentEditorPosition\">" +
 				"<input type=\"hidden\" name=\"" + Editor.BAR_REFERER   + "\" value=\"" + referer(request)         + "\">" +
 				"<input type=\"hidden\" name=\"" + Editor.BAR_FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
 				"<input type=\"hidden\" name=\"" + Editor.BAR_ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
@@ -300,7 +300,7 @@ final class LiveRequest
 		Bar_Jspm.write(out,
 				anchor.getTarget(),
 				targets,
-				action(request, response),
+				action(),
 				referer(request),
 				borders,
 				borders ? Editor.BAR_BORDERS_OFF : Editor.BAR_BORDERS_ON,
@@ -311,9 +311,9 @@ final class LiveRequest
 				anchor.sessionName);
 	}
 	
-	private static final String action(final HttpServletRequest request, final HttpServletResponse response)
+	private String action()
 	{
-		return response.encodeURL(request.getContextPath() + request.getServletPath() + Editor.LOGIN_PATH_INFO);
+		return response.encodeURL(anchor.loginURL);
 	}
 	
 	private static final String referer(final HttpServletRequest request)
