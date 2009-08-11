@@ -71,7 +71,7 @@ final class Anchor implements Serializable // for session persistence
 		this.hideButtonURL          = filter!=null ? filter.getHideButtonURL  (request, response) : null;
 		this.closeButtonURL         = filter!=null ? filter.getCloseButtonURL (request, response) : null;
 		this.previousPositionButtonURL = filter!=null ? filter.getPreviousPositionButtonURL(request, response) : null;
-		this.loginURL = request.getContextPath() + request.getServletPath() + Editor.LOGIN_PATH_INFO;
+		this.loginURL = request!=null ? (request.getContextPath() + request.getServletPath() + Editor.LOGIN_PATH_INFO) : null;
 		
 		this.user = user;
 		this.session = session;
