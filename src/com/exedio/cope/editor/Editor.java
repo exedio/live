@@ -161,7 +161,7 @@ public abstract class Editor implements Filter
 		
 		if(LOGIN_PATH_INFO.equals(request.getPathInfo()))
 		{
-			servletRequest.setCharacterEncoding(UTF8);
+			request.setCharacterEncoding(UTF8);
 			final HttpSession httpSession = request.getSession(true);
 			final Object anchor = httpSession.getAttribute(ANCHOR);
 			
