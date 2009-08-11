@@ -319,6 +319,6 @@ final class LiveRequest
 	private static final String referer(final HttpServletRequest request)
 	{
 		final String queryString = request.getQueryString();
-		return queryString!=null ? (request.getPathInfo() + '?' + request.getQueryString()) : request.getPathInfo();
+		return queryString!=null ? (request.getPathInfo() + '?' + queryString) : request.getPathInfo();
 	}
 }
