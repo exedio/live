@@ -37,9 +37,9 @@ import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
 import com.exedio.cops.XMLEncoder;
 
-final class LiveRequest
+public final class LiveRequest
 {
-	static LiveRequest get(
+	public static LiveRequest get(
 			final HttpServletRequest request,
 			final HttpServletResponse response)
 	{
@@ -90,12 +90,12 @@ final class LiveRequest
 		return (previous!=null && previous.intValue()<next.intValue()) ? result : null;
 	}
 	
-	boolean isBordersEnabled()
+	public boolean isBordersEnabled()
 	{
 		return anchor.borders;
 	}
 	
-	Session getSession()
+	public Session getSession()
 	{
 		return anchor.session;
 	}
@@ -118,7 +118,7 @@ final class LiveRequest
 						Cope.equalAndCast(feature.getParent(), item)));
 	}
 	
-	<K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
+	public <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
 	{
 		checkEdit(feature, item);
 		
@@ -128,7 +128,7 @@ final class LiveRequest
 				getItem(feature, key, item));
 	}
 	
-	String edit(final String content, final StringField feature, final Item item)
+	public String edit(final String content, final StringField feature, final Item item)
 	{
 		checkEdit(feature, item);
 		if(feature.isFinal())
@@ -185,7 +185,7 @@ final class LiveRequest
 		return bf.toString();
 	}
 	
-	String edit(final Media feature, final Item item)
+	public String edit(final Media feature, final Item item)
 	{
 		return edit(feature, item, true);
 	}
@@ -196,7 +196,7 @@ final class LiveRequest
 		if(feature.isFinal())
 			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
 		
-		final String modificationURL = modifiable ? anchor.getModificationURL(feature, item, request, response) : null;
+		final String modificationURL = modifiable ? anchor.getModificationURL(feature, item, response) : null;
 		final String onload =
 			modificationURL!=null
 				? (" onload=\"this.src='" + XMLEncoder.encode(response.encodeURL(modificationURL)) + "';\"")
@@ -221,7 +221,7 @@ final class LiveRequest
 		return bf.toString();
 	}
 	
-	String edit(final MediaFilter feature, final Item item)
+	public String edit(final MediaFilter feature, final Item item)
 	{
 		if(!anchor.borders)
 			return "";
@@ -231,7 +231,7 @@ final class LiveRequest
 		return edit(feature.getSource(), item, false);
 	}
 	
-	String edit(final IntegerField feature, final Item item)
+	public String edit(final IntegerField feature, final Item item)
 	{
 		if(!anchor.borders)
 			return "";
@@ -239,7 +239,7 @@ final class LiveRequest
 		return edit(feature, item, anchor.previousPositionButtonURL);
 	}
 	
-	String edit(final IntegerField feature, final Item item, final String buttonURL)
+	public String edit(final IntegerField feature, final Item item, final String buttonURL)
 	{
 		if(!anchor.borders)
 			return "";
@@ -266,26 +266,26 @@ final class LiveRequest
 			"</form>";
 	}
 	
-	void writeHead(final PrintStream out)
+	public void writeHead(final PrintStream out)
 	{
 		final StringBuilder bf = new StringBuilder();
 		writeHead(bf);
 		out.print(bf);
 	}
 	
-	void writeBar(final PrintStream out)
+	public void writeBar(final PrintStream out)
 	{
 		final StringBuilder bf = new StringBuilder();
 		writeBar(bf);
 		out.print(bf);
 	}
 	
-	void writeHead(final StringBuilder out)
+	public void writeHead(final StringBuilder out)
 	{
 		Bar_Jspm.writeHead(out, anchor.borders);
 	}
 	
-	void writeBar(final StringBuilder out)
+	public void writeBar(final StringBuilder out)
 	{
 		final ArrayList<Target> targets = new ArrayList<Target>();
 		targets.add(TargetLive.INSTANCE);
@@ -318,7 +318,18 @@ final class LiveRequest
 	
 	private static final String referer(final HttpServletRequest request)
 	{
+		final StringBuilder bf = new StringBuilder();
+		bf.append(request.getContextPath());
+		bf.append(request.getServletPath());
+		
+		final String pathInfo = request.getPathInfo();
+		if(pathInfo!=null)
+			bf.append(pathInfo);
+		
 		final String queryString = request.getQueryString();
-		return queryString!=null ? (request.getPathInfo() + '?' + queryString) : request.getPathInfo();
+		if(queryString!=null)
+			bf.append('?').append(queryString);
+		
+		return bf.toString();
 	}
 }

@@ -7,5 +7,8 @@ omit bug fixes.
 The items are sorted inversely, i.e. lastest items are on top
 
 --------------------------------------------------------------------------
+* remove ThreadLocal usage
+	THIS CHANGE IS NOT BACKWARDS COMPATIBLE, YOU MUST ADJUST YOUR CODE
+	- the filter is now a separate class, you need to adjust your web.xml
 * bugfix: image preview did not work without cookies
 * cope live editor is now it's own project

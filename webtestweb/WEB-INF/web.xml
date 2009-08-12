@@ -19,9 +19,17 @@
 		<url-pattern>/edited/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>live</servlet-name>
+		<servlet-class>com.exedio.cope.util.EditorFilter</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>live</servlet-name>
+		<url-pattern>/edited/copeLiveEdit.html/*</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>editor</filter-name>
-		<filter-class>com.exedio.cope.util.EditorFilter</filter-class>
+		<filter-class>com.exedio.cope.editor.util.LiveFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>editor</filter-name>

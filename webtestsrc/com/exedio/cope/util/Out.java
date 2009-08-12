@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
-import com.exedio.cope.editor.Editor;
 import com.exedio.cope.editor.Session;
+import com.exedio.cope.editor.util.LiveFilter;
 import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
@@ -69,52 +69,52 @@ final class Out
 	
 	boolean isEditorLoggedIn()
 	{
-		return Editor.isLoggedIn();
+		return LiveFilter.isLoggedIn();
 	}
 	
 	boolean isEditorBordersEnabled()
 	{
-		return Editor.isBordersEnabled();
+		return LiveFilter.isBordersEnabled();
 	}
 	
 	Session getEditorSession()
 	{
-		return Editor.getSession();
+		return LiveFilter.getSession();
 	}
 	
 	void writeEditorHead()
 	{
-		Editor.writeHead(bf);
+		LiveFilter.writeHead(bf);
 	}
 	
 	void writeEditorBar()
 	{
-		Editor.writeBar(bf);
+		LiveFilter.writeBar(bf);
 	}
 	
 	void write(final String s, final StringField feature, final Item item)
 	{
-		bf.print(Editor.edit(s, feature, item));
+		bf.print(LiveFilter.edit(s, feature, item));
 	}
 	
 	<K> void write(final String s, final MapField<K, String> feature, final Item item, final K key)
 	{
-		bf.print(Editor.edit(s, feature, item, key));
+		bf.print(LiveFilter.edit(s, feature, item, key));
 	}
 	
 	void edit(final Media feature, final Item item)
 	{
-		bf.print(Editor.edit(feature, item));
+		bf.print(LiveFilter.edit(feature, item));
 	}
 	
 	void edit(final MediaFilter feature, final Item item)
 	{
-		bf.print(Editor.edit(feature, item));
+		bf.print(LiveFilter.edit(feature, item));
 	}
 	
 	void swap(final IntegerField feature, final Item item)
 	{
-		bf.print(Editor.edit(feature, item));
+		bf.print(LiveFilter.edit(feature, item));
 	}
 	
 	void close()

@@ -21,13 +21,11 @@ package com.exedio.cope.editor;
 
 import static com.exedio.cops.XMLEncoder.encode;
 
-import javax.servlet.http.HttpServletResponse;
-
 final class Login_Jspm
 {
 	static final void write(
 			final StringBuilder out,
-			final HttpServletResponse response,
+			final String action,
 			final Package thePackage,
 			final String failureUser)
 	{
@@ -70,7 +68,7 @@ final class Login_Jspm
 		<div>Login failed, because either user or password was not correct.</div><%
 		}
 		%>
-		<form action="<%=response.encodeURL(Editor.LOGIN_URL)%>" method="POST">
+		<form action="<%=action%>" method="POST">
 			<table>
 				<tr>
 					<td>Login</td>

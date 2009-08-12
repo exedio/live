@@ -54,10 +54,18 @@ final class ModificationMedia extends Modification
 	String getURL(final HttpServletRequest request, final HttpServletResponse response)
 	{
 		return
-			request.getContextPath() +
-			request.getServletPath() +
 			response.encodeURL(
-					Editor.LOGIN_PATH_INFO +
+					request.getContextPath() +
+					request.getServletPath() + '/' +
+					'?' + Editor.MEDIA_FEATURE + '=' + getFeature().getID() +
+					'&' + Editor.MEDIA_ITEM + '=' + item.getCopeID());
+	}
+	
+	String getURL(final Anchor anchor, final HttpServletResponse response)
+	{
+		return
+			response.encodeURL(
+					anchor.loginURL +
 					'?' + Editor.MEDIA_FEATURE + '=' + getFeature().getID() +
 					'&' + Editor.MEDIA_ITEM + '=' + item.getCopeID());
 	}

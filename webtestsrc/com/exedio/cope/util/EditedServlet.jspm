@@ -31,6 +31,7 @@ final class EditedServlet_Jspm
 			final Out out,
 			final HttpServletResponse response,
 			final String loginURL,
+			final String duplicateURL,
 			final List<EditedItem> items)
 	{
 		final EditedItem item1 = items.get(0);
@@ -80,7 +81,7 @@ final class EditedServlet_Jspm
 		isLoggedIn:<%=out.isEditorLoggedIn()%>
 		isBordersEnabled:<%=out.isEditorBordersEnabled()%>
 		getSession:<%=out.getEditorSession()%>
-		duplicate: <%=item1.getCopeID()%>, <a href="<%=response.encodeURL("duplicate.html")%>"><%= item1.getField(), item1.field, item1 %></a> (<%=item1.getField()%>)
+		duplicate: <%=item1.getCopeID()%>, <a href="<%=duplicateURL%>"><%= item1.getField(), item1.field, item1 %></a> (<%=item1.getField()%>)
 		<br>
 		to login page:
 		<a href="<%=loginURL%>">get</a>

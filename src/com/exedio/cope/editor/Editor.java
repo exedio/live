@@ -20,7 +20,6 @@ package com.exedio.cope.editor;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,13 +27,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -53,15 +47,13 @@ import com.exedio.cope.NoSuchIDException;
 import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
 import com.exedio.cope.pattern.History;
-import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
-import com.exedio.cope.pattern.MediaFilter;
 import com.exedio.cope.util.ConnectToken;
 import com.exedio.cope.util.ServletUtil;
 import com.exedio.cops.Cop;
 import com.exedio.cops.CopsServlet;
 
-public abstract class Editor implements Filter
+public abstract class Editor extends CopsServlet
 {
 	static final String UTF8 = CopsServlet.UTF8;
 	
@@ -79,13 +71,13 @@ public abstract class Editor implements Filter
 		this.model = model;
 	}
 	
-	private FilterConfig config = null;
+	private ServletConfig config = null;
 	private boolean draftsEnabled = false;
 	private Target defaultTarget = TargetLive.INSTANCE;
 	private ConnectToken connectToken = null;
 	private final Object connectTokenLock = new Object();
 	
-	public final void init(final FilterConfig config)
+	public final void init(final ServletConfig config)
 	{
 		this.config = config;
 		for(final Type<?> type : model.getTypes())
@@ -144,23 +136,12 @@ public abstract class Editor implements Filter
 		return null;
 	}
 	
-	public final void doFilter(
-			final ServletRequest servletRequest,
-			final ServletResponse servletResponse,
-			final FilterChain chain)
-	throws IOException, ServletException
+	public final void doRequest(
+			final HttpServletRequest request,
+			final HttpServletResponse response
+			)
+	throws IOException
 	{
-		if(!(servletRequest instanceof HttpServletRequest) || !(servletResponse instanceof HttpServletResponse))
-		{
-			chain.doFilter(servletRequest, servletResponse);
-			return;
-		}
-		
-		final HttpServletRequest request = (HttpServletRequest)servletRequest;
-		final HttpServletResponse response = (HttpServletResponse)servletResponse;
-		
-		if(LOGIN_PATH_INFO.equals(request.getPathInfo()))
-		{
 			request.setCharacterEncoding(UTF8);
 			final HttpSession httpSession = request.getSession(true);
 			final Object anchor = httpSession.getAttribute(ANCHOR);
@@ -176,27 +157,6 @@ public abstract class Editor implements Filter
 				else
 					doBar(request, httpSession, response, (Anchor)anchor);
 			}
-			
-			return;
-		}
-
-		final LiveRequest liveRequest = LiveRequest.get(request, response);
-		if(liveRequest!=null)
-		{
-			try
-			{
-				tls.set(liveRequest);
-				chain.doFilter(request, servletResponse);
-			}
-			finally
-			{
-				tls.remove();
-			}
-		}
-		else
-		{
-			chain.doFilter(request, servletResponse);
-		}
 	}
 	
 	private static final void redirectHome(
@@ -204,7 +164,7 @@ public abstract class Editor implements Filter
 			final HttpServletResponse response)
 	throws IOException
 	{
-		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + request.getServletPath() + '/'));
+		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/edited")); // TODO
 	}
 	
 	static final String AVOID_COLLISION = "contentEditorBar823658617";
@@ -413,7 +373,7 @@ public abstract class Editor implements Filter
 			Preview_Jspm.writeOverview(
 					out,
 					request, response,
-					response.encodeURL(LOGIN_URL + '?' + PREVIEW_OVERVIEW + "=t"),
+					response.encodeURL(request.getContextPath() + request.getServletPath() + '?' + PREVIEW_OVERVIEW + "=t"),
 					anchor.getModifications(),
 					anchor.getTarget(), targets,
 					draftsEnabled, drafts);
@@ -686,7 +646,7 @@ public abstract class Editor implements Filter
 		}
 		
 		if(referer!=null)
-			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + request.getServletPath() + referer));
+			response.sendRedirect(response.encodeRedirectURL(referer));
 	}
 	
 	static final String MEDIA_FEATURE = "mf";
@@ -778,8 +738,6 @@ public abstract class Editor implements Filter
 		}
 	}
 	
-	static final String LOGIN_URL = "copeLiveEdit.html";
-	public static final String LOGIN_PATH_INFO = '/' + LOGIN_URL;
 	static final String LOGIN_SUBMIT   = "login.submit";
 	static final String LOGIN_USER     = "login.user";
 	static final String LOGIN_PASSWORD = "login.password";
@@ -808,7 +766,7 @@ public abstract class Editor implements Filter
 				else
 				{
 					final StringBuilder out = new StringBuilder();
-					Login_Jspm.write(out, response, Editor.class.getPackage(), user);
+					Login_Jspm.write(out, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), user);
 					writeBody(out, response);
 				}
 				model.commit();
@@ -821,125 +779,16 @@ public abstract class Editor implements Filter
 		else
 		{
 			final StringBuilder out = new StringBuilder();
-			Login_Jspm.write(out, response, Editor.class.getPackage(), null);
+			Login_Jspm.write(out, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), null);
 			writeBody(out, response);
 		}
 	}
 	
 	static final String ANCHOR = Session.class.getName();
 	
-	private static final ThreadLocal<LiveRequest> tls = new ThreadLocal<LiveRequest>();
-	
-	public static final boolean isLoggedIn()
-	{
-		return tls.get()!=null;
-	}
-	
-	public static final boolean isBordersEnabled()
-	{
-		final LiveRequest tl = tls.get();
-		return tl!=null && tl.isBordersEnabled();
-	}
-	
-	public static final Session getSession()
-	{
-		final LiveRequest tl = tls.get();
-		return tl!=null ? tl.getSession() : null;
-	}
-	
-	public static final <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return content;
-		
-		return tl.edit(content, feature, item, key);
-	}
-	
-	public static final String edit(final String content, final StringField feature, final Item item)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return content;
-		
-		return tl.edit(content, feature, item);
-	}
-	
 	static final String EDIT_METHOD_LINE = AVOID_COLLISION + "line";
 	static final String EDIT_METHOD_FILE = AVOID_COLLISION + "file";
 	static final String EDIT_METHOD_AREA = AVOID_COLLISION + "area";
-	
-	public static final String edit(final Media feature, final Item item)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return "";
-		
-		return tl.edit(feature, item);
-	}
-	
-	public static final String edit(final MediaFilter feature, final Item item)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return "";
-		
-		return tl.edit(feature, item);
-	}
-	
-	public static final String edit(final IntegerField feature, final Item item)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return "";
-		
-		return tl.edit(feature, item);
-	}
-	
-	public static final String edit(final IntegerField feature, final Item item, final String buttonURL)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return "";
-		
-		return tl.edit(feature, item, buttonURL);
-	}
-	
-	public static final void writeHead(final PrintStream out)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return;
-		
-		tl.writeHead(out);
-	}
-	
-	public static final void writeBar(final PrintStream out)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return;
-		
-		tl.writeBar(out);
-	}
-	
-	public static final void writeHead(final StringBuilder out)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return;
-		
-		tl.writeHead(out);
-	}
-	
-	public static final void writeBar(final StringBuilder out)
-	{
-		final LiveRequest tl = tls.get();
-		if(tl==null)
-			return;
-		
-		tl.writeBar(out);
-	}
 	
 	private static final void writeBody(
 			final StringBuilder out,
@@ -958,34 +807,5 @@ public abstract class Editor implements Filter
 			if(outStream!=null)
 				outStream.close();
 		}
-	}
-	
-	// ------------------- deprecated stuff -------------------
-	
-	/**
-	 * @deprecated Use {@link #isLoggedIn()} instead
-	 */
-	@Deprecated
-	public static final boolean isActive()
-	{
-		return isLoggedIn();
-	}
-	
-	/**
-	 * @deprecated use {@link #edit(String, MapField, Item, Object)} instead.
-	 */
-	@Deprecated
-	public static final <K> String editBlock(final String content, final MapField<K, String> feature, final Item item, final K key)
-	{
-		return edit(content, feature, item, key);
-	}
-	
-	/**
-	 * @deprecated Use {@link #getSession()} instead
-	 */
-	@Deprecated
-	public static final Session getLogin()
-	{
-		return getSession();
 	}
 }

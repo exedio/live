@@ -71,7 +71,7 @@ final class Anchor implements Serializable // for session persistence
 		this.hideButtonURL          = filter!=null ? filter.getHideButtonURL  (request, response) : null;
 		this.closeButtonURL         = filter!=null ? filter.getCloseButtonURL (request, response) : null;
 		this.previousPositionButtonURL = filter!=null ? filter.getPreviousPositionButtonURL(request, response) : null;
-		this.loginURL = request!=null ? (request.getContextPath() + request.getServletPath() + Editor.LOGIN_PATH_INFO) : null;
+		this.loginURL = request!=null ? (request.getContextPath() + request.getServletPath() + '/') : null;
 		
 		this.user = user;
 		this.session = session;
@@ -123,13 +123,13 @@ final class Anchor implements Serializable // for session persistence
 		return null;
 	}
 	
-	String getModificationURL(final Media feature, final Item item, final HttpServletRequest request, final HttpServletResponse response)
+	String getModificationURL(final Media feature, final Item item, final HttpServletResponse response)
 	{
 		if(!modifications.isEmpty()) // shortcut
 		{
 			final ModificationMedia m = new ModificationMedia(feature, item);
 			if(modifications.contains(m))
-				return m.getURL(request, response);
+				return m.getURL(this, response);
 		}
 		return null;
 	}

@@ -168,6 +168,7 @@
 		<ljavac srcdir="webtestsrc" destdir="webtestweb/WEB-INF/classes">
 			<classpath>
 				<pathelement location="lib/exedio-cope.jar" />
+				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 			</classpath>
 		</ljavac>
