@@ -63,16 +63,13 @@ public final class LiveFilter implements Filter
 			return;
 		}
 		
-		final HttpServletRequest request = (HttpServletRequest)servletRequest;
-		final HttpServletResponse response = (HttpServletResponse)servletResponse;
-		
-		final LiveRequest liveRequest = LiveRequest.get(request, response);
+		final LiveRequest liveRequest = LiveRequest.get((HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse);
 		if(liveRequest!=null)
 		{
 			try
 			{
 				tls.set(liveRequest);
-				chain.doFilter(request, servletResponse);
+				chain.doFilter(servletRequest, servletResponse);
 			}
 			finally
 			{
@@ -81,7 +78,7 @@ public final class LiveFilter implements Filter
 		}
 		else
 		{
-			chain.doFilter(request, servletResponse);
+			chain.doFilter(servletRequest, servletResponse);
 		}
 	}
 	
