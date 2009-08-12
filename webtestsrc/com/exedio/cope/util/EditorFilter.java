@@ -27,6 +27,8 @@ import com.exedio.cope.editor.Editor;
 
 public final class EditorFilter extends Editor
 {
+	private static final long serialVersionUID = 1l;
+	
 	public EditorFilter()
 	{
 		super(EditedServlet.model);
