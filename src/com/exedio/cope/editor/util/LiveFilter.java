@@ -68,12 +68,12 @@ public final class LiveFilter implements Filter
 		{
 			try
 			{
-				tls.set(liveRequest);
+				threadLocal.set(liveRequest);
 				chain.doFilter(request, response);
 			}
 			finally
 			{
-				tls.remove();
+				threadLocal.remove();
 			}
 		}
 		else
@@ -82,28 +82,28 @@ public final class LiveFilter implements Filter
 		}
 	}
 	
-	private static final ThreadLocal<LiveRequest> tls = new ThreadLocal<LiveRequest>();
+	private static final ThreadLocal<LiveRequest> threadLocal = new ThreadLocal<LiveRequest>();
 	
 	public static final boolean isLoggedIn()
 	{
-		return tls.get()!=null;
+		return threadLocal.get()!=null;
 	}
 	
 	public static final boolean isBordersEnabled()
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		return tl!=null && tl.isBordersEnabled();
 	}
 	
 	public static final Session getSession()
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		return tl!=null ? tl.getSession() : null;
 	}
 	
 	public static final <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return content;
 		
@@ -112,7 +112,7 @@ public final class LiveFilter implements Filter
 	
 	public static final String edit(final String content, final StringField feature, final Item item)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return content;
 		
@@ -121,7 +121,7 @@ public final class LiveFilter implements Filter
 	
 	public static final String edit(final Media feature, final Item item)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
 		
@@ -130,7 +130,7 @@ public final class LiveFilter implements Filter
 	
 	public static final String edit(final MediaFilter feature, final Item item)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
 		
@@ -139,7 +139,7 @@ public final class LiveFilter implements Filter
 	
 	public static final String edit(final IntegerField feature, final Item item)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
 		
@@ -148,7 +148,7 @@ public final class LiveFilter implements Filter
 	
 	public static final String edit(final IntegerField feature, final Item item, final String buttonURL)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
 		
@@ -157,7 +157,7 @@ public final class LiveFilter implements Filter
 	
 	public static final void writeHead(final PrintStream out)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return;
 		
@@ -166,7 +166,7 @@ public final class LiveFilter implements Filter
 	
 	public static final void writeBar(final PrintStream out)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return;
 		
@@ -175,7 +175,7 @@ public final class LiveFilter implements Filter
 	
 	public static final void writeHead(final StringBuilder out)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return;
 		
@@ -184,7 +184,7 @@ public final class LiveFilter implements Filter
 	
 	public static final void writeBar(final StringBuilder out)
 	{
-		final LiveRequest tl = tls.get();
+		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return;
 		
