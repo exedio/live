@@ -55,8 +55,6 @@ import com.exedio.cops.CopsServlet;
 
 public abstract class Editor extends CopsServlet
 {
-	static final String UTF8 = CopsServlet.UTF8;
-	
 	private final Model model;
 	
 	/**
