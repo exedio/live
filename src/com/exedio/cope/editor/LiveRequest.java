@@ -254,7 +254,7 @@ public final class LiveRequest
 		
 		return
 			"<form action=\"" + action() + "\" method=\"POST\" class=\"contentEditorPosition\">" +
-				"<input type=\"hidden\" name=\"" + Editor.BAR_REFERER   + "\" value=\"" + referer(request)         + "\">" +
+				"<input type=\"hidden\" name=\"" + Editor.BAR_REFERER   + "\" value=\"" + referer()                + "\">" +
 				"<input type=\"hidden\" name=\"" + Editor.BAR_FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
 				"<input type=\"hidden\" name=\"" + Editor.BAR_ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
 				"<input type=\"hidden\" name=\"" + Editor.BAR_ITEM      + "\" value=\"" + item.getCopeID()         + "\">" +
@@ -301,7 +301,7 @@ public final class LiveRequest
 				anchor.getTarget(),
 				targets,
 				action(),
-				referer(request),
+				referer(),
 				borders,
 				borders ? Editor.BAR_BORDERS_OFF : Editor.BAR_BORDERS_ON,
 				borders ? anchor.borderDisableButtonURL : anchor.borderEnableButtonURL,
@@ -316,7 +316,7 @@ public final class LiveRequest
 		return response.encodeURL(anchor.loginURL);
 	}
 	
-	private static final String referer(final HttpServletRequest request)
+	private String referer()
 	{
 		final StringBuilder bf = new StringBuilder();
 		bf.append(request.getContextPath());
