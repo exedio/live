@@ -77,6 +77,7 @@ public abstract class Editor extends CopsServlet
 	private ConnectToken connectToken = null;
 	private final Object connectTokenLock = new Object();
 	
+	@Override
 	public final void init(final ServletConfig config)
 	{
 		this.config = config;
@@ -102,6 +103,7 @@ public abstract class Editor extends CopsServlet
 		model.startTransaction(getClass().getName() + '#' + name);
 	}
 	
+	@Override
 	public final void destroy()
 	{
 		synchronized(connectTokenLock)
@@ -136,6 +138,7 @@ public abstract class Editor extends CopsServlet
 		return null;
 	}
 	
+	@Override
 	public final void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response
