@@ -139,25 +139,24 @@ public abstract class Editor extends CopsServlet
 	@Override
 	public final void doRequest(
 			final HttpServletRequest request,
-			final HttpServletResponse response
-			)
+			final HttpServletResponse response)
 	throws IOException
 	{
-			request.setCharacterEncoding(UTF8);
-			final HttpSession httpSession = request.getSession(true);
-			final Object anchor = httpSession.getAttribute(ANCHOR);
-			
-			if(anchor==null)
-				doLogin(request, httpSession, response);
+		request.setCharacterEncoding(UTF8);
+		final HttpSession httpSession = request.getSession(true);
+		final Object anchor = httpSession.getAttribute(ANCHOR);
+		
+		if(anchor==null)
+			doLogin(request, httpSession, response);
+		else
+		{
+			if(request.getParameter(PREVIEW_OVERVIEW)!=null)
+				doPreviewOverview(request, response, (Anchor)anchor);
+			else if(request.getParameter(MEDIA_FEATURE)!=null)
+				doMedia(request, response, (Anchor)anchor);
 			else
-			{
-				if(request.getParameter(PREVIEW_OVERVIEW)!=null)
-					doPreviewOverview(request, response, (Anchor)anchor);
-				else if(request.getParameter(MEDIA_FEATURE)!=null)
-					doMedia(request, response, (Anchor)anchor);
-				else
-					doBar(request, httpSession, response, (Anchor)anchor);
-			}
+				doBar(request, httpSession, response, (Anchor)anchor);
+		}
 	}
 	
 	private static final void redirectHome(
