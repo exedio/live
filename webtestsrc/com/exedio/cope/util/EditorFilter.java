@@ -23,7 +23,7 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.exedio.cope.editor.Editor;
+import com.exedio.cope.live.Editor;
 
 public final class EditorFilter extends Editor
 {
@@ -34,7 +34,7 @@ public final class EditorFilter extends Editor
 		super(EditedServlet.model);
 	}
 	
-	private static class Session implements com.exedio.cope.editor.Session, Serializable
+	private static class Session implements com.exedio.cope.live.Session, Serializable
 	{
 		private static final long serialVersionUID = 1l;
 		

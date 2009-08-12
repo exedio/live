@@ -16,13 +16,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.exedio.cope.editor;
+package com.exedio.cope.live;
 
-/**
- * If you want persistent http sessions,
- * make implementions of this interface serializable.
- */
-public interface Session
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+public class PackageTest extends TestCase
 {
-	String getName();
+	public static Test suite()
+	{
+		final TestSuite suite = new TestSuite();
+		suite.addTestSuite(DraftTest.class);
+		suite.addTestSuite(SaveTest.class);
+		return suite;
+	}
 }

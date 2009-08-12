@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.exedio.cope.editor;
+package com.exedio.cope.live;
 
 import static com.exedio.cops.CopsServlet.UTF8;
 import static com.exedio.cops.XMLEncoder.encode;

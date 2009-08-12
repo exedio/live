@@ -16,64 +16,48 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.exedio.cope.editor;
+package com.exedio.cope.live;
 
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
 
-final class TargetLive implements Target
+final class ModificationString extends Modification
 {
-	static final TargetLive INSTANCE = new TargetLive();
-	static final String ID = "Live";
-	
-	private TargetLive()
-	{
-		// prevent public instantiation
-	}
-	
-	public String getID()
-	{
-		return ID;
-	}
-	
-	public boolean exists()
-	{
-		return true;
-	}
-	
-	public String getDescription()
-	{
-		return "Live Site";
-	}
-	
-	public boolean isLive()
-	{
-		return true;
-	}
-	
-	public String get(final StringField feature, final Item item)
-	{
-		return null;
-	}
-	
-	public void save(final Anchor anchor)
-	{
-		for(final Modification m : anchor.getModifications())
-			m.publish();
-		// TODO maintain history
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		return getClass().hashCode();
-	}
-	
-	@Override
-	public boolean equals(final Object other)
-	{
-		return (other!=null) && (other instanceof TargetLive);
-	}
-	
 	private static final long serialVersionUID = 1l;
+	
+	String value;
+	
+	ModificationString(final StringField feature, final Item item)
+	{
+		this(feature, item, null);
+	}
+	
+	ModificationString(final StringField feature, final Item item, final String value)
+	{
+		super(feature, item);
+		this.value = value;
+	}
+	
+	@Override
+	StringField getFeature()
+	{
+		return (StringField)super.getFeature();
+	}
+	
+	String getOldValue()
+	{
+		return getFeature().get(item);
+	}
+	
+	@Override
+	void publish()
+	{
+		getFeature().set(item, value);
+	}
+	
+	@Override
+	void saveTo(final Draft draft)
+	{
+		draft.addItem(getFeature(), item, value);
+	}
 }

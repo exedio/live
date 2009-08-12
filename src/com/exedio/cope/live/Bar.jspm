@@ -17,10 +17,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.exedio.cope.editor;
+package com.exedio.cope.live;
 
 import static com.exedio.cops.XMLEncoder.encode;
-import static com.exedio.cope.editor.Editor.AVOID_COLLISION;
+import static com.exedio.cope.live.Editor.AVOID_COLLISION;
 
 import java.util.ArrayList;
 

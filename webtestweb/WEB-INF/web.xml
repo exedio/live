@@ -29,7 +29,7 @@
 	</servlet-mapping>
 	<filter>
 		<filter-name>editor</filter-name>
-		<filter-class>com.exedio.cope.editor.util.LiveFilter</filter-class>
+		<filter-class>com.exedio.cope.live.util.LiveFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>editor</filter-name>

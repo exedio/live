@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.exedio.cope.editor.util;
+package com.exedio.cope.live.util;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -33,8 +33,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
-import com.exedio.cope.editor.LiveRequest;
-import com.exedio.cope.editor.Session;
+import com.exedio.cope.live.LiveRequest;
+import com.exedio.cope.live.Session;
 import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;

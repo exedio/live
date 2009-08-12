@@ -16,48 +16,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.exedio.cope.editor;
+package com.exedio.cope.live;
+
+import java.io.Serializable;
 
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
 
-final class ModificationString extends Modification
+interface Target extends Serializable
 {
-	private static final long serialVersionUID = 1l;
-	
-	String value;
-	
-	ModificationString(final StringField feature, final Item item)
-	{
-		this(feature, item, null);
-	}
-	
-	ModificationString(final StringField feature, final Item item, final String value)
-	{
-		super(feature, item);
-		this.value = value;
-	}
-	
-	@Override
-	StringField getFeature()
-	{
-		return (StringField)super.getFeature();
-	}
-	
-	String getOldValue()
-	{
-		return getFeature().get(item);
-	}
-	
-	@Override
-	void publish()
-	{
-		getFeature().set(item, value);
-	}
-	
-	@Override
-	void saveTo(final Draft draft)
-	{
-		draft.addItem(getFeature(), item, value);
-	}
+	String getID();
+	boolean exists();
+	String getDescription();
+	boolean isLive();
+	String get(StringField feature, Item item);
+	void save(Anchor anchor);
 }

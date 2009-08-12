@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.exedio.cope.Model;
-import com.exedio.cope.editor.Draft;
-import com.exedio.cope.editor.DraftItem;
+import com.exedio.cope.live.Draft;
+import com.exedio.cope.live.DraftItem;
 import com.exedio.cope.pattern.Media;
 
 public final class EditedServlet extends HttpServlet
