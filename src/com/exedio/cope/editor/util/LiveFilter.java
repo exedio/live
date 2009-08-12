@@ -52,24 +52,24 @@ public final class LiveFilter implements Filter
 	}
 	
 	public final void doFilter(
-			final ServletRequest servletRequest,
-			final ServletResponse servletResponse,
+			final ServletRequest request,
+			final ServletResponse response,
 			final FilterChain chain)
 	throws IOException, ServletException
 	{
-		if(!(servletRequest instanceof HttpServletRequest) || !(servletResponse instanceof HttpServletResponse))
+		if(!(request instanceof HttpServletRequest) || !(response instanceof HttpServletResponse))
 		{
-			chain.doFilter(servletRequest, servletResponse);
+			chain.doFilter(request, response);
 			return;
 		}
 		
-		final LiveRequest liveRequest = LiveRequest.get((HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse);
+		final LiveRequest liveRequest = LiveRequest.get((HttpServletRequest)request, (HttpServletResponse)response);
 		if(liveRequest!=null)
 		{
 			try
 			{
 				tls.set(liveRequest);
-				chain.doFilter(servletRequest, servletResponse);
+				chain.doFilter(request, response);
 			}
 			finally
 			{
@@ -78,7 +78,7 @@ public final class LiveFilter implements Filter
 		}
 		else
 		{
-			chain.doFilter(servletRequest, servletResponse);
+			chain.doFilter(request, response);
 		}
 	}
 	
