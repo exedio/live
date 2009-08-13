@@ -52,9 +52,12 @@ import com.exedio.cope.util.ConnectToken;
 import com.exedio.cope.util.ServletUtil;
 import com.exedio.cops.Cop;
 import com.exedio.cops.CopsServlet;
+import com.exedio.cops.Resource;
 
 public abstract class Editor extends CopsServlet
 {
+	static final Resource logo = new Resource("logo.png");
+	
 	private final Model model;
 	
 	/**
@@ -766,7 +769,7 @@ public abstract class Editor extends CopsServlet
 				else
 				{
 					final StringBuilder out = new StringBuilder();
-					Login_Jspm.write(out, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), user);
+					Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), user);
 					writeBody(out, response);
 				}
 				model.commit();
@@ -779,7 +782,7 @@ public abstract class Editor extends CopsServlet
 		else
 		{
 			final StringBuilder out = new StringBuilder();
-			Login_Jspm.write(out, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), null);
+			Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), null);
 			writeBody(out, response);
 		}
 	}

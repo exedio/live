@@ -76,6 +76,11 @@
 				<pathelement location="lib/exedio-cope.jar" />
 			</classpath>
 		</ljavac>
+		<copy todir="build/classes">
+			<fileset dir="src">
+				<include name="**/*.png" />
+			</fileset>
+		</copy>
 	</target>
 	
 	<target name="test.compile" depends="core.compile">
