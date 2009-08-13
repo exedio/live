@@ -5,6 +5,6 @@
 	<import file="getlib/getlib-contrib.xml"/>
 
 
-	<target name="getlib" depends="hsqldb, commons-io, commons-fileupload, exedio-jspm, exedio-cope" />
+	<target name="getlib" depends="hsqldb, commons-io, commons-fileupload, exedio-jspm, exedio-cope, exedio-cops" />
 	
 </project>
