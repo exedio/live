@@ -251,23 +251,9 @@ final class Bar_Jspm
 		<div id="contentEditorBar" style="right:20px;">
 			<form action="<%=action%>" method="POST" id="contentEditorBarSwitches">
 				<input type="hidden" name="<%=Editor.BAR_REFERER%>" value="<%=referer%>">
-				<input type="<%
-					if(borderButtonURL!=null) { %>image<% } else { %>submit<% }
-					%>" name="<%=borderToggleParameter%>" <%
-					if(borderButtonURL!=null)
-					{ %>src="<%=borderButtonURL%>" alt="<%if(borders){%>Dis<%}else{%>En<%}%>able Borders"<% }
-					else
-					{ %>value="<%if(borders){%>dis<%}else{%>en<%}%>able borders"<% }
-					%>>
+				<input type="image" name="<%=borderToggleParameter%>" src="<%=borderButtonURL%>" alt="<%if(borders){%>Dis<%}else{%>En<%}%>able Borders">
 				<img src="<%=hideButtonURL%>" onclick="document.getElementById('contentEditorBar').style.display = 'none';">
-				<input type="<%
-					if(closeButtonURL!=null) { %>image<% } else { %>submit<% }
-					%>" name="<%=Editor.BAR_CLOSE%>" <%
-					if(closeButtonURL!=null)
-					{ %>src="<%=closeButtonURL%>" alt="Close Live Edit"<% }
-					else
-					{ %>value="X"<% }
-					%>>
+				<input type="image" name="<%=Editor.BAR_CLOSE%>" src="<%=closeButtonURL%>" alt="Close Live Edit">
 			</form>
 			<h1><a href="<%=action%>?<%=Editor.PREVIEW_OVERVIEW%>=t" target="Live Edit">COPE Live Edit</a></h1><%
 			if(loginName!=null)
