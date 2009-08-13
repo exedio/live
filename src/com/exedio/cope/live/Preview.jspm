@@ -115,7 +115,7 @@ final class Preview_Jspm
 		</style>
 	</head>
 	<body>
-		<a href="http://cope.sourceforge.net/" target="_blank"><img src="<%=Editor.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
+		<a href="http://cope.sourceforge.net/" target="_blank"><img src="<%=LiveServlet.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
 		<h1>COPE Live Edit</h1><%
 		
 	if(draftsEnabled)
@@ -137,8 +137,8 @@ final class Preview_Jspm
 			<tr<% if(open){%> class="open"<%} %>>
 				<td>
 					<form action="<%=url%>" method="POST" style="display:inline;">
-						<input type="hidden" name="<%=Editor.TARGET_ID%>"   value="<%=target.getID()%>">
-						<input type="submit" name="<%=Editor.TARGET_OPEN%>" value="Open"<% if(open){%> disabled="disabled"<%} %>>
+						<input type="hidden" name="<%=LiveServlet.TARGET_ID%>"   value="<%=target.getID()%>">
+						<input type="submit" name="<%=LiveServlet.TARGET_OPEN%>" value="Open"<% if(open){%> disabled="disabled"<%} %>>
 					</form>
 				</td><%
 			if(target instanceof TargetLive)
@@ -152,8 +152,8 @@ final class Preview_Jspm
 				<td colspan="5">
 					<form action="<%=url%>" method="POST" style="display:inline;">
 						Comment:
-						<input name="<%=Editor.DRAFT_COMMENT%>" type="text">
-						<input type="submit" name="<%=Editor.DRAFT_NEW%>" value="New">
+						<input name="<%=LiveServlet.DRAFT_COMMENT%>" type="text">
+						<input type="submit" name="<%=LiveServlet.DRAFT_NEW%>" value="New">
 					</form>
 				</td><%
 			}
@@ -169,9 +169,9 @@ final class Preview_Jspm
 				%>
 				<td>
 					<form action="<%=url%>" method="POST" style="display:inline;">
-						<input type="hidden" name="<%=Editor.DRAFT_ID    %>" value="<%=target.getID()%>">
-						<input type="submit" name="<%=Editor.DRAFT_LOAD  %>" value="Load">
-						<input type="submit" name="<%=Editor.DRAFT_DELETE%>" value="Delete"<%
+						<input type="hidden" name="<%=LiveServlet.DRAFT_ID    %>" value="<%=target.getID()%>">
+						<input type="submit" name="<%=LiveServlet.DRAFT_LOAD  %>" value="Load">
+						<input type="submit" name="<%=LiveServlet.DRAFT_DELETE%>" value="Delete"<%
 							if(itemsCount>0)
 							{
 								%> onclick="return confirm('Do you really want to delete <%=
@@ -213,7 +213,7 @@ final class Preview_Jspm
 				{
 				%>
 				<tr>
-					<td><input name="<%=Editor.MODIFICATION_IDS%>" type="checkbox" value="<%=m.getID()%>" checked="checked"></td>
+					<td><input name="<%=LiveServlet.MODIFICATION_IDS%>" type="checkbox" value="<%=m.getID()%>" checked="checked"></td>
 				<%
 				if(m instanceof ModificationString)
 				{
@@ -234,22 +234,22 @@ final class Preview_Jspm
 				}
 				%>
 			</table>
-			<input name="<%=Editor.MODIFICATION_PUBLISH%>" type="submit" value="Publish">
-			<input name="<%=Editor.MODIFICATION_DISCARD%>" type="submit" value="Discard"><%
+			<input name="<%=LiveServlet.MODIFICATION_PUBLISH%>" type="submit" value="Publish">
+			<input name="<%=LiveServlet.MODIFICATION_DISCARD%>" type="submit" value="Discard"><%
 			
 		if(draftsEnabled)
 		{
 			%>
 			<br>
-			<input name="<%=Editor.MODIFICATION_PERSIST%>" type="submit" value="Save as new Draft:">
-			<input name="<%=Editor.MODIFICATION_PERSIST_COMMENT%>" type="text"><%
+			<input name="<%=LiveServlet.MODIFICATION_PERSIST%>" type="submit" value="Save as new Draft:">
+			<input name="<%=LiveServlet.MODIFICATION_PERSIST_COMMENT%>" type="text"><%
 			
 			if(!drafts.isEmpty())
 			{
 			%>
 			<br>
-			<input name="<%=Editor.SAVE_TO_DRAFT%>" type="submit" value="Save to Draft:">
-			<select name="<%=Editor.DRAFT_ID%>"><%
+			<input name="<%=LiveServlet.SAVE_TO_DRAFT%>" type="submit" value="Save to Draft:">
+			<select name="<%=LiveServlet.DRAFT_ID%>"><%
 			for(final Draft draft : drafts)
 			{
 				%>

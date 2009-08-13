@@ -47,7 +47,7 @@ public final class LiveRequest
 		if(session==null)
 			return null;
 		
-		final Object anchor = session.getAttribute(Editor.ANCHOR);
+		final Object anchor = session.getAttribute(LiveServlet.ANCHOR);
 		if(anchor==null)
 			return null;
 		
@@ -169,7 +169,7 @@ public final class LiveRequest
 			append(
 				" class=\"contentEditorLink\"" +
 				" onclick=\"" +
-					"return " + (block ? Editor.EDIT_METHOD_AREA : Editor.EDIT_METHOD_LINE) + "(this,'").
+					"return " + (block ? LiveServlet.EDIT_METHOD_AREA : LiveServlet.EDIT_METHOD_LINE) + "(this,'").
 						append(feature.getID()).
 						append("','").
 						append(item.getCopeID()).
@@ -210,7 +210,7 @@ public final class LiveRequest
 				" class=\"contentEditorLink\"" +
 				onload +
 				" onclick=\"" +
-					"return " + Editor.EDIT_METHOD_FILE + "(this,'").
+					"return " + LiveServlet.EDIT_METHOD_FILE + "(this,'").
 						append(feature.getID()).
 						append("','").
 						append(item.getCopeID()).
@@ -254,10 +254,10 @@ public final class LiveRequest
 		
 		return
 			"<form action=\"" + action() + "\" method=\"POST\" class=\"contentEditorPosition\">" +
-				"<input type=\"hidden\" name=\"" + Editor.BAR_REFERER   + "\" value=\"" + referer()                + "\">" +
-				"<input type=\"hidden\" name=\"" + Editor.BAR_FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
-				"<input type=\"hidden\" name=\"" + Editor.BAR_ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
-				"<input type=\"hidden\" name=\"" + Editor.BAR_ITEM      + "\" value=\"" + item.getCopeID()         + "\">" +
+				"<input type=\"hidden\" name=\"" + LiveServlet.BAR_REFERER   + "\" value=\"" + referer()                + "\">" +
+				"<input type=\"hidden\" name=\"" + LiveServlet.BAR_FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
+				"<input type=\"hidden\" name=\"" + LiveServlet.BAR_ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
+				"<input type=\"hidden\" name=\"" + LiveServlet.BAR_ITEM      + "\" value=\"" + item.getCopeID()         + "\">" +
 				(
 					buttonURL!=null
 					? ("<input type=\"image\" src=\"" + buttonURL + "\" alt=\"Swap with previous item\">")
@@ -303,7 +303,7 @@ public final class LiveRequest
 				action(),
 				referer(),
 				borders,
-				borders ? Editor.BAR_BORDERS_OFF : Editor.BAR_BORDERS_ON,
+				borders ? LiveServlet.BAR_BORDERS_OFF : LiveServlet.BAR_BORDERS_ON,
 				borders ? anchor.borderDisableButtonURL : anchor.borderEnableButtonURL,
 				anchor.hideButtonURL,
 				anchor.closeButtonURL,

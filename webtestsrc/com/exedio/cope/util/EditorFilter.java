@@ -23,9 +23,9 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.exedio.cope.live.Editor;
+import com.exedio.cope.live.LiveServlet;
 
-public final class EditorFilter extends Editor
+public final class EditorFilter extends LiveServlet
 {
 	private static final long serialVersionUID = 1l;
 	

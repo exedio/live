@@ -55,7 +55,7 @@ import com.exedio.cops.Cop;
 import com.exedio.cops.CopsServlet;
 import com.exedio.cops.Resource;
 
-public abstract class Editor extends CopsServlet
+public abstract class LiveServlet extends CopsServlet
 {
 	static final Resource logo = new Resource("logo.png");
 	
@@ -70,7 +70,7 @@ public abstract class Editor extends CopsServlet
 	 * Subclasses must define a public no-args constructor
 	 * providing the model.
 	 */
-	protected Editor(final Model model)
+	protected LiveServlet(final Model model)
 	{
 		if(model==null)
 			throw new NullPointerException("model");
@@ -765,7 +765,7 @@ public abstract class Editor extends CopsServlet
 				else
 				{
 					final StringBuilder out = new StringBuilder();
-					Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), user);
+					Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), user);
 					writeBody(out, response);
 				}
 				model.commit();
@@ -778,7 +778,7 @@ public abstract class Editor extends CopsServlet
 		else
 		{
 			final StringBuilder out = new StringBuilder();
-			Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), Editor.class.getPackage(), null);
+			Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), null);
 			writeBody(out, response);
 		}
 	}

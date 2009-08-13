@@ -64,7 +64,7 @@ final class Login_Jspm
 		</style>
 	</head>
 	<body>
-		<a href="http://cope.sourceforge.net/" target="_blank"><img src="<%=Editor.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
+		<a href="http://cope.sourceforge.net/" target="_blank"><img src="<%=LiveServlet.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
 		<h1>COPE Live Edit</h1><%
 		if(failureUser!=null)
 		{
@@ -76,15 +76,15 @@ final class Login_Jspm
 			<table>
 				<tr>
 					<td>Login</td>
-					<td><input name="<%=Editor.LOGIN_USER%>"<% if(failureUser!=null){%> value="<%=encode(failureUser)%>"<%} %>></td>
+					<td><input name="<%=LiveServlet.LOGIN_USER%>"<% if(failureUser!=null){%> value="<%=encode(failureUser)%>"<%} %>></td>
 				</tr>
 				<tr>
 					<td>Password</td>
-					<td><input name="<%=Editor.LOGIN_PASSWORD%>" type="password"></td>
+					<td><input name="<%=LiveServlet.LOGIN_PASSWORD%>" type="password"></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><input name="<%=Editor.LOGIN_SUBMIT%>" type="submit" value="Login"></td>
+					<td><input name="<%=LiveServlet.LOGIN_SUBMIT%>" type="submit" value="Login"></td>
 				</tr>
 			</table>
 		</form>

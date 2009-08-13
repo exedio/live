@@ -57,8 +57,8 @@ final class ModificationMedia extends Modification
 			response.encodeURL(
 					request.getContextPath() +
 					request.getServletPath() + '/' +
-					'?' + Editor.MEDIA_FEATURE + '=' + getFeature().getID() +
-					'&' + Editor.MEDIA_ITEM + '=' + item.getCopeID());
+					'?' + LiveServlet.MEDIA_FEATURE + '=' + getFeature().getID() +
+					'&' + LiveServlet.MEDIA_ITEM + '=' + item.getCopeID());
 	}
 	
 	String getURL(final Anchor anchor, final HttpServletResponse response)
@@ -66,8 +66,8 @@ final class ModificationMedia extends Modification
 		return
 			response.encodeURL(
 					anchor.loginURL +
-					'?' + Editor.MEDIA_FEATURE + '=' + getFeature().getID() +
-					'&' + Editor.MEDIA_ITEM + '=' + item.getCopeID());
+					'?' + LiveServlet.MEDIA_FEATURE + '=' + getFeature().getID() +
+					'&' + LiveServlet.MEDIA_ITEM + '=' + item.getCopeID());
 	}
 	
 	@Override
