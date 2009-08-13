@@ -82,7 +82,7 @@ public abstract class Editor extends CopsServlet
 	@Override
 	public final void init(final ServletConfig config) throws ServletException
 	{
-		super.init();
+		super.init(config);
 		
 		this.config = config;
 		for(final Type<?> type : model.getTypes())
