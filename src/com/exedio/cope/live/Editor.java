@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,8 +80,10 @@ public abstract class Editor extends CopsServlet
 	private final Object connectTokenLock = new Object();
 	
 	@Override
-	public final void init(final ServletConfig config)
+	public final void init(final ServletConfig config) throws ServletException
 	{
+		super.init();
+		
 		this.config = config;
 		for(final Type<?> type : model.getTypes())
 			if(type==DraftItem.TYPE) // DraftItem implies Draft because of the parent field
@@ -115,6 +118,8 @@ public abstract class Editor extends CopsServlet
 				connectToken = null;
 			}
 		}
+		
+		super.destroy();
 	}
 	
 	protected abstract Session login(String user, String password);
