@@ -59,6 +59,11 @@ public abstract class Editor extends CopsServlet
 {
 	static final Resource logo = new Resource("logo.png");
 	
+	static final Resource borderDisable = new Resource("borderDisable.png");
+	static final Resource borderEnable  = new Resource("borderEnable.png");
+	static final Resource hide          = new Resource("hide.png");
+	static final Resource close         = new Resource("close.png");
+	
 	private final Model model;
 	
 	/**
@@ -123,20 +128,6 @@ public abstract class Editor extends CopsServlet
 	}
 	
 	protected abstract Session login(String user, String password);
-	
-	@SuppressWarnings("unused")
-	protected String getBorderButtonURL(HttpServletRequest request, HttpServletResponse response, boolean bordersEnabled)
-	{
-		return null;
-	}
-	
-	protected abstract String getHideButtonURL(HttpServletRequest request, HttpServletResponse response);
-	
-	@SuppressWarnings("unused")
-	protected String getCloseButtonURL(HttpServletRequest request, HttpServletResponse response)
-	{
-		return null;
-	}
 	
 	@SuppressWarnings("unused")
 	protected String getPreviousPositionButtonURL(HttpServletRequest request, HttpServletResponse response)

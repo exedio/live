@@ -66,10 +66,10 @@ final class Anchor implements Serializable // for session persistence
 		this.defaultTarget = defaultTarget;
 		this.draftsEnabled = draftsEnabled;
 		
-		this.borderDisableButtonURL = filter!=null ? filter.getBorderButtonURL(request, response, true) : null;
-		this.borderEnableButtonURL  = filter!=null ? filter.getBorderButtonURL(request, response, false) : null;
-		this.hideButtonURL          = filter!=null ? filter.getHideButtonURL  (request, response) : null;
-		this.closeButtonURL         = filter!=null ? filter.getCloseButtonURL (request, response) : null;
+		this.borderDisableButtonURL = request!=null ? Editor.borderDisable.getURL(request) : null;
+		this.borderEnableButtonURL  = request!=null ? Editor.borderEnable .getURL(request) : null;
+		this.hideButtonURL          = request!=null ? Editor.hide         .getURL(request) : null;
+		this.closeButtonURL         = request!=null ? Editor.close        .getURL(request) : null;
 		this.previousPositionButtonURL = filter!=null ? filter.getPreviousPositionButtonURL(request, response) : null;
 		this.loginURL = request!=null ? (request.getContextPath() + request.getServletPath() + '/') : null;
 		

@@ -69,26 +69,6 @@ public final class EditorFilter extends Editor
 	}
 	
 	@Override
-	protected String getBorderButtonURL(final HttpServletRequest request, final HttpServletResponse response, final boolean bordersEnabled)
-	{
-		return request.getContextPath() + "/border-" + (bordersEnabled ? "dis" : "en") + "able.png";
-		//return null;
-	}
-	
-	@Override
-	protected String getHideButtonURL(final HttpServletRequest request, final HttpServletResponse response)
-	{
-		return request.getContextPath() + "/hide.png";
-	}
-	
-	@Override
-	protected String getCloseButtonURL(final HttpServletRequest request, final HttpServletResponse response)
-	{
-		return request.getContextPath() + "/close.png";
-		//return null;
-	}
-	
-	@Override
 	protected String getPreviousPositionButtonURL(final HttpServletRequest request, final HttpServletResponse response)
 	{
 		return request.getContextPath() + "/previous.png";
