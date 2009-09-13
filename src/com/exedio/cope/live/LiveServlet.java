@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -35,19 +34,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.exedio.cope.Feature;
-import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
 import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
-import com.exedio.cope.pattern.History;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.util.ConnectToken;
 import com.exedio.cope.util.ServletUtil;
@@ -67,6 +59,7 @@ public abstract class LiveServlet extends CopsServlet
 	static final Resource close         = new Resource("close.png");
 	
 	private final Model model;
+	private final Bar bar;
 	
 	/**
 	 * Subclasses must define a public no-args constructor
@@ -78,6 +71,7 @@ public abstract class LiveServlet extends CopsServlet
 			throw new NullPointerException("model");
 		
 		this.model = model;
+		this.bar = new Bar(model, this);
 	}
 	
 	private boolean draftsEnabled = false;
@@ -101,7 +95,7 @@ public abstract class LiveServlet extends CopsServlet
 		model.reviseIfSupported();
 	}
 	
-	private final void startTransaction(final String name)
+	final void startTransaction(final String name)
 	{
 		model.startTransaction(getClass().getName() + '#' + name);
 	}
@@ -145,11 +139,11 @@ public abstract class LiveServlet extends CopsServlet
 			else if(request.getParameter(MEDIA_FEATURE)!=null)
 				doMedia(request, response, (Anchor)anchor);
 			else
-				doBar(request, httpSession, response, (Anchor)anchor);
+				bar.doBar(request, httpSession, response, (Anchor)anchor);
 		}
 	}
 	
-	private static final void redirectHome(
+	static final void redirectHome(
 			final HttpServletRequest request,
 			final HttpServletResponse response)
 	throws IOException
@@ -158,29 +152,6 @@ public abstract class LiveServlet extends CopsServlet
 	}
 	
 	static final String AVOID_COLLISION = "contentEditorBar823658617";
-	static final String BAR_REFERER = "referer";
-	static final String BAR_BORDERS_ON  = "borders.on";
-	static final String BAR_BORDERS_OFF = "borders.off";
-	static final String BAR_CLOSE = "close";
-	static final String BAR_SWITCH_TARGET = "target.switch";
-	static final String BAR_SAVE_TARGET   = "target.save";
-	
-	static final String BAR_FEATURE = "feature";
-	static final String BAR_ITEM    = "item";
-	static final String BAR_TEXT    = "text";
-	static final String BAR_FILE    = "file";
-	static final String BAR_ITEM_FROM = "itemPrevious";
-	static final String BAR_PUBLISH_NOW = "publishNow";
-	
-	private static final String BAR_CLOSE_IMAGE       = BAR_CLOSE       + ".x";
-	private static final String BAR_BORDERS_ON_IMAGE  = BAR_BORDERS_ON  + ".x";
-	private static final String BAR_BORDERS_OFF_IMAGE = BAR_BORDERS_OFF + ".x";
-	
-	@SuppressWarnings("deprecation")
-	private static final boolean isMultipartContent(final HttpServletRequest request)
-	{
-		return ServletFileUpload.isMultipartContent(request);
-	}
 	
 	static final String PREVIEW_OVERVIEW = "po";
 	static final String MODIFICATION_PUBLISH = "modification.publish";
@@ -384,7 +355,7 @@ public abstract class LiveServlet extends CopsServlet
 		writeBody(out, response);
 	}
 	
-	private final Target getTarget(final String id)
+	final Target getTarget(final String id)
 	{
 		if(TargetLive.ID.equals(id))
 		{
@@ -410,233 +381,6 @@ public abstract class LiveServlet extends CopsServlet
 				model.rollbackIfNotCommitted();
 			}
 		}
-	}
-	
-	private final void doBar(
-			final HttpServletRequest request,
-			final HttpSession httpSession,
-			final HttpServletResponse response,
-			final Anchor anchor)
-	throws IOException
-	{
-		if(!Cop.isPost(request))
-		{
-			redirectHome(request, response);
-			return;
-		}
-		
-		final String referer;
-		
-		if(isMultipartContent(request))
-		{
-			final HashMap<String, String> fields = new HashMap<String, String>();
-			final HashMap<String, FileItem> files = new HashMap<String, FileItem>();
-			final FileItemFactory factory = new DiskFileItemFactory();
-			final ServletFileUpload upload = new ServletFileUpload(factory);
-			upload.setHeaderEncoding(UTF8);
-			try
-			{
-				for(Iterator<?> i = upload.parseRequest(request).iterator(); i.hasNext(); )
-				{
-					final FileItem item = (FileItem)i.next();
-					if(item.isFormField())
-						fields.put(item.getFieldName(), item.getString(UTF8));
-					else
-						files.put(item.getFieldName(), item);
-				}
-			}
-			catch(FileUploadException e)
-			{
-				throw new RuntimeException(e);
-			}
-			
-			final String featureID = fields.get(BAR_FEATURE);
-			if(featureID==null)
-				throw new NullPointerException();
-			
-			final Media feature = (Media)model.getFeature(featureID);
-			if(feature==null)
-				throw new NullPointerException(featureID);
-			
-			final String itemID = fields.get(BAR_ITEM);
-			if(itemID==null)
-				throw new NullPointerException();
-			
-			final FileItem file = files.get(BAR_FILE);
-		
-			try
-			{
-				startTransaction("publishFile(" + featureID + ',' + itemID + ')');
-				
-				final Item item = model.getItem(itemID);
-
-				if(fields.get(BAR_PUBLISH_NOW)!=null)
-				{
-					for(final History history : History.getHistories(item.getCopeType()))
-					{
-						final History.Event event = history.createEvent(item, anchor.getHistoryAuthor(), false);
-						event.createFeature(
-								feature, feature.getName(),
-								feature.isNull(item) ? null : ("file type=" + feature.getContentType(item) + " size=" + feature.getLength(item)),
-								"file name=" + file.getName() + " type=" + file.getContentType() + " size=" + file.getSize());
-					}
-					
-					// TODO use more efficient setter with File or byte[]
-					feature.set(item, file.getInputStream(), file.getContentType());
-				}
-				else
-				{
-					anchor.modify(file, feature, item);
-				}
-				
-				model.commit();
-			}
-			catch(NoSuchIDException e)
-			{
-				throw new RuntimeException(e);
-			}
-			finally
-			{
-				model.rollbackIfNotCommitted();
-			}
-			
-			referer = fields.get(BAR_REFERER);
-		}
-		else // isMultipartContent
-		{
-			if(request.getParameter(BAR_BORDERS_ON)!=null || request.getParameter(BAR_BORDERS_ON_IMAGE)!=null)
-			{
-				anchor.borders = true;
-			}
-			else if(request.getParameter(BAR_BORDERS_OFF)!=null || request.getParameter(BAR_BORDERS_OFF_IMAGE)!=null)
-			{
-				anchor.borders = false;
-			}
-			else if(request.getParameter(BAR_CLOSE)!=null || request.getParameter(BAR_CLOSE_IMAGE)!=null)
-			{
-				httpSession.removeAttribute(ANCHOR);
-			}
-			else if(request.getParameter(BAR_SWITCH_TARGET)!=null)
-			{
-				anchor.setTarget(getTarget(request.getParameter(BAR_SWITCH_TARGET)));
-			}
-			else if(request.getParameter(BAR_SAVE_TARGET)!=null)
-			{
-				try
-				{
-					startTransaction("saveTarget");
-					anchor.getTarget().save(anchor);
-					model.commit();
-				}
-				finally
-				{
-					model.rollbackIfNotCommitted();
-				}
-				anchor.notifyPublishedAll();
-			}
-			else
-			{
-				final String featureID = request.getParameter(BAR_FEATURE);
-				if(featureID==null)
-					throw new NullPointerException();
-				
-				final Feature featureO = model.getFeature(featureID);
-				if(featureO==null)
-					throw new NullPointerException(featureID);
-				
-				final String itemID = request.getParameter(BAR_ITEM);
-				if(itemID==null)
-					throw new NullPointerException();
-				
-				if(featureO instanceof StringField)
-				{
-					final StringField feature = (StringField)featureO;
-					final String value = request.getParameter(BAR_TEXT);
-				
-					try
-					{
-						startTransaction("barText(" + featureID + ',' + itemID + ')');
-						
-						final Item item = model.getItem(itemID);
-	
-						if(request.getParameter(BAR_PUBLISH_NOW)!=null)
-						{
-							String v = value;
-							if("".equals(v))
-								v = null;
-							for(final History history : History.getHistories(item.getCopeType()))
-							{
-								final History.Event event = history.createEvent(item, anchor.getHistoryAuthor(), false);
-								event.createFeature(feature, feature.getName(), feature.get(item), v);
-							}
-							feature.set(item, v);
-							anchor.notifyPublished(feature, item);
-						}
-						else
-						{
-							anchor.modify(value, feature, item);
-						}
-						
-						model.commit();
-					}
-					catch(NoSuchIDException e)
-					{
-						throw new RuntimeException(e);
-					}
-					finally
-					{
-						model.rollbackIfNotCommitted();
-					}
-				}
-				else
-				{
-					final IntegerField feature = (IntegerField)featureO;
-					final String itemIDFrom = request.getParameter(BAR_ITEM_FROM);
-					if(itemIDFrom==null)
-						throw new NullPointerException();
-					
-					try
-					{
-						startTransaction("swapPosition(" + featureID + ',' + itemIDFrom + ',' + itemID + ')');
-						
-						final Item itemFrom = model.getItem(itemIDFrom);
-						final Item itemTo   = model.getItem(itemID);
-	
-						final Integer positionFrom = feature.get(itemFrom);
-						final Integer positionTo   = feature.get(itemTo);
-						feature.set(itemFrom, feature.getMinimum());
-						feature.set(itemTo,   positionFrom);
-						feature.set(itemFrom, positionTo);
-						
-						for(final History history : History.getHistories(itemFrom.getCopeType()))
-						{
-							final History.Event event = history.createEvent(itemFrom, anchor.getHistoryAuthor(), false);
-							event.createFeature(feature, feature.getName(), positionFrom, positionTo);
-						}
-						for(final History history : History.getHistories(itemTo.getCopeType()))
-						{
-							final History.Event event = history.createEvent(itemTo, anchor.getHistoryAuthor(), false);
-							event.createFeature(feature, feature.getName(), positionTo, positionFrom);
-						}
-						
-						model.commit();
-					}
-					catch(NoSuchIDException e)
-					{
-						throw new RuntimeException(e);
-					}
-					finally
-					{
-						model.rollbackIfNotCommitted();
-					}
-				}
-			}
-			
-			referer = request.getParameter(BAR_REFERER);
-		}
-		
-		if(referer!=null)
-			response.sendRedirect(response.encodeRedirectURL(referer));
 	}
 	
 	static final String MEDIA_FEATURE = "mf";

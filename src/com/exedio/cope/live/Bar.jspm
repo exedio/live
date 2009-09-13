@@ -250,10 +250,10 @@ final class Bar_Jspm
 		%>
 		<div id="contentEditorBar" style="right:20px;">
 			<form action="<%=action%>" method="POST" id="contentEditorBarSwitches">
-				<input type="hidden" name="<%=LiveServlet.BAR_REFERER%>" value="<%=referer%>">
+				<input type="hidden" name="<%=Bar.BAR_REFERER%>" value="<%=referer%>">
 				<input type="image" name="<%=borderToggleParameter%>" src="<%=borderButtonURL%>" width="63" height="21" alt="<%if(borders){%>Dis<%}else{%>En<%}%>able Borders">
 				<img src="<%=hideButtonURL%>" onclick="document.getElementById('contentEditorBar').style.display = 'none';" width="21" height="21">
-				<input type="image" name="<%=LiveServlet.BAR_CLOSE%>" src="<%=closeButtonURL%>" alt="Close Live Edit" width="21" height="21">
+				<input type="image" name="<%=Bar.BAR_CLOSE%>" src="<%=closeButtonURL%>" alt="Close Live Edit" width="21" height="21">
 			</form>
 			<h1><a href="<%=action%>?<%=LiveServlet.PREVIEW_OVERVIEW%>=t" target="Live Edit">COPE Live Edit</a></h1><%
 			if(loginName!=null)
@@ -264,8 +264,8 @@ final class Bar_Jspm
 			%>
 			<br>
 			<form action="<%=action%>" method="POST" style="display:inline;">
-				<input type="hidden" name="<%=LiveServlet.BAR_REFERER%>" value="<%=referer%>">
-				<select name="<%=LiveServlet.BAR_SWITCH_TARGET%>" onchange="this.form.submit();"><%
+				<input type="hidden" name="<%=Bar.BAR_REFERER%>" value="<%=referer%>">
+				<select name="<%=Bar.BAR_SWITCH_TARGET%>" onchange="this.form.submit();"><%
 				for(final Target t : targets)
 				{
 					final boolean active = t.equals(target);
@@ -283,8 +283,8 @@ final class Bar_Jspm
 				final boolean live = target.isLive();
 			%>
 			<form action="<%=action%>" method="POST" style="display:inline;">
-				<input type="hidden" name="<%=LiveServlet.BAR_REFERER    %>" value="<%=referer%>">
-				<input type="submit" name="<%=LiveServlet.BAR_SAVE_TARGET%>" value="<% if(live){%>Publish<%}else{%>Save<%} %><%
+				<input type="hidden" name="<%=Bar.BAR_REFERER    %>" value="<%=referer%>">
+				<input type="submit" name="<%=Bar.BAR_SAVE_TARGET%>" value="<% if(live){%>Publish<%}else{%>Save<%} %><%
 					if(modificationsCount>1)
 					{
 						%> (<%=modificationsCount%>)<%
@@ -306,33 +306,33 @@ final class Bar_Jspm
 			%>
 			<form action="<%=action%>" method="POST" id="<%=ID_LINE_FORM%>" style="display:none;">
 				<hr>
-				<input name="<%=   LiveServlet.BAR_REFERER%>" value="<%=referer     %>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_FEATURE%>" id="<%=ID_LINE_FEATURE%>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_ITEM   %>" id="<%=ID_LINE_ITEM   %>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_TEXT   %>" id="<%=ID_LINE_VALUE  %>" class="text" onkeyup="return <%=ONKEY_METHOD_LINE%>(this);">
+				<input name="<%=   Bar.BAR_REFERER%>" value="<%=referer     %>" type="hidden">
+				<input name="<%=   Bar.BAR_FEATURE%>" id="<%=ID_LINE_FEATURE%>" type="hidden">
+				<input name="<%=   Bar.BAR_ITEM   %>" id="<%=ID_LINE_ITEM   %>" type="hidden">
+				<input name="<%=   Bar.BAR_TEXT   %>" id="<%=ID_LINE_VALUE  %>" class="text" onkeyup="return <%=ONKEY_METHOD_LINE%>(this);">
 				<br>
-				<input type="submit" value="Publish Now!" id="<%=ID_LINE_PUBLISH%>" name="<%=LiveServlet.BAR_PUBLISH_NOW%>" class="publishNow">
+				<input type="submit" value="Publish Now!" id="<%=ID_LINE_PUBLISH%>" name="<%=Bar.BAR_PUBLISH_NOW%>" class="publishNow">
 				<input type="submit" value="Apply"        id="<%=ID_LINE_APPLY%>">
 			</form>
 			<form action="<%=action%>" method="POST" id="<%=ID_FILE_FORM%>" style="display:none;" enctype="multipart/form-data">
 				<hr>
 				<img id="<%=ID_FILE_VALUE%>" src="">
-				<input name="<%=   LiveServlet.BAR_REFERER%>" value="<%=referer     %>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_FEATURE%>" id="<%=ID_FILE_FEATURE%>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_ITEM   %>" id="<%=ID_FILE_ITEM   %>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_FILE   %>" type="file" class="text">
+				<input name="<%=   Bar.BAR_REFERER%>" value="<%=referer     %>" type="hidden">
+				<input name="<%=   Bar.BAR_FEATURE%>" id="<%=ID_FILE_FEATURE%>" type="hidden">
+				<input name="<%=   Bar.BAR_ITEM   %>" id="<%=ID_FILE_ITEM   %>" type="hidden">
+				<input name="<%=   Bar.BAR_FILE   %>" type="file" class="text">
 				<br>
-				<input type="submit" value="Publish Now!" id="<%=ID_FILE_PUBLISH%>" name="<%=LiveServlet.BAR_PUBLISH_NOW%>" class="publishNow">
+				<input type="submit" value="Publish Now!" id="<%=ID_FILE_PUBLISH%>" name="<%=Bar.BAR_PUBLISH_NOW%>" class="publishNow">
 				<input type="submit" value="Apply"        id="<%=ID_FILE_APPLY%>">
 				<br>
 			</form>
 			<form action="<%=action%>" method="POST" id="<%=ID_AREA_FORM%>" style="display:none;">
 				<hr>
-				<input name="<%=   LiveServlet.BAR_REFERER%>" value="<%=referer     %>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_FEATURE%>" id="<%=ID_AREA_FEATURE%>" type="hidden">
-				<input name="<%=   LiveServlet.BAR_ITEM   %>" id="<%=ID_AREA_ITEM   %>" type="hidden">
-				<textarea name="<%=LiveServlet.BAR_TEXT   %>" id="<%=ID_AREA_VALUE  %>" cols="100" rows="15">X</textarea>
-				<input type="submit" value="Publish Now!" id="<%=ID_AREA_PUBLISH%>" name="<%=LiveServlet.BAR_PUBLISH_NOW%>" class="publishNow">
+				<input name="<%=   Bar.BAR_REFERER%>" value="<%=referer     %>" type="hidden">
+				<input name="<%=   Bar.BAR_FEATURE%>" id="<%=ID_AREA_FEATURE%>" type="hidden">
+				<input name="<%=   Bar.BAR_ITEM   %>" id="<%=ID_AREA_ITEM   %>" type="hidden">
+				<textarea name="<%=Bar.BAR_TEXT   %>" id="<%=ID_AREA_VALUE  %>" cols="100" rows="15">X</textarea>
+				<input type="submit" value="Publish Now!" id="<%=ID_AREA_PUBLISH%>" name="<%=Bar.BAR_PUBLISH_NOW%>" class="publishNow">
 				<input type="submit" value="Apply"        id="<%=ID_AREA_APPLY%>">
 			</form><%
 			}
