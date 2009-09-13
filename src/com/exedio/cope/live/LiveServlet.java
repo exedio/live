@@ -80,18 +80,15 @@ public abstract class LiveServlet extends CopsServlet
 		this.model = model;
 	}
 	
-	private ServletConfig config = null;
 	private boolean draftsEnabled = false;
 	private Target defaultTarget = TargetLive.INSTANCE;
 	private ConnectToken connectToken = null;
-	private final Object connectTokenLock = new Object();
 	
 	@Override
 	public final void init(final ServletConfig config) throws ServletException
 	{
 		super.init(config);
 		
-		this.config = config;
 		for(final Type<?> type : model.getTypes())
 			if(type==DraftItem.TYPE) // DraftItem implies Draft because of the parent field
 			{
@@ -99,31 +96,23 @@ public abstract class LiveServlet extends CopsServlet
 				defaultTarget = TargetNewDraft.INSTANCE;
 				break;
 			}
+		
+		connectToken = ServletUtil.connect(model, config, getClass().getName());
+		model.reviseIfSupported();
 	}
 	
 	private final void startTransaction(final String name)
 	{
-		synchronized(connectTokenLock)
-		{
-			if(connectToken==null)
-			{
-				connectToken = ServletUtil.connect(model, config, getClass().getName());
-				model.reviseIfSupported();
-			}
-		}
 		model.startTransaction(getClass().getName() + '#' + name);
 	}
 	
 	@Override
 	public final void destroy()
 	{
-		synchronized(connectTokenLock)
+		if(connectToken!=null)
 		{
-			if(connectToken!=null)
-			{
-				connectToken.returnIt();
-				connectToken = null;
-			}
+			connectToken.returnIt();
+			connectToken = null;
 		}
 		
 		super.destroy();
