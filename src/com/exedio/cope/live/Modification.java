@@ -25,6 +25,8 @@ import com.exedio.cope.Item;
 
 abstract class Modification implements Serializable // for session persistence
 {
+	private static final long serialVersionUID = 1l;
+
 	private final String feature;
 	final Item item;
 	
