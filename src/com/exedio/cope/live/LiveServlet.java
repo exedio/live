@@ -57,6 +57,8 @@ import com.exedio.cops.Resource;
 
 public abstract class LiveServlet extends CopsServlet
 {
+	private static final long serialVersionUID = 1l;
+
 	static final Resource logo = new Resource("logo.png");
 	
 	static final Resource borderDisable = new Resource("borderDisable.png");
