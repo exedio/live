@@ -29,16 +29,15 @@ import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
 import com.exedio.cope.live.Session;
-import com.exedio.cope.live.util.LiveFilter;
 import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
 import com.exedio.cops.CopsServlet;
 
-final class Out
+abstract class Out
 {
-	private final StringBuilder bf;
-	private final HttpServletRequest request;
+	protected final StringBuilder bf;
+	protected final HttpServletRequest request;
 	private final HttpServletResponse response;
 	
 	Out(
@@ -50,87 +49,44 @@ final class Out
 		this.response = response;
 	}
 	
-	void write(final String s)
+	final void write(final String s)
 	{
 		bf.append(s);
 	}
 	
-	void write(final Date d)
+	final void write(final Date d)
 	{
 		bf.append(d);
 	}
 	
-	void write(final Session s)
+	final void write(final Session s)
 	{
 		bf.append(s);
 	}
 	
-	void write(final boolean b)
+	final void write(final boolean b)
 	{
 		bf.append(b);
 	}
 	
-	void write(final int i)
+	final void write(final int i)
 	{
 		bf.append(i);
 	}
 	
-	boolean isEditorLoggedIn()
-	{
-		return LiveFilter.isLoggedIn();
-	}
+	abstract boolean isEditorLoggedIn();
+	abstract boolean isEditorBordersEnabled();
+	abstract Session getEditorSession();
+	abstract void writeEditorHead();
+	abstract void writeEditorBar();
+	abstract void write(final String s, final StringField feature, final Item item);
+	abstract <K> void write(final String s, final MapField<K, String> feature, final Item item, final K key);
+	abstract void edit(final Media feature, final Item item);
+	abstract void edit(final MediaFilter feature, final Item item);
+	abstract void swapIcon(final IntegerField feature, final Item item);
+	abstract void swapText(final IntegerField feature, final Item item);
 	
-	boolean isEditorBordersEnabled()
-	{
-		return LiveFilter.isBordersEnabled();
-	}
-	
-	Session getEditorSession()
-	{
-		return LiveFilter.getSession();
-	}
-	
-	void writeEditorHead()
-	{
-		bf.append(LiveFilter.getHead());
-	}
-	
-	void writeEditorBar()
-	{
-		bf.append(LiveFilter.getBar());
-	}
-	
-	void write(final String s, final StringField feature, final Item item)
-	{
-		bf.append(LiveFilter.edit(s, feature, item));
-	}
-	
-	<K> void write(final String s, final MapField<K, String> feature, final Item item, final K key)
-	{
-		bf.append(LiveFilter.edit(s, feature, item, key));
-	}
-	
-	void edit(final Media feature, final Item item)
-	{
-		bf.append(LiveFilter.edit(feature, item));
-	}
-	
-	void edit(final MediaFilter feature, final Item item)
-	{
-		bf.append(LiveFilter.edit(feature, item));
-	}
-	
-	void swapIcon(final IntegerField feature, final Item item)
-	{
-		bf.append(LiveFilter.edit(feature, item, request.getContextPath() + "/previous.png"));
-	}
-	
-	void swapText(final IntegerField feature, final Item item)
-	{
-		bf.append(LiveFilter.edit(feature, item, null));
-	}
-	
-	void sendBody() throws IOException
+	final void sendBody() throws IOException
 	{
 		final String s = bf.toString();
 		ServletOutputStream stream = null;

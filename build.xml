@@ -156,6 +156,7 @@
 				<include name="**/*.java" />
 				<exclude name="**/EditedServlet_Jspm.java" />
 				<exclude name="**/Out.java" />
+				<exclude name="**/OutFilter.java" />
 			</fileset>
 		</instrument>
 	</target>
