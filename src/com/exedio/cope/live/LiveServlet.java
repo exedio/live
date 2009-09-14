@@ -139,7 +139,7 @@ public abstract class LiveServlet extends CopsServlet
 			else if(request.getParameter(MEDIA_FEATURE)!=null)
 				doMedia(request, response, (Anchor)anchor);
 			else
-				bar.doBar(request, httpSession, response, (Anchor)anchor);
+				bar.doRequest(request, httpSession, response, (Anchor)anchor);
 		}
 	}
 	

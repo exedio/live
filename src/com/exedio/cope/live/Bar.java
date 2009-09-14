@@ -84,7 +84,7 @@ final class Bar
 		return ServletFileUpload.isMultipartContent(request);
 	}
 	
-	final void doBar(
+	final void doRequest(
 			final HttpServletRequest request,
 			final HttpSession httpSession,
 			final HttpServletResponse response,
