@@ -255,7 +255,7 @@ final class Bar_Jspm
 				<img src="<%=hideButtonURL%>" onclick="document.getElementById('contentEditorBar').style.display = 'none';" width="21" height="21">
 				<input type="image" name="<%=Bar.CLOSE%>" src="<%=closeButtonURL%>" alt="Close Live Edit" width="21" height="21">
 			</form>
-			<h1><a href="<%=action%>?<%=LiveServlet.PREVIEW_OVERVIEW%>=t" target="Live Edit">COPE Live Edit</a></h1><%
+			<h1><a href="<%=action%>?<%=Management.PREVIEW_OVERVIEW%>=t" target="Live Edit">COPE Live Edit</a></h1><%
 			if(loginName!=null)
 			{
 			%>

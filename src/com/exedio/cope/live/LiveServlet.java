@@ -20,11 +20,6 @@ package com.exedio.cope.live;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -38,7 +33,6 @@ import org.apache.commons.fileupload.FileItem;
 import com.exedio.cope.Item;
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
-import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.util.ConnectToken;
@@ -60,6 +54,7 @@ public abstract class LiveServlet extends CopsServlet
 	
 	private final Model model;
 	private final Bar bar;
+	private final Management management;
 	
 	/**
 	 * Subclasses must define a public no-args constructor
@@ -72,6 +67,7 @@ public abstract class LiveServlet extends CopsServlet
 		
 		this.model = model;
 		this.bar = new Bar(model, this);
+		this.management = new Management(model, this);
 	}
 	
 	private boolean draftsEnabled = false;
@@ -134,8 +130,8 @@ public abstract class LiveServlet extends CopsServlet
 			doLogin(request, httpSession, response);
 		else
 		{
-			if(request.getParameter(PREVIEW_OVERVIEW)!=null)
-				doPreviewOverview(request, response, (Anchor)anchor);
+			if(request.getParameter(Management.PREVIEW_OVERVIEW)!=null)
+				management.doPreviewOverview(request, response, draftsEnabled, (Anchor)anchor);
 			else if(request.getParameter(MEDIA_FEATURE)!=null)
 				doMedia(request, response, (Anchor)anchor);
 			else
@@ -149,208 +145,6 @@ public abstract class LiveServlet extends CopsServlet
 	throws IOException
 	{
 		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/edited")); // TODO
-	}
-	
-	static final String PREVIEW_OVERVIEW = "po";
-	static final String MODIFICATION_PUBLISH = "modification.publish";
-	static final String MODIFICATION_DISCARD = "modification.discard";
-	static final String MODIFICATION_PERSIST = "modification.persist";
-	static final String MODIFICATION_PERSIST_COMMENT = "modification.persistComment";
-	static final String MODIFICATION_IDS = "id";
-	static final String SAVE_TO_DRAFT = "draft.saveTo";
-	static final String DRAFT_ID     = "draft.id";
-	static final String DRAFT_LOAD   = "draft.load";
-	static final String DRAFT_DELETE = "draft.delete";
-	static final String DRAFT_NEW    = "draft.new";
-	static final String DRAFT_COMMENT= "draft.comment";
-	static final String TARGET_ID   = "target.id";
-	static final String TARGET_OPEN = "target.load";
-	
-	private final void doPreviewOverview(
-			final HttpServletRequest request,
-			final HttpServletResponse response,
-			final Anchor anchor)
-	throws IOException
-	{
-		if(Cop.isPost(request))
-		{
-			final String[] idA = request.getParameterValues(MODIFICATION_IDS);
-			final HashSet<String> ids = idA!=null ? new HashSet<String>(Arrays.asList(idA)) : null;
-			if(request.getParameter(MODIFICATION_PUBLISH)!=null)
-			{
-				try
-				{
-					startTransaction("publishPreviews");
-					for(final Iterator<Modification> i = anchor.modifications.iterator(); i.hasNext(); )
-					{
-						final Modification p = i.next();
-						if(ids!=null && ids.contains(p.getID()))
-						{
-							p.publish();
-							i.remove();
-						}
-					}
-					// TODO maintain history
-					model.commit();
-				}
-				finally
-				{
-					model.rollbackIfNotCommitted();
-				}
-			}
-			else if(request.getParameter(MODIFICATION_PERSIST)!=null)
-			{
-				try
-				{
-					startTransaction("persistProposals");
-					final Draft parent = new Draft(anchor.user, anchor.sessionName, request.getParameter(MODIFICATION_PERSIST_COMMENT));
-					for(final Iterator<Modification> i = anchor.modifications.iterator(); i.hasNext(); )
-					{
-						final Modification p = i.next();
-						if(ids!=null && ids.contains(p.getID()))
-						{
-							p.saveTo(parent);
-							i.remove();
-						}
-					}
-					model.commit();
-				}
-				finally
-				{
-					model.rollbackIfNotCommitted();
-				}
-			}
-			else if(request.getParameter(SAVE_TO_DRAFT)!=null)
-			{
-				try
-				{
-					startTransaction("saveToDraft");
-					final Draft parent = (Draft)model.getItem(request.getParameter(DRAFT_ID));
-					for(final Iterator<Modification> i = anchor.modifications.iterator(); i.hasNext(); )
-					{
-						final Modification p = i.next();
-						if(ids!=null && ids.contains(p.getID()))
-						{
-							p.saveTo(parent);
-							i.remove();
-						}
-					}
-					model.commit();
-				}
-				catch(NoSuchIDException e)
-				{
-					throw new RuntimeException(e);
-				}
-				finally
-				{
-					model.rollbackIfNotCommitted();
-				}
-			}
-			else if(request.getParameter(MODIFICATION_DISCARD)!=null)
-			{
-				for(final Iterator<Modification> i = anchor.modifications.iterator(); i.hasNext(); )
-				{
-					final Modification p = i.next();
-					if(ids!=null && ids.contains(p.getID()))
-						i.remove();
-				}
-			}
-			else if(request.getParameter(DRAFT_LOAD)!=null)
-			{
-				try
-				{
-					startTransaction("loadDraft");
-					final Draft draft =
-						(Draft)model.getItem(request.getParameter(DRAFT_ID));
-					for(final DraftItem i : draft.getItems())
-						anchor.modify(
-								DraftItem.newValue.get(i),
-								(StringField)model.getFeature(DraftItem.feature.get(i)),
-								model.getItem(DraftItem.item.get(i)));
-				}
-				catch(NoSuchIDException e)
-				{
-					throw new RuntimeException(e);
-				}
-				finally
-				{
-					model.rollbackIfNotCommitted();
-				}
-			}
-			else if(request.getParameter(DRAFT_DELETE)!=null)
-			{
-				try
-				{
-					startTransaction("deleteDraft");
-					((Draft)model.getItem(request.getParameter(DRAFT_ID))).deleteCopeItem();
-					model.commit();
-				}
-				catch(NoSuchIDException e)
-				{
-					throw new RuntimeException(e);
-				}
-				finally
-				{
-					model.rollbackIfNotCommitted();
-				}
-			}
-			else if(request.getParameter(DRAFT_NEW)!=null)
-			{
-				try
-				{
-					startTransaction("newDraft");
-					new Draft(anchor.user, anchor.sessionName, request.getParameter(DRAFT_COMMENT));
-					model.commit();
-				}
-				finally
-				{
-					model.rollbackIfNotCommitted();
-				}
-			}
-			else if(request.getParameter(TARGET_OPEN)!=null)
-			{
-				anchor.setTarget(getTarget(request.getParameter(TARGET_ID)));
-			}
-		}
-		
-		final StringBuilder out = new StringBuilder();
-		try
-		{
-			startTransaction("proposal");
-			final List<Draft> drafts =
-				draftsEnabled
-				? Draft.TYPE.search(null, Draft.date, true)
-				: null;
-			final ArrayList<Target> targets = new ArrayList<Target>();
-			targets.add(TargetLive.INSTANCE);
-			if(draftsEnabled)
-			{
-				for(final Draft draft : drafts)
-					targets.add(new TargetDraft(draft));
-				targets.add(TargetNewDraft.INSTANCE);
-			}
-			Preview_Jspm.writeOverview(
-					out,
-					request, response,
-					response.encodeURL(request.getContextPath() + request.getServletPath() + '?' + PREVIEW_OVERVIEW + "=t"),
-					anchor.getModifications(),
-					anchor.getTarget(), targets,
-					draftsEnabled, drafts);
-			model.commit();
-		}
-		finally
-		{
-			model.rollbackIfNotCommitted();
-		}
-		
-		response.setContentType("text/html; charset="+UTF8);
-		response.addHeader("Cache-Control", "no-cache");
-		response.addHeader("Cache-Control", "no-store");
-		response.addHeader("Cache-Control", "max-age=0");
-		response.addHeader("Cache-Control", "must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", System.currentTimeMillis());
-		writeBody(out, response);
 	}
 	
 	final Target getTarget(final String id)
@@ -518,7 +312,7 @@ public abstract class LiveServlet extends CopsServlet
 	
 	static final String ANCHOR = Session.class.getName();
 	
-	private static final void writeBody(
+	static final void writeBody(
 			final StringBuilder out,
 			final HttpServletResponse response)
 		throws IOException
