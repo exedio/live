@@ -65,7 +65,7 @@ final class ModificationMedia extends Modification
 	{
 		return
 			response.encodeURL(
-					anchor.loginURL +
+					anchor.servletPath +
 					'?' + LiveServlet.MEDIA_FEATURE + '=' + getFeature().getID() +
 					'&' + LiveServlet.MEDIA_ITEM + '=' + item.getCopeID());
 	}

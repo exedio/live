@@ -43,7 +43,7 @@ final class Anchor implements Serializable // for session persistence
 	final String hideButtonURL;
 	final String closeButtonURL;
 	final String previousPositionButtonURL;
-	final String loginURL;
+	final String servletPath;
 	
 	final String user;
 	final Session session;
@@ -71,7 +71,7 @@ final class Anchor implements Serializable // for session persistence
 		this.hideButtonURL          = request!=null ? LiveServlet.hide         .getURL(request) : null;
 		this.closeButtonURL         = request!=null ? LiveServlet.close        .getURL(request) : null;
 		this.previousPositionButtonURL = filter!=null ? filter.getPreviousPositionButtonURL(request, response) : null;
-		this.loginURL = request!=null ? (request.getContextPath() + request.getServletPath() + '/') : null;
+		this.servletPath = request!=null ? (request.getContextPath() + request.getServletPath() + '/') : null;
 		
 		this.user = user;
 		this.session = session;

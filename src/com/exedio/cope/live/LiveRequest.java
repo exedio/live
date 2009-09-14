@@ -313,7 +313,7 @@ public final class LiveRequest
 	
 	private String action()
 	{
-		return response.encodeURL(anchor.loginURL);
+		return response.encodeURL(anchor.servletPath);
 	}
 	
 	private String referer()
