@@ -142,6 +142,7 @@
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/jdbc/hsqldb.jar" />
 				<pathelement location="lib/junit.jar" />
+				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
 			</classpath>
 			<test name="com.exedio.cope.live.PackageTest" todir="build/testresults" outfile="editor" />
