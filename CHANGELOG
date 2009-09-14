@@ -9,6 +9,10 @@ The items are sorted inversely, i.e. lastest items are on top
 --------------------------------------------------------------------------
 * remove ThreadLocal usage
 	THIS CHANGE IS NOT BACKWARDS COMPATIBLE, YOU MUST ADJUST YOUR CODE
+	- renamed css classes:
+			contentEditorLink       -> copeLive-edit
+			contentEditorLinkEdited -> copeLive-editActive
+			contentEditorPosition   -> copeLive-swap
 	- change write[Head|Bar] to get[Head|Bar]
 	- rename LiveRequest.edit for IntegerField to swap
 	- remove write[Head|Bar](PrintStream)

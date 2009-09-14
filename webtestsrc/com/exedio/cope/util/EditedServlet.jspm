@@ -45,24 +45,24 @@ final class EditedServlet_Jspm
 		%>
 		<style type="text/css">
 		
-			.contentEditorLink
+			.copeLive-edit
 			{
 				margin: -2px;
 				border: dotted 2px #d33;
 			}
 			
-			.contentEditorLinkEdited
+			.copeLive-editActive
 			{
 				margin: -2px;
 				border: solid 2px #d33;
 			}
 			
-			.contentEditorPosition
+			.copeLive-swap
 			{
 				display: inline;
 			}
 			
-			.contentEditorPosition input
+			.copeLive-swap input
 			{
 				width: 20px;
 				height: 20px;

@@ -62,6 +62,10 @@ final class Bar
 	
 	static final String AVOID_COLLISION = "contentEditorBar823658617";
 	
+	static final String CSS_EDIT        = "copeLive-edit";
+	static final String CSS_EDIT_ACTIVE = "copeLive-editActive";
+	static final String CSS_SWAP        = "copeLive-swap";
+	
 	static final String EDIT_METHOD_LINE = AVOID_COLLISION + "line";
 	static final String EDIT_METHOD_FILE = AVOID_COLLISION + "file";
 	static final String EDIT_METHOD_AREA = AVOID_COLLISION + "area";

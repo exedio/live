@@ -166,7 +166,7 @@ public final class LiveRequest
 		bf.append('<').
 			append(tag).
 			append(
-				" class=\"contentEditorLink\"" +
+				" class=\"" + Bar.CSS_EDIT + "\"" +
 				" onclick=\"" +
 					"return " + (block ? Bar.EDIT_METHOD_AREA : Bar.EDIT_METHOD_LINE) + "(this,'").
 						append(feature.getID()).
@@ -206,7 +206,7 @@ public final class LiveRequest
 		
 		final StringBuilder bf = new StringBuilder();
 		bf.append(
-				" class=\"contentEditorLink\"" +
+				" class=\"" + Bar.CSS_EDIT + "\"" +
 				onload +
 				" onclick=\"" +
 					"return " + Bar.EDIT_METHOD_FILE + "(this,'").
@@ -244,7 +244,7 @@ public final class LiveRequest
 			return "";
 		
 		return
-			"<form action=\"" + action() + "\" method=\"POST\" class=\"contentEditorPosition\">" +
+			"<form action=\"" + action() + "\" method=\"POST\" class=\"" + Bar.CSS_SWAP + "\">" +
 				"<input type=\"hidden\" name=\"" + Bar.REFERER   + "\" value=\"" + referer()                + "\">" +
 				"<input type=\"hidden\" name=\"" + Bar.FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
 				"<input type=\"hidden\" name=\"" + Bar.ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +

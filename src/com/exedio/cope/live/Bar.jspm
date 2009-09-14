@@ -165,8 +165,8 @@ final class Bar_Jspm
 				document.getElementById("contentEditorBar").style.display = "block";
 				
 				if(previousBorder!=null)
-					previousBorder.className='contentEditorLink';
-				border.className='contentEditorLinkEdited';
+					previousBorder.className='<%=Bar.CSS_EDIT%>';
+				border.className='<%=Bar.CSS_EDIT_ACTIVE%>';
 				previousBorder = border;
 				previousModifiable = modifiable;
 				
@@ -190,8 +190,8 @@ final class Bar_Jspm
 				document.getElementById("contentEditorBar").style.display = "block";
 				
 				if(previousBorder!=null)
-					previousBorder.className='contentEditorLink';
-				border.className='contentEditorLinkEdited';
+					previousBorder.className='<%=Bar.CSS_EDIT%>';
+				border.className='<%=Bar.CSS_EDIT_ACTIVE%>';
 				previousBorder = border;
 				previousModifiable = modifiable;
 				
@@ -215,8 +215,8 @@ final class Bar_Jspm
 				document.getElementById("contentEditorBar").style.display = "block";
 				
 				if(previousBorder!=null)
-					previousBorder.className='contentEditorLink';
-				border.className='contentEditorLinkEdited';
+					previousBorder.className='<%=Bar.CSS_EDIT%>';
+				border.className='<%=Bar.CSS_EDIT_ACTIVE%>';
 				previousBorder = border;
 				previousModifiable = modifiable;
 				
