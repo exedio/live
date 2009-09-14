@@ -110,6 +110,11 @@ public abstract class LiveServlet extends CopsServlet
 	
 	protected abstract Session login(String user, String password);
 	
+	protected String getHome()
+	{
+		return "";
+	}
+	
 	@Override
 	public final void doRequest(
 			final HttpServletRequest request,
@@ -133,12 +138,12 @@ public abstract class LiveServlet extends CopsServlet
 		}
 	}
 	
-	static final void redirectHome(
+	final void redirectHome(
 			final HttpServletRequest request,
 			final HttpServletResponse response)
 	throws IOException
 	{
-		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/edited")); // TODO
+		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + '/' + getHome()));
 	}
 	
 	final Target getTarget(final String id)

@@ -64,4 +64,10 @@ public final class EditorFilter extends LiveServlet
 		
 		return null;
 	}
+	
+	@Override
+	protected String getHome()
+	{
+		return "edited";
+	}
 }

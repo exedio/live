@@ -103,7 +103,7 @@ final class Bar
 	{
 		if(!Cop.isPost(request))
 		{
-			LiveServlet.redirectHome(request, response);
+			servlet.redirectHome(request, response);
 			return;
 		}
 		
