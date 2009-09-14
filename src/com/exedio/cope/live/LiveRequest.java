@@ -254,10 +254,10 @@ public final class LiveRequest
 		
 		return
 			"<form action=\"" + action() + "\" method=\"POST\" class=\"contentEditorPosition\">" +
-				"<input type=\"hidden\" name=\"" + Bar.BAR_REFERER   + "\" value=\"" + referer()                + "\">" +
-				"<input type=\"hidden\" name=\"" + Bar.BAR_FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
-				"<input type=\"hidden\" name=\"" + Bar.BAR_ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
-				"<input type=\"hidden\" name=\"" + Bar.BAR_ITEM      + "\" value=\"" + item.getCopeID()         + "\">" +
+				"<input type=\"hidden\" name=\"" + Bar.REFERER   + "\" value=\"" + referer()                + "\">" +
+				"<input type=\"hidden\" name=\"" + Bar.FEATURE   + "\" value=\"" + feature.getID()          + "\">" +
+				"<input type=\"hidden\" name=\"" + Bar.ITEM_FROM + "\" value=\"" + previousItem.getCopeID() + "\">" +
+				"<input type=\"hidden\" name=\"" + Bar.ITEM      + "\" value=\"" + item.getCopeID()         + "\">" +
 				(
 					buttonURL!=null
 					? ("<input type=\"image\" src=\"" + buttonURL + "\" alt=\"Swap with previous item\">")
@@ -303,7 +303,7 @@ public final class LiveRequest
 				action(),
 				referer(),
 				borders,
-				borders ? Bar.BAR_BORDERS_OFF : Bar.BAR_BORDERS_ON,
+				borders ? Bar.BORDERS_OFF : Bar.BORDERS_ON,
 				borders ? anchor.borderDisableButtonURL : anchor.borderEnableButtonURL,
 				anchor.hideButtonURL,
 				anchor.closeButtonURL,

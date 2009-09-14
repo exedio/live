@@ -60,23 +60,23 @@ final class Bar
 		servlet.startTransaction(name);
 	}
 	
-	static final String BAR_REFERER = "referer";
-	static final String BAR_BORDERS_ON  = "borders.on";
-	static final String BAR_BORDERS_OFF = "borders.off";
-	static final String BAR_CLOSE = "close";
-	static final String BAR_SWITCH_TARGET = "target.switch";
-	static final String BAR_SAVE_TARGET   = "target.save";
+	static final String REFERER = "referer";
+	static final String BORDERS_ON  = "borders.on";
+	static final String BORDERS_OFF = "borders.off";
+	static final String CLOSE = "close";
+	static final String SWITCH_TARGET = "target.switch";
+	static final String SAVE_TARGET   = "target.save";
 	
-	static final String BAR_FEATURE = "feature";
-	static final String BAR_ITEM    = "item";
-	static final String BAR_TEXT    = "text";
-	static final String BAR_FILE    = "file";
-	static final String BAR_ITEM_FROM = "itemPrevious";
-	static final String BAR_PUBLISH_NOW = "publishNow";
+	static final String FEATURE = "feature";
+	static final String ITEM    = "item";
+	static final String TEXT    = "text";
+	static final String FILE    = "file";
+	static final String ITEM_FROM = "itemPrevious";
+	static final String PUBLISH_NOW = "publishNow";
 	
-	private static final String BAR_CLOSE_IMAGE       = BAR_CLOSE       + ".x";
-	private static final String BAR_BORDERS_ON_IMAGE  = BAR_BORDERS_ON  + ".x";
-	private static final String BAR_BORDERS_OFF_IMAGE = BAR_BORDERS_OFF + ".x";
+	private static final String CLOSE_IMAGE       = CLOSE       + ".x";
+	private static final String BORDERS_ON_IMAGE  = BORDERS_ON  + ".x";
+	private static final String BORDERS_OFF_IMAGE = BORDERS_OFF + ".x";
 	
 	@SuppressWarnings("deprecation")
 	private static final boolean isMultipartContent(final HttpServletRequest request)
@@ -122,7 +122,7 @@ final class Bar
 				throw new RuntimeException(e);
 			}
 			
-			final String featureID = fields.get(BAR_FEATURE);
+			final String featureID = fields.get(FEATURE);
 			if(featureID==null)
 				throw new NullPointerException();
 			
@@ -130,11 +130,11 @@ final class Bar
 			if(feature==null)
 				throw new NullPointerException(featureID);
 			
-			final String itemID = fields.get(BAR_ITEM);
+			final String itemID = fields.get(ITEM);
 			if(itemID==null)
 				throw new NullPointerException();
 			
-			final FileItem file = files.get(BAR_FILE);
+			final FileItem file = files.get(FILE);
 		
 			try
 			{
@@ -142,7 +142,7 @@ final class Bar
 				
 				final Item item = model.getItem(itemID);
 
-				if(fields.get(BAR_PUBLISH_NOW)!=null)
+				if(fields.get(PUBLISH_NOW)!=null)
 				{
 					for(final History history : History.getHistories(item.getCopeType()))
 					{
@@ -172,27 +172,27 @@ final class Bar
 				model.rollbackIfNotCommitted();
 			}
 			
-			referer = fields.get(BAR_REFERER);
+			referer = fields.get(REFERER);
 		}
 		else // isMultipartContent
 		{
-			if(request.getParameter(BAR_BORDERS_ON)!=null || request.getParameter(BAR_BORDERS_ON_IMAGE)!=null)
+			if(request.getParameter(BORDERS_ON)!=null || request.getParameter(BORDERS_ON_IMAGE)!=null)
 			{
 				anchor.borders = true;
 			}
-			else if(request.getParameter(BAR_BORDERS_OFF)!=null || request.getParameter(BAR_BORDERS_OFF_IMAGE)!=null)
+			else if(request.getParameter(BORDERS_OFF)!=null || request.getParameter(BORDERS_OFF_IMAGE)!=null)
 			{
 				anchor.borders = false;
 			}
-			else if(request.getParameter(BAR_CLOSE)!=null || request.getParameter(BAR_CLOSE_IMAGE)!=null)
+			else if(request.getParameter(CLOSE)!=null || request.getParameter(CLOSE_IMAGE)!=null)
 			{
 				httpSession.removeAttribute(LiveServlet.ANCHOR);
 			}
-			else if(request.getParameter(BAR_SWITCH_TARGET)!=null)
+			else if(request.getParameter(SWITCH_TARGET)!=null)
 			{
-				anchor.setTarget(servlet.getTarget(request.getParameter(BAR_SWITCH_TARGET)));
+				anchor.setTarget(servlet.getTarget(request.getParameter(SWITCH_TARGET)));
 			}
-			else if(request.getParameter(BAR_SAVE_TARGET)!=null)
+			else if(request.getParameter(SAVE_TARGET)!=null)
 			{
 				try
 				{
@@ -208,7 +208,7 @@ final class Bar
 			}
 			else
 			{
-				final String featureID = request.getParameter(BAR_FEATURE);
+				final String featureID = request.getParameter(FEATURE);
 				if(featureID==null)
 					throw new NullPointerException();
 				
@@ -216,14 +216,14 @@ final class Bar
 				if(featureO==null)
 					throw new NullPointerException(featureID);
 				
-				final String itemID = request.getParameter(BAR_ITEM);
+				final String itemID = request.getParameter(ITEM);
 				if(itemID==null)
 					throw new NullPointerException();
 				
 				if(featureO instanceof StringField)
 				{
 					final StringField feature = (StringField)featureO;
-					final String value = request.getParameter(BAR_TEXT);
+					final String value = request.getParameter(TEXT);
 				
 					try
 					{
@@ -231,7 +231,7 @@ final class Bar
 						
 						final Item item = model.getItem(itemID);
 	
-						if(request.getParameter(BAR_PUBLISH_NOW)!=null)
+						if(request.getParameter(PUBLISH_NOW)!=null)
 						{
 							String v = value;
 							if("".equals(v))
@@ -263,7 +263,7 @@ final class Bar
 				else
 				{
 					final IntegerField feature = (IntegerField)featureO;
-					final String itemIDFrom = request.getParameter(BAR_ITEM_FROM);
+					final String itemIDFrom = request.getParameter(ITEM_FROM);
 					if(itemIDFrom==null)
 						throw new NullPointerException();
 					
@@ -304,7 +304,7 @@ final class Bar
 				}
 			}
 			
-			referer = request.getParameter(BAR_REFERER);
+			referer = request.getParameter(REFERER);
 		}
 		
 		if(referer!=null)
