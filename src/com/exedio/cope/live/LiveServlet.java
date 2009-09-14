@@ -151,8 +151,6 @@ public abstract class LiveServlet extends CopsServlet
 		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/edited")); // TODO
 	}
 	
-	static final String AVOID_COLLISION = "contentEditorBar823658617";
-	
 	static final String PREVIEW_OVERVIEW = "po";
 	static final String MODIFICATION_PUBLISH = "modification.publish";
 	static final String MODIFICATION_DISCARD = "modification.discard";
@@ -519,10 +517,6 @@ public abstract class LiveServlet extends CopsServlet
 	}
 	
 	static final String ANCHOR = Session.class.getName();
-	
-	static final String EDIT_METHOD_LINE = AVOID_COLLISION + "line";
-	static final String EDIT_METHOD_FILE = AVOID_COLLISION + "file";
-	static final String EDIT_METHOD_AREA = AVOID_COLLISION + "area";
 	
 	private static final void writeBody(
 			final StringBuilder out,

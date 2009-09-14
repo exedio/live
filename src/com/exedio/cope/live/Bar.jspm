@@ -20,7 +20,7 @@
 package com.exedio.cope.live;
 
 import static com.exedio.cops.XMLEncoder.encode;
-import static com.exedio.cope.live.LiveServlet.AVOID_COLLISION;
+import static com.exedio.cope.live.Bar.AVOID_COLLISION;
 
 import java.util.ArrayList;
 
@@ -147,7 +147,7 @@ final class Bar_Jspm
 			var previousBorder = null;
 			var previousModifiable = false;
 			
-			function <%=LiveServlet.EDIT_METHOD_LINE%>(border,feature,item,value,modifiable)
+			function <%=Bar.EDIT_METHOD_LINE%>(border,feature,item,value,modifiable)
 			{
 				if(previousBorder==border)
 					return true;
@@ -172,7 +172,7 @@ final class Bar_Jspm
 				
 				return false;
 			}
-			function <%=LiveServlet.EDIT_METHOD_FILE%>(border,feature,item,value,modifiable)
+			function <%=Bar.EDIT_METHOD_FILE%>(border,feature,item,value,modifiable)
 			{
 				if(previousBorder==border)
 					return true;
@@ -197,7 +197,7 @@ final class Bar_Jspm
 				
 				return false;
 			}
-			function <%=LiveServlet.EDIT_METHOD_AREA%>(border,feature,item,value,modifiable)
+			function <%=Bar.EDIT_METHOD_AREA%>(border,feature,item,value,modifiable)
 			{
 				if(previousBorder==border)
 					return true;

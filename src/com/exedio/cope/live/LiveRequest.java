@@ -169,7 +169,7 @@ public final class LiveRequest
 			append(
 				" class=\"contentEditorLink\"" +
 				" onclick=\"" +
-					"return " + (block ? LiveServlet.EDIT_METHOD_AREA : LiveServlet.EDIT_METHOD_LINE) + "(this,'").
+					"return " + (block ? Bar.EDIT_METHOD_AREA : Bar.EDIT_METHOD_LINE) + "(this,'").
 						append(feature.getID()).
 						append("','").
 						append(item.getCopeID()).
@@ -210,7 +210,7 @@ public final class LiveRequest
 				" class=\"contentEditorLink\"" +
 				onload +
 				" onclick=\"" +
-					"return " + LiveServlet.EDIT_METHOD_FILE + "(this,'").
+					"return " + Bar.EDIT_METHOD_FILE + "(this,'").
 						append(feature.getID()).
 						append("','").
 						append(item.getCopeID()).

@@ -60,6 +60,12 @@ final class Bar
 		servlet.startTransaction(name);
 	}
 	
+	static final String AVOID_COLLISION = "contentEditorBar823658617";
+	
+	static final String EDIT_METHOD_LINE = AVOID_COLLISION + "line";
+	static final String EDIT_METHOD_FILE = AVOID_COLLISION + "file";
+	static final String EDIT_METHOD_AREA = AVOID_COLLISION + "area";
+	
 	static final String REFERER = "referer";
 	static final String BORDERS_ON  = "borders.on";
 	static final String BORDERS_OFF = "borders.off";
