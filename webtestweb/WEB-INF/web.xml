@@ -41,7 +41,7 @@
 		<auth-constraint><role-name>manager</role-name></auth-constraint>
 	</security-constraint>
 	
-	<filter>
+	<!-- to be enabled with class OutFilter only filter>
 		<filter-name>editor</filter-name>
 		<filter-class>com.exedio.cope.live.util.LiveFilter</filter-class>
 	</filter>
@@ -49,7 +49,7 @@
 		<filter-name>editor</filter-name>
 		<servlet-name>edited</servlet-name>
 		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
+	</filter-mapping-->
 	
 	<servlet>
 		<servlet-name>media</servlet-name>
