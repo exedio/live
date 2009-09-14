@@ -42,7 +42,6 @@ final class Anchor implements Serializable // for session persistence
 	final String borderEnableButtonURL;
 	final String hideButtonURL;
 	final String closeButtonURL;
-	final String previousPositionButtonURL;
 	final String servletPath;
 	
 	final String user;
@@ -56,9 +55,7 @@ final class Anchor implements Serializable // for session persistence
 	Anchor(
 			final Target defaultTarget,
 			final boolean draftsEnabled,
-			final LiveServlet filter,
 			final HttpServletRequest request,
-			final HttpServletResponse response,
 			final String user,
 			final Session session,
 			final String sessionName)
@@ -70,7 +67,6 @@ final class Anchor implements Serializable // for session persistence
 		this.borderEnableButtonURL  = request!=null ? LiveServlet.borderEnable .getURL(request) : null;
 		this.hideButtonURL          = request!=null ? LiveServlet.hide         .getURL(request) : null;
 		this.closeButtonURL         = request!=null ? LiveServlet.close        .getURL(request) : null;
-		this.previousPositionButtonURL = filter!=null ? filter.getPreviousPositionButtonURL(request, response) : null;
 		this.servletPath = request!=null ? (request.getContextPath() + request.getServletPath() + '/') : null;
 		
 		this.user = user;

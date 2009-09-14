@@ -92,12 +92,13 @@ final class EditedServlet_Jspm
 			<input type="submit" name="something" value="post file">
 		</form>
 		<ol><%
+		boolean swapIcon = false;
 		for(final EditedItem item : items)
 		{
 			%>
 			<li>
 				<%=item.getCopeID()%>
-				p(<%=item.getPosition()%>,<% out.swap(item.position, item); %>)
+				p(<%=item.getPosition()%>,<% if(swapIcon = !swapIcon) out.swapIcon(item.position, item); else out.swapText(item.position, item); %>)
 				<ul>
 					<li>field: <%= item.getField(), item.field, item %> (<%=item.getField()%>) {<%= "---"+item.getField()+"---", item.field, item %>}</li>
 					<li>fieldBlock: <pre><%= item.getFieldBlock(), item.fieldBlock, item %></pre> <pre><%=item.getFieldBlock()%></pre></li>

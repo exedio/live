@@ -46,7 +46,7 @@ public class SaveTest extends CopeTest
 		item = deleteOnTearDown(new DraftedItem());
 		draft = deleteOnTearDown(new Draft("user", "name", "comment"));
 		item.setString("oldString1");
-		anchor = new Anchor(TargetNewDraft.INSTANCE, true, null, null, null, "anchorUser", SESSION, "anchorSessionName");
+		anchor = new Anchor(TargetNewDraft.INSTANCE, true, null, "anchorUser", SESSION, "anchorSessionName");
 		anchor.modify("newString1", DraftedItem.string, item);
 	}
 	

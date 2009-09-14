@@ -231,14 +231,6 @@ public final class LiveRequest
 		return edit(feature.getSource(), item, false);
 	}
 	
-	public String edit(final IntegerField feature, final Item item)
-	{
-		if(!anchor.borders)
-			return "";
-		
-		return edit(feature, item, anchor.previousPositionButtonURL);
-	}
-	
 	public String edit(final IntegerField feature, final Item item, final String buttonURL)
 	{
 		if(!anchor.borders)

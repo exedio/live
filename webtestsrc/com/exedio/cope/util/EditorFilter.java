@@ -20,9 +20,6 @@ package com.exedio.cope.util;
 
 import java.io.Serializable;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.exedio.cope.live.LiveServlet;
 
 public final class EditorFilter extends LiveServlet
@@ -66,12 +63,5 @@ public final class EditorFilter extends LiveServlet
 			return new Session(user);
 		
 		return null;
-	}
-	
-	@Override
-	protected String getPreviousPositionButtonURL(final HttpServletRequest request, final HttpServletResponse response)
-	{
-		return request.getContextPath() + "/previous.png";
-		//return null;
 	}
 }

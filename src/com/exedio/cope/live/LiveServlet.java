@@ -110,12 +110,6 @@ public abstract class LiveServlet extends CopsServlet
 	
 	protected abstract Session login(String user, String password);
 	
-	@SuppressWarnings("unused")
-	protected String getPreviousPositionButtonURL(HttpServletRequest request, HttpServletResponse response)
-	{
-		return null;
-	}
-	
 	@Override
 	public final void doRequest(
 			final HttpServletRequest request,
@@ -286,7 +280,7 @@ public abstract class LiveServlet extends CopsServlet
 				final Session session = login(user, password);
 				if(session!=null)
 				{
-					httpSession.setAttribute(ANCHOR, new Anchor(defaultTarget, draftsEnabled, this, request, response, user, session, session.getName()));
+					httpSession.setAttribute(ANCHOR, new Anchor(defaultTarget, draftsEnabled, request, user, session, session.getName()));
 					redirectHome(request, response);
 				}
 				else

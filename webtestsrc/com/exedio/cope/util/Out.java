@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.exedio.cope.IntegerField;
@@ -36,10 +37,12 @@ import com.exedio.cope.pattern.MediaFilter;
 final class Out
 {
 	private final PrintStream bf;
+	private final HttpServletRequest request;
 	
-	Out(final HttpServletResponse response) throws IOException
+	Out(final HttpServletRequest request, final HttpServletResponse response) throws IOException
 	{
 		this.bf = new PrintStream(response.getOutputStream(), false, EditedServlet.ENCODING);
+		this.request = request;
 	}
 	
 	void write(final String s)
@@ -112,9 +115,14 @@ final class Out
 		bf.print(LiveFilter.edit(feature, item));
 	}
 	
-	void swap(final IntegerField feature, final Item item)
+	void swapIcon(final IntegerField feature, final Item item)
 	{
-		bf.print(LiveFilter.edit(feature, item));
+		bf.print(LiveFilter.edit(feature, item, request.getContextPath() + "/previous.png"));
+	}
+	
+	void swapText(final IntegerField feature, final Item item)
+	{
+		bf.print(LiveFilter.edit(feature, item, null));
 	}
 	
 	void close()

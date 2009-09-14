@@ -137,15 +137,6 @@ public final class LiveFilter implements Filter
 		return tl.edit(feature, item);
 	}
 	
-	public static final String edit(final IntegerField feature, final Item item)
-	{
-		final LiveRequest tl = threadLocal.get();
-		if(tl==null)
-			return "";
-		
-		return tl.edit(feature, item);
-	}
-	
 	public static final String edit(final IntegerField feature, final Item item, final String buttonURL)
 	{
 		final LiveRequest tl = threadLocal.get();
