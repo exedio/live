@@ -230,7 +230,7 @@ final class Management
 					targets.add(new TargetDraft(draft));
 				targets.add(TargetNewDraft.INSTANCE);
 			}
-			Preview_Jspm.writeOverview(
+			Management_Jspm.writeOverview(
 					out,
 					request, response,
 					response.encodeURL(request.getContextPath() + request.getServletPath() + '?' + PREVIEW_OVERVIEW + "=t"),
