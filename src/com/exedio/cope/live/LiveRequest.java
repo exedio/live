@@ -257,12 +257,14 @@ public final class LiveRequest
 			"</form>";
 	}
 	
-	public void writeHead(final StringBuilder out)
+	public String getHead()
 	{
+		final StringBuilder out = new StringBuilder();
 		Bar_Jspm.writeHead(out, anchor.borders);
+		return out.toString();
 	}
 	
-	public void writeBar(final StringBuilder out)
+	public String getBar()
 	{
 		final ArrayList<Target> targets = new ArrayList<Target>();
 		targets.add(TargetLive.INSTANCE);
@@ -274,6 +276,7 @@ public final class LiveRequest
 			targets.add(TargetNewDraft.INSTANCE);
 		}
 		final boolean borders = anchor.borders;
+		final StringBuilder out = new StringBuilder();
 		Bar_Jspm.write(out,
 				anchor.getTarget(),
 				targets,
@@ -286,6 +289,7 @@ public final class LiveRequest
 				anchor.closeButtonURL,
 				anchor.getModificationsCount(),
 				anchor.sessionName);
+		return out.toString();
 	}
 	
 	private String action()

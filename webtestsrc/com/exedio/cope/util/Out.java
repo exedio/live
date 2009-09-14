@@ -92,12 +92,12 @@ final class Out
 	
 	void writeEditorHead()
 	{
-		LiveFilter.writeHead(bf);
+		bf.append(LiveFilter.getHead());
 	}
 	
 	void writeEditorBar()
 	{
-		LiveFilter.writeBar(bf);
+		bf.append(LiveFilter.getBar());
 	}
 	
 	void write(final String s, final StringField feature, final Item item)

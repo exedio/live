@@ -145,21 +145,21 @@ public final class LiveFilter implements Filter
 		return tl.swap(feature, item, buttonURL);
 	}
 	
-	public static final void writeHead(final StringBuilder out)
+	public static final String getHead()
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
-			return;
+			return "";
 		
-		tl.writeHead(out);
+		return tl.getHead();
 	}
 	
-	public static final void writeBar(final StringBuilder out)
+	public static final String getBar()
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
-			return;
+			return "";
 		
-		tl.writeBar(out);
+		return tl.getBar();
 	}
 }
