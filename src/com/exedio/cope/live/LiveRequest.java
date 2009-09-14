@@ -230,7 +230,7 @@ public final class LiveRequest
 		return edit(feature.getSource(), item, false);
 	}
 	
-	public String edit(final IntegerField feature, final Item item, final String buttonURL)
+	public String swap(final IntegerField feature, final Item item, final String buttonURL)
 	{
 		if(!anchor.borders)
 			return "";

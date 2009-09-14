@@ -142,7 +142,7 @@ public final class LiveFilter implements Filter
 		if(tl==null)
 			return "";
 		
-		return tl.edit(feature, item, buttonURL);
+		return tl.swap(feature, item, buttonURL);
 	}
 	
 	public static final void writeHead(final StringBuilder out)
