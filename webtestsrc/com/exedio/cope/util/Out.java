@@ -39,7 +39,10 @@ final class Out
 	private final PrintStream bf;
 	private final HttpServletRequest request;
 	
-	Out(final HttpServletRequest request, final HttpServletResponse response) throws IOException
+	Out(
+			final HttpServletRequest request,
+			final HttpServletResponse response)
+	throws IOException
 	{
 		this.bf = new PrintStream(response.getOutputStream(), false, EditedServlet.ENCODING);
 		this.request = request;
