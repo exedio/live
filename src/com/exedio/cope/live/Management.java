@@ -66,7 +66,7 @@ final class Management
 	static final String TARGET_ID   = "target.id";
 	static final String TARGET_OPEN = "target.load";
 	
-	final void doPreviewOverview(
+	final void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
 			final boolean draftsEnabled,

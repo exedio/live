@@ -131,7 +131,7 @@ public abstract class LiveServlet extends CopsServlet
 		else
 		{
 			if(request.getParameter(Management.PREVIEW_OVERVIEW)!=null)
-				management.doPreviewOverview(request, response, draftsEnabled, (Anchor)anchor);
+				management.doRequest(request, response, draftsEnabled, (Anchor)anchor);
 			else if(request.getParameter(MEDIA_FEATURE)!=null)
 				doMedia(request, response, (Anchor)anchor);
 			else
