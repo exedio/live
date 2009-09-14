@@ -63,13 +63,15 @@ final class OutRequest extends Out
 	@Override
 	void writeEditorHead()
 	{
-		if(live!=null) bf.append(live.getHead());
+		if(live!=null)
+			bf.append(live.getHead());
 	}
 	
 	@Override
 	void writeEditorBar()
 	{
-		if(live!=null) bf.append(live.getBar());
+		if(live!=null)
+			bf.append(live.getBar());
 	}
 	
 	@Override
@@ -87,24 +89,28 @@ final class OutRequest extends Out
 	@Override
 	void edit(final Media feature, final Item item)
 	{
-		if(live!=null) bf.append(live.edit(feature, item));
+		if(live!=null)
+			bf.append(live.edit(feature, item));
 	}
 	
 	@Override
 	void edit(final MediaFilter feature, final Item item)
 	{
-		if(live!=null) bf.append(live.edit(feature, item));
+		if(live!=null)
+			bf.append(live.edit(feature, item));
 	}
 	
 	@Override
 	void swapIcon(final IntegerField feature, final Item item)
 	{
-		if(live!=null) bf.append(live.swap(feature, item, request.getContextPath() + "/previous.png"));
+		if(live!=null)
+			bf.append(live.swap(feature, item, request.getContextPath() + "/previous.png"));
 	}
 	
 	@Override
 	void swapText(final IntegerField feature, final Item item)
 	{
-		if(live!=null) bf.append(live.swap(feature, item, null));
+		if(live!=null)
+			bf.append(live.swap(feature, item, null));
 	}
 }
