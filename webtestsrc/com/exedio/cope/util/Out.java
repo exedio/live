@@ -19,9 +19,9 @@
 package com.exedio.cope.util;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Date;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,44 +33,46 @@ import com.exedio.cope.live.util.LiveFilter;
 import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
+import com.exedio.cops.CopsServlet;
 
 final class Out
 {
-	private final PrintStream bf;
+	private final StringBuilder bf;
 	private final HttpServletRequest request;
+	private final HttpServletResponse response;
 	
 	Out(
 			final HttpServletRequest request,
 			final HttpServletResponse response)
-	throws IOException
 	{
-		this.bf = new PrintStream(response.getOutputStream(), false, EditedServlet.ENCODING);
+		this.bf = new StringBuilder();
 		this.request = request;
+		this.response = response;
 	}
 	
 	void write(final String s)
 	{
-		bf.print(s);
+		bf.append(s);
 	}
 	
 	void write(final Date d)
 	{
-		bf.print(d);
+		bf.append(d);
 	}
 	
 	void write(final Session s)
 	{
-		bf.print(s);
+		bf.append(s);
 	}
 	
 	void write(final boolean b)
 	{
-		bf.print(b);
+		bf.append(b);
 	}
 	
 	void write(final int i)
 	{
-		bf.print(i);
+		bf.append(i);
 	}
 	
 	boolean isEditorLoggedIn()
@@ -100,36 +102,48 @@ final class Out
 	
 	void write(final String s, final StringField feature, final Item item)
 	{
-		bf.print(LiveFilter.edit(s, feature, item));
+		bf.append(LiveFilter.edit(s, feature, item));
 	}
 	
 	<K> void write(final String s, final MapField<K, String> feature, final Item item, final K key)
 	{
-		bf.print(LiveFilter.edit(s, feature, item, key));
+		bf.append(LiveFilter.edit(s, feature, item, key));
 	}
 	
 	void edit(final Media feature, final Item item)
 	{
-		bf.print(LiveFilter.edit(feature, item));
+		bf.append(LiveFilter.edit(feature, item));
 	}
 	
 	void edit(final MediaFilter feature, final Item item)
 	{
-		bf.print(LiveFilter.edit(feature, item));
+		bf.append(LiveFilter.edit(feature, item));
 	}
 	
 	void swapIcon(final IntegerField feature, final Item item)
 	{
-		bf.print(LiveFilter.edit(feature, item, request.getContextPath() + "/previous.png"));
+		bf.append(LiveFilter.edit(feature, item, request.getContextPath() + "/previous.png"));
 	}
 	
 	void swapText(final IntegerField feature, final Item item)
 	{
-		bf.print(LiveFilter.edit(feature, item, null));
+		bf.append(LiveFilter.edit(feature, item, null));
 	}
 	
-	void close()
+	void sendBody() throws IOException
 	{
-		bf.close();
+		final String s = bf.toString();
+		ServletOutputStream stream = null;
+		try
+		{
+			stream = response.getOutputStream();
+			final byte[] bytes = s.getBytes(CopsServlet.UTF8);
+			stream.write(bytes);
+		}
+		finally
+		{
+			if(stream!=null)
+				stream.close();
+		}
 	}
 }

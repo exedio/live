@@ -18,7 +18,6 @@
 
 package com.exedio.cope.live;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -256,20 +255,6 @@ public final class LiveRequest
 					: ("<input type=\"submit\" value=\"Up\">")
 				) +
 			"</form>";
-	}
-	
-	public void writeHead(final PrintStream out)
-	{
-		final StringBuilder bf = new StringBuilder();
-		writeHead(bf);
-		out.print(bf);
-	}
-	
-	public void writeBar(final PrintStream out)
-	{
-		final StringBuilder bf = new StringBuilder();
-		writeBar(bf);
-		out.print(bf);
 	}
 	
 	public void writeHead(final StringBuilder out)

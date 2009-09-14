@@ -119,11 +119,11 @@ public final class EditedServlet extends HttpServlet
 					EditedItem.TYPE.search(null, EditedItem.position, true));
 			model.commit();
 			response.setStatus(HttpServletResponse.SC_OK);
+			out.sendBody();
 		}
 		finally
 		{
 			model.rollbackIfNotCommitted();
-			out.close();
 		}
 	}
 	

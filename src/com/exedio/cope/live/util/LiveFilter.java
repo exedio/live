@@ -19,7 +19,6 @@
 package com.exedio.cope.live.util;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -144,24 +143,6 @@ public final class LiveFilter implements Filter
 			return "";
 		
 		return tl.edit(feature, item, buttonURL);
-	}
-	
-	public static final void writeHead(final PrintStream out)
-	{
-		final LiveRequest tl = threadLocal.get();
-		if(tl==null)
-			return;
-		
-		tl.writeHead(out);
-	}
-	
-	public static final void writeBar(final PrintStream out)
-	{
-		final LiveRequest tl = threadLocal.get();
-		if(tl==null)
-			return;
-		
-		tl.writeBar(out);
 	}
 	
 	public static final void writeHead(final StringBuilder out)
