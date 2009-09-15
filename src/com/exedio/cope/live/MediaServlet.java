@@ -51,7 +51,7 @@ final class MediaServlet
 	static final String MEDIA_FEATURE = "mf";
 	static final String MEDIA_ITEM = "mi";
 	
-	final void doMedia(
+	final void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
 			final Anchor anchor)
