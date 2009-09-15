@@ -49,15 +49,15 @@ final class MediaServlet
 	}
 	
 	static final String PATH_INFO = "media";
-	private static final String MEDIA_FEATURE = "mf";
-	private static final String MEDIA_ITEM = "mi";
+	private static final String FEATURE = "mf";
+	private static final String ITEM = "mi";
 	
 	static String makeURL(final Media feature, final Item item)
 	{
 		return
 			PATH_INFO +
-			'?' + MediaServlet.MEDIA_FEATURE + '=' + feature.getID() +
-			'&' + MediaServlet.MEDIA_ITEM + '=' + item.getCopeID();
+			'?' + MediaServlet.FEATURE + '=' + feature.getID() +
+			'&' + MediaServlet.ITEM + '=' + item.getCopeID();
 	}
 	
 	final void doRequest(
@@ -65,14 +65,14 @@ final class MediaServlet
 			final HttpServletResponse response,
 			final Anchor anchor)
 	{
-		final String featureID = request.getParameter(MEDIA_FEATURE);
+		final String featureID = request.getParameter(FEATURE);
 		if(featureID==null)
 			throw new NullPointerException();
 		final Media feature = (Media)model.getFeature(featureID);
 		if(feature==null)
 			throw new NullPointerException(featureID);
 		
-		final String itemID = request.getParameter(MEDIA_ITEM);
+		final String itemID = request.getParameter(ITEM);
 		if(itemID==null)
 			throw new NullPointerException();
 		
