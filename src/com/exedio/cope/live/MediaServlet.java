@@ -49,7 +49,7 @@ final class MediaServlet
 	}
 	
 	static final String PATH_INFO = "media";
-	static final String MEDIA_FEATURE = "mf";
+	private static final String MEDIA_FEATURE = "mf";
 	private static final String MEDIA_ITEM = "mi";
 	
 	static String makeURL(final Media feature, final Item item)
