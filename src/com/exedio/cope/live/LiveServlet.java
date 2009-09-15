@@ -126,9 +126,10 @@ public abstract class LiveServlet extends CopsServlet
 			doLogin(request, httpSession, response);
 		else
 		{
+			final String pathInfo = request.getPathInfo();
 			if(request.getParameter(Management.PREVIEW_OVERVIEW)!=null)
 				management.doRequest(request, response, draftsEnabled, (Anchor)anchor);
-			else if(request.getParameter(MediaServlet.MEDIA_FEATURE)!=null)
+			else if(('/' + MediaServlet.PATH_INFO).equals(pathInfo))
 				media.doRequest(request, response, (Anchor)anchor);
 			else
 				bar.doRequest(request, httpSession, response, (Anchor)anchor);

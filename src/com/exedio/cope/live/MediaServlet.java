@@ -48,12 +48,14 @@ final class MediaServlet
 		servlet.startTransaction(name);
 	}
 	
+	static final String PATH_INFO = "media";
 	static final String MEDIA_FEATURE = "mf";
 	private static final String MEDIA_ITEM = "mi";
 	
 	static String makeURL(final Media feature, final Item item)
 	{
 		return
+			PATH_INFO +
 			'?' + MediaServlet.MEDIA_FEATURE + '=' + feature.getID() +
 			'&' + MediaServlet.MEDIA_ITEM + '=' + item.getCopeID();
 	}
