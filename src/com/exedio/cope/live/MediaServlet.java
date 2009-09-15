@@ -51,6 +51,13 @@ final class MediaServlet
 	static final String MEDIA_FEATURE = "mf";
 	static final String MEDIA_ITEM = "mi";
 	
+	static String makeURL(final Media feature, final Item item)
+	{
+		return
+			'?' + MediaServlet.MEDIA_FEATURE + '=' + feature.getID() +
+			'&' + MediaServlet.MEDIA_ITEM + '=' + item.getCopeID();
+	}
+	
 	final void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
