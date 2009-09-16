@@ -157,7 +157,7 @@ final class Anchor implements Serializable // for session persistence
 	
 	String getHistoryAuthor()
 	{
-		return (sessionName!=null ? sessionName : user) + " (CCE)";
+		return (sessionName!=null ? sessionName : user) + " (live)";
 	}
 	
 	@Override
