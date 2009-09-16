@@ -76,15 +76,15 @@ final class Login_Jspm
 			<table>
 				<tr>
 					<td>Login</td>
-					<td><input name="<%=LoginServlet.LOGIN_USER%>"<% if(failureUser!=null){%> value="<%=encode(failureUser)%>"<%} %>></td>
+					<td><input name="<%=LoginServlet.USER%>"<% if(failureUser!=null){%> value="<%=encode(failureUser)%>"<%} %>></td>
 				</tr>
 				<tr>
 					<td>Password</td>
-					<td><input name="<%=LoginServlet.LOGIN_PASSWORD%>" type="password"></td>
+					<td><input name="<%=LoginServlet.PASSWORD%>" type="password"></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><input name="<%=LoginServlet.LOGIN_SUBMIT%>" type="submit" value="Login"></td>
+					<td><input name="<%=LoginServlet.SUBMIT%>" type="submit" value="Login"></td>
 				</tr>
 			</table>
 		</form>

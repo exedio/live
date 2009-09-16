@@ -49,9 +49,9 @@ final class LoginServlet
 	
 	static final String ANCHOR = Session.class.getName();
 	
-	static final String LOGIN_SUBMIT   = "login.submit";
-	static final String LOGIN_USER     = "login.user";
-	static final String LOGIN_PASSWORD = "login.password";
+	static final String SUBMIT   = "login.submit";
+	static final String USER     = "login.user";
+	static final String PASSWORD = "login.password";
 	
 	void doRequest(
 			final HttpServletRequest request,
@@ -61,10 +61,10 @@ final class LoginServlet
 	{
 		assert httpSession!=null;
 		response.setContentType("text/html; charset="+UTF8);
-		if(Cop.isPost(request) && request.getParameter(LOGIN_SUBMIT)!=null)
+		if(Cop.isPost(request) && request.getParameter(SUBMIT)!=null)
 		{
-			final String user = request.getParameter(LOGIN_USER);
-			final String password = request.getParameter(LOGIN_PASSWORD);
+			final String user = request.getParameter(USER);
+			final String password = request.getParameter(PASSWORD);
 			try
 			{
 				startTransaction("login");
