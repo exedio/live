@@ -49,7 +49,7 @@ final class LoginServlet
 	static final String LOGIN_USER     = "login.user";
 	static final String LOGIN_PASSWORD = "login.password";
 	
-	final void doLogin(
+	final void doRequest(
 			final boolean draftsEnabled,
 			final Target defaultTarget,
 			final HttpServletRequest request,

@@ -124,7 +124,7 @@ public abstract class LiveServlet extends CopsServlet
 		final Object anchor = httpSession.getAttribute(LoginServlet.ANCHOR);
 		
 		if(anchor==null)
-			login.doLogin(draftsEnabled, defaultTarget, request, httpSession, response);
+			login.doRequest(draftsEnabled, defaultTarget, request, httpSession, response);
 		else
 		{
 			final String pathInfo = request.getPathInfo();
