@@ -196,7 +196,7 @@ final class Bar
 			}
 			else if(request.getParameter(CLOSE)!=null || request.getParameter(CLOSE_IMAGE)!=null)
 			{
-				httpSession.removeAttribute(LiveServlet.ANCHOR);
+				httpSession.removeAttribute(LoginServlet.ANCHOR);
 			}
 			else if(request.getParameter(SWITCH_TARGET)!=null)
 			{

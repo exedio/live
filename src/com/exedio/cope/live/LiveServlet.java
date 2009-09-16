@@ -32,7 +32,6 @@ import com.exedio.cope.NoSuchIDException;
 import com.exedio.cope.Type;
 import com.exedio.cope.util.ConnectToken;
 import com.exedio.cope.util.ServletUtil;
-import com.exedio.cops.Cop;
 import com.exedio.cops.CopsServlet;
 import com.exedio.cops.Resource;
 
@@ -48,6 +47,7 @@ public abstract class LiveServlet extends CopsServlet
 	static final Resource close         = new Resource("close.png");
 	
 	private final Model model;
+	private final LoginServlet login;
 	private final Bar bar;
 	private final Management management;
 	private final MediaServlet media;
@@ -62,6 +62,7 @@ public abstract class LiveServlet extends CopsServlet
 			throw new NullPointerException("model");
 		
 		this.model = model;
+		this.login = new LoginServlet(model, this);
 		this.bar = new Bar(model, this);
 		this.management = new Management(model, this);
 		this.media = new MediaServlet(model, this);
@@ -120,10 +121,10 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		request.setCharacterEncoding(UTF8);
 		final HttpSession httpSession = request.getSession(true);
-		final Object anchor = httpSession.getAttribute(ANCHOR);
+		final Object anchor = httpSession.getAttribute(LoginServlet.ANCHOR);
 		
 		if(anchor==null)
-			doLogin(request, httpSession, response);
+			login.doLogin(draftsEnabled, defaultTarget, request, httpSession, response);
 		else
 		{
 			final String pathInfo = request.getPathInfo();
@@ -171,54 +172,6 @@ public abstract class LiveServlet extends CopsServlet
 			}
 		}
 	}
-	
-	static final String LOGIN_SUBMIT   = "login.submit";
-	static final String LOGIN_USER     = "login.user";
-	static final String LOGIN_PASSWORD = "login.password";
-	
-	private final void doLogin(
-			final HttpServletRequest request,
-			final HttpSession httpSession,
-			final HttpServletResponse response)
-	throws IOException
-	{
-		assert httpSession!=null;
-		response.setContentType("text/html; charset="+UTF8);
-		if(Cop.isPost(request) && request.getParameter(LOGIN_SUBMIT)!=null)
-		{
-			final String user = request.getParameter(LOGIN_USER);
-			final String password = request.getParameter(LOGIN_PASSWORD);
-			try
-			{
-				startTransaction("login");
-				final Session session = login(user, password);
-				if(session!=null)
-				{
-					httpSession.setAttribute(ANCHOR, new Anchor(defaultTarget, draftsEnabled, request, user, session, session.getName()));
-					redirectHome(request, response);
-				}
-				else
-				{
-					final StringBuilder out = new StringBuilder();
-					Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), user);
-					writeBody(out, response);
-				}
-				model.commit();
-			}
-			finally
-			{
-				model.rollbackIfNotCommitted();
-			}
-		}
-		else
-		{
-			final StringBuilder out = new StringBuilder();
-			Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), null);
-			writeBody(out, response);
-		}
-	}
-	
-	static final String ANCHOR = Session.class.getName();
 	
 	static final void writeBody(
 			final StringBuilder out,

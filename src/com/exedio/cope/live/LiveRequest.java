@@ -46,7 +46,7 @@ public final class LiveRequest
 		if(session==null)
 			return null;
 		
-		final Object anchor = session.getAttribute(LiveServlet.ANCHOR);
+		final Object anchor = session.getAttribute(LoginServlet.ANCHOR);
 		if(anchor==null)
 			return null;
 		
