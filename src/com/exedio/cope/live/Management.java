@@ -38,11 +38,13 @@ import com.exedio.cops.Cop;
 final class Management
 {
 	private final Model model;
+	private final boolean draftsEnabled;
 	private final LiveServlet servlet;
 	
-	Management(final Model model, final LiveServlet servlet)
+	Management(final Model model, final boolean draftsEnabled, final LiveServlet servlet)
 	{
 		this.model = model;
+		this.draftsEnabled = draftsEnabled;
 		this.servlet = servlet;
 	}
 	
@@ -69,7 +71,6 @@ final class Management
 	final void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
-			final boolean draftsEnabled,
 			final Anchor anchor)
 	throws IOException
 	{

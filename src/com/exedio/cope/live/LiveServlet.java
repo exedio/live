@@ -60,30 +60,29 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		if(model==null)
 			throw new NullPointerException("model");
+		final boolean draftsEnabled = draftsEnabled(model);
 		
 		this.model = model;
-		this.login = new LoginServlet(model, this);
+		this.login = new LoginServlet(model, draftsEnabled, this);
 		this.bar = new Bar(model, this);
-		this.management = new Management(model, this);
+		this.management = new Management(model, draftsEnabled, this);
 		this.media = new MediaServlet(model, this);
 	}
 	
-	private boolean draftsEnabled = false;
-	private Target defaultTarget = TargetLive.INSTANCE;
+	private static boolean draftsEnabled(final Model model)
+	{
+		for(final Type<?> type : model.getTypes())
+			if(type==DraftItem.TYPE) // DraftItem implies Draft because of the parent field
+				return true;
+		return false;
+	}
+	
 	private ConnectToken connectToken = null;
 	
 	@Override
 	public final void init(final ServletConfig config) throws ServletException
 	{
 		super.init(config);
-		
-		for(final Type<?> type : model.getTypes())
-			if(type==DraftItem.TYPE) // DraftItem implies Draft because of the parent field
-			{
-				draftsEnabled = true;
-				defaultTarget = TargetNewDraft.INSTANCE;
-				break;
-			}
 		
 		connectToken = ServletUtil.connect(model, config, getClass().getName());
 		model.reviseIfSupported();
@@ -124,12 +123,12 @@ public abstract class LiveServlet extends CopsServlet
 		final Object anchor = httpSession.getAttribute(LoginServlet.ANCHOR);
 		
 		if(anchor==null)
-			login.doRequest(draftsEnabled, defaultTarget, request, httpSession, response);
+			login.doRequest(request, httpSession, response);
 		else
 		{
 			final String pathInfo = request.getPathInfo();
 			if(request.getParameter(Management.PREVIEW_OVERVIEW)!=null)
-				management.doRequest(request, response, draftsEnabled, (Anchor)anchor);
+				management.doRequest(request, response, (Anchor)anchor);
 			else if(('/' + MediaServlet.PATH_INFO).equals(pathInfo))
 				media.doRequest(request, response, (Anchor)anchor);
 			else

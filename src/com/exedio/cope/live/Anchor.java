@@ -53,14 +53,13 @@ final class Anchor implements Serializable // for session persistence
 	final GetterSet<Modification> modifications = new GetterSet<Modification>();
 	
 	Anchor(
-			final Target defaultTarget,
 			final boolean draftsEnabled,
 			final HttpServletRequest request,
 			final String user,
 			final Session session,
 			final String sessionName)
 	{
-		this.defaultTarget = defaultTarget;
+		this.defaultTarget = draftsEnabled ? TargetNewDraft.INSTANCE : TargetLive.INSTANCE;
 		this.draftsEnabled = draftsEnabled;
 		
 		this.borderDisableButtonURL = LiveServlet.borderDisable.getURL(request);

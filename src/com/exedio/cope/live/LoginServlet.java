@@ -32,11 +32,13 @@ import com.exedio.cops.Cop;
 final class LoginServlet
 {
 	private final Model model;
+	private final boolean draftsEnabled;
 	private final LiveServlet servlet;
 	
-	LoginServlet(final Model model, final LiveServlet servlet)
+	LoginServlet(final Model model, final boolean draftsEnabled, final LiveServlet servlet)
 	{
 		this.model = model;
+		this.draftsEnabled = draftsEnabled;
 		this.servlet = servlet;
 	}
 	
@@ -52,8 +54,6 @@ final class LoginServlet
 	static final String LOGIN_PASSWORD = "login.password";
 	
 	final void doRequest(
-			final boolean draftsEnabled,
-			final Target defaultTarget,
 			final HttpServletRequest request,
 			final HttpSession httpSession,
 			final HttpServletResponse response)
@@ -71,7 +71,7 @@ final class LoginServlet
 				final Session session = servlet.login(user, password);
 				if(session!=null)
 				{
-					httpSession.setAttribute(ANCHOR, new Anchor(defaultTarget, draftsEnabled, request, user, session, session.getName()));
+					httpSession.setAttribute(ANCHOR, new Anchor(draftsEnabled, request, user, session, session.getName()));
 					servlet.redirectHome(request, response);
 				}
 				else
