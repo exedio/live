@@ -4,6 +4,6 @@ TODO for cope live editor
 - resolve conflicts when publishing modifications/drafts
 - preview for thumbnails
 - provide constants for css classes etc
-- let filter provide icons for editor bar
-- let filter provide css/icons as external resources
+- let filter provide css as external resources
 - make sure, History is maintained everywhere, also when saving drafts etc.
+- allow drafts for position swapping
