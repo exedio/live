@@ -99,7 +99,7 @@ public final class LiveRequest
 		return anchor.session;
 	}
 	
-	private static final void checkEdit(final Feature feature, final Item item)
+	private static void checkEdit(final Feature feature, final Item item)
 	{
 		if(feature==null)
 			throw new NullPointerException("feature");
@@ -109,7 +109,7 @@ public final class LiveRequest
 			throw new IllegalArgumentException("item " + item.getCopeID() + " does not belong to type of feature " + feature.getID());
 	}
 	
-	private static final <K> Item getItem(final MapField<K, String> feature, final K key, final Item item)
+	private static <K> Item getItem(final MapField<K, String> feature, final K key, final Item item)
 	{
 		return
 				feature.getRelationType().searchSingletonStrict(

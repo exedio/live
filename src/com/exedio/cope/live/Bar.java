@@ -55,7 +55,7 @@ final class Bar
 		this.servlet = servlet;
 	}
 	
-	private final void startTransaction(final String name)
+	private void startTransaction(final String name)
 	{
 		servlet.startTransaction(name);
 	}
@@ -89,12 +89,12 @@ final class Bar
 	private static final String BORDERS_OFF_IMAGE = BORDERS_OFF + ".x";
 	
 	@SuppressWarnings("deprecation")
-	private static final boolean isMultipartContent(final HttpServletRequest request)
+	private static boolean isMultipartContent(final HttpServletRequest request)
 	{
 		return ServletFileUpload.isMultipartContent(request);
 	}
 	
-	final void doRequest(
+	void doRequest(
 			final HttpServletRequest request,
 			final HttpSession httpSession,
 			final HttpServletResponse response,

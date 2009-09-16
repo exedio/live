@@ -42,7 +42,7 @@ final class LoginServlet
 		this.servlet = servlet;
 	}
 	
-	private final void startTransaction(final String name)
+	private void startTransaction(final String name)
 	{
 		servlet.startTransaction(name);
 	}
@@ -53,7 +53,7 @@ final class LoginServlet
 	static final String LOGIN_USER     = "login.user";
 	static final String LOGIN_PASSWORD = "login.password";
 	
-	final void doRequest(
+	void doRequest(
 			final HttpServletRequest request,
 			final HttpSession httpSession,
 			final HttpServletResponse response)

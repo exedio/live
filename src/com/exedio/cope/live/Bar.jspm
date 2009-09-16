@@ -49,7 +49,7 @@ final class Bar_Jspm
 	
 	private static final String ONKEY_METHOD_LINE = AVOID_COLLISION + "onkeyline";
 	
-	static final void writeHead(
+	static void writeHead(
 			final StringBuilder out,
 			final boolean borders)
 	{
@@ -233,7 +233,7 @@ final class Bar_Jspm
 		}
 	}
 	
-	static final void write(
+	static void write(
 			final StringBuilder out,
 			final Target target,
 			final ArrayList<Target> targets,

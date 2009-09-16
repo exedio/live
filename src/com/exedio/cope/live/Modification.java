@@ -69,7 +69,7 @@ abstract class Modification implements Serializable // for session persistence
 	}
 	
 	@Override
-	public String toString()
+	public final String toString()
 	{
 		return feature + '-' + item.getCopeID();
 	}

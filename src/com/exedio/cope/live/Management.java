@@ -48,7 +48,7 @@ final class Management
 		this.servlet = servlet;
 	}
 	
-	private final void startTransaction(final String name)
+	private void startTransaction(final String name)
 	{
 		servlet.startTransaction(name);
 	}
@@ -68,7 +68,7 @@ final class Management
 	static final String TARGET_ID   = "target.id";
 	static final String TARGET_OPEN = "target.load";
 	
-	final void doRequest(
+	void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
 			final Anchor anchor)
