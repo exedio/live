@@ -95,12 +95,6 @@ final class MediaServlet
 		final FileItem fi = anchor.getModification(feature, item);
 		if(fi==null)
 			throw new NullPointerException(featureID + '-' + itemID);
-		response.addHeader("Cache-Control", "no-cache");
-		response.addHeader("Cache-Control", "no-store");
-		response.addHeader("Cache-Control", "max-age=0");
-		response.addHeader("Cache-Control", "must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", System.currentTimeMillis());
 		response.setContentType(fi.getContentType());
 		response.setContentLength((int)fi.getSize());
 		

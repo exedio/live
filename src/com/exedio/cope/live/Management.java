@@ -246,12 +246,6 @@ final class Management
 		}
 		
 		response.setContentType("text/html; charset="+UTF8);
-		response.addHeader("Cache-Control", "no-cache");
-		response.addHeader("Cache-Control", "no-store");
-		response.addHeader("Cache-Control", "max-age=0");
-		response.addHeader("Cache-Control", "must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", System.currentTimeMillis());
 		LiveServlet.writeBody(out, response);
 	}
 }
