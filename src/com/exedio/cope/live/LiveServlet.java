@@ -127,7 +127,7 @@ public abstract class LiveServlet extends CopsServlet
 		else
 		{
 			final String pathInfo = request.getPathInfo();
-			if(request.getParameter(Management.PREVIEW_OVERVIEW)!=null)
+			if(('/' + Management.PATH_INFO).equals(pathInfo))
 				management.doRequest(request, response, (Anchor)anchor);
 			else if(('/' + MediaServlet.PATH_INFO).equals(pathInfo))
 				media.doRequest(request, response, (Anchor)anchor);

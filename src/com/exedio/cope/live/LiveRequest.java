@@ -282,6 +282,7 @@ public final class LiveRequest
 				targets,
 				action(),
 				referer(),
+				response.encodeURL(anchor.servletPath + Management.PATH_INFO),
 				borders,
 				borders ? Bar.BORDERS_OFF : Bar.BORDERS_ON,
 				borders ? anchor.borderDisableButtonURL : anchor.borderEnableButtonURL,

@@ -53,7 +53,7 @@ final class Management
 		servlet.startTransaction(name);
 	}
 	
-	static final String PREVIEW_OVERVIEW = "po";
+	static final String PATH_INFO = "management";
 	static final String MODIFICATION_PUBLISH = "modification.publish";
 	static final String MODIFICATION_DISCARD = "modification.discard";
 	static final String MODIFICATION_PERSIST = "modification.persist";
@@ -234,7 +234,7 @@ final class Management
 			Management_Jspm.write(
 					out,
 					request, response,
-					response.encodeURL(request.getContextPath() + request.getServletPath() + '?' + PREVIEW_OVERVIEW + "=t"),
+					response.encodeURL(request.getContextPath() + request.getServletPath() + '/' + PATH_INFO),
 					anchor.getModifications(),
 					anchor.getTarget(), targets,
 					draftsEnabled, drafts);
