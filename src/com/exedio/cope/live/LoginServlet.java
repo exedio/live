@@ -76,9 +76,7 @@ final class LoginServlet
 				}
 				else
 				{
-					final StringBuilder out = new StringBuilder();
-					Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), user);
-					LiveServlet.writeBody(out, response);
+					write(request, response, user);
 				}
 				model.commit();
 			}
@@ -89,9 +87,18 @@ final class LoginServlet
 		}
 		else
 		{
-			final StringBuilder out = new StringBuilder();
-			Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), null);
-			LiveServlet.writeBody(out, response);
+			write(request, response, null);
 		}
+	}
+	
+	private void write(
+			final HttpServletRequest request,
+			final HttpServletResponse response,
+			final String user)
+	throws IOException
+	{
+		final StringBuilder out = new StringBuilder();
+		Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), user);
+		LiveServlet.writeBody(out, response);
 	}
 }
