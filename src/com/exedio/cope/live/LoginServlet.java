@@ -45,6 +45,8 @@ final class LoginServlet
 		servlet.startTransaction(name);
 	}
 	
+	static final String ANCHOR = Session.class.getName();
+	
 	static final String LOGIN_SUBMIT   = "login.submit";
 	static final String LOGIN_USER     = "login.user";
 	static final String LOGIN_PASSWORD = "login.password";
@@ -92,6 +94,4 @@ final class LoginServlet
 			LiveServlet.writeBody(out, response);
 		}
 	}
-	
-	static final String ANCHOR = Session.class.getName();
 }
