@@ -12,12 +12,12 @@
 	
 	<context-param>
 		<param-name>model</param-name>
-		<param-value>com.exedio.cope.util.EditedServlet#model</param-value>
+		<param-value>com.exedio.cope.live.webtest.EditedServlet#model</param-value>
 	</context-param>
 	
 	<servlet>
 		<servlet-name>edited</servlet-name>
-		<servlet-class>com.exedio.cope.util.EditedServlet</servlet-class>
+		<servlet-class>com.exedio.cope.live.webtest.EditedServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>edited</servlet-name>
@@ -26,7 +26,7 @@
 	
 	<servlet>
 		<servlet-name>live</servlet-name>
-		<servlet-class>com.exedio.cope.util.EditorFilter</servlet-class>
+		<servlet-class>com.exedio.cope.live.webtest.EditorFilter</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>live</servlet-name>

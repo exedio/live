@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.exedio.cope.util;
+package com.exedio.cope.live.webtest;
 
 import java.io.IOException;
 
@@ -29,6 +29,8 @@ import com.exedio.cope.Model;
 import com.exedio.cope.live.Draft;
 import com.exedio.cope.live.DraftItem;
 import com.exedio.cope.pattern.Media;
+import com.exedio.cope.util.ConnectToken;
+import com.exedio.cope.util.ServletUtil;
 
 public final class EditedServlet extends HttpServlet
 {
