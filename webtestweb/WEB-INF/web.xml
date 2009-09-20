@@ -30,14 +30,14 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>live</servlet-name>
-		<url-pattern>/edited/copeLiveEdit.html/*</url-pattern>
+		<url-pattern>/edited/livePath/*</url-pattern>
 	</servlet-mapping>
 	<!-- don't know, why this is needed here,
 		  copsResourceStatus.html protects itself
 		  and this works for all other servlets -->
 	<security-role><role-name>manager</role-name></security-role>
 	<security-constraint>
-		<web-resource-collection><url-pattern>/edited/copeLiveEdit.html/copsResourceStatus.html</url-pattern></web-resource-collection>
+		<web-resource-collection><url-pattern>/edited/livePath/copsResourceStatus.html</url-pattern></web-resource-collection>
 		<auth-constraint><role-name>manager</role-name></auth-constraint>
 	</security-constraint>
 	

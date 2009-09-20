@@ -116,7 +116,7 @@ public final class EditedServlet extends HttpServlet
 			model.startTransaction("EditedServlet");
 			EditedServlet_Jspm.write(out,
 					response,
-					response.encodeURL(request.getContextPath() + "/edited/copeLiveEdit.html"),
+					response.encodeURL(request.getContextPath() + "/edited/livePath"),
 					response.encodeURL(request.getContextPath() + "/edited/duplicate.html"),
 					EditedItem.TYPE.search(null, EditedItem.position, true));
 			model.commit();
