@@ -22,11 +22,11 @@ import java.io.Serializable;
 
 import com.exedio.cope.live.LiveServlet;
 
-public final class EditorFilter extends LiveServlet
+public final class Live extends LiveServlet
 {
 	private static final long serialVersionUID = 1l;
 	
-	public EditorFilter()
+	public Live()
 	{
 		super(EditedServlet.model);
 	}
