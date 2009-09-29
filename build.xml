@@ -146,16 +146,11 @@
 			<zipfileset dir="${basedir}/src"><include name="**/*.java"/><exclude name="**/*_Jspm.java" /></zipfileset>
 		</zip>
 	</target>
-	
-	<target name="webtest.compile"
-			depends="webtest.jspm, webtest.instrument, core.compile">
-		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
-			<classpath>
-				<pathelement location="build/classes" />
-				<pathelement location="lib/servlet-api.jar" />
-				<pathelement location="lib/exedio-cope.jar" />
-			</classpath>
-		</ljavac>
+
+	<target name="webtest.jspm">
+		<jspm method="write">
+			<fileset dir="webtestsrc" includes="**/*.jspm" />
+		</jspm>
 	</target>
 	
 	<target name="webtest.instrument" unless="skip.instrument">
@@ -169,11 +164,16 @@
 			</fileset>
 		</instrument>
 	</target>
-
-	<target name="webtest.jspm">
-		<jspm method="write">
-			<fileset dir="webtestsrc" includes="**/*.jspm" />
-		</jspm>
+	
+	<target name="webtest.compile"
+			depends="webtest.jspm, webtest.instrument, core.compile">
+		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
+			<classpath>
+				<pathelement location="build/classes" />
+				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/exedio-cope.jar" />
+			</classpath>
+		</ljavac>
 	</target>
 
 	<target name="webtest.web"
