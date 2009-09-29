@@ -148,7 +148,7 @@
 	</target>
 	
 	<target name="webtest.compile"
-			depends="webtest.instrument, core.compile">
+			depends="webtest.jspm, webtest.instrument, core.compile">
 		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
 			<classpath>
 				<pathelement location="build/classes" />
