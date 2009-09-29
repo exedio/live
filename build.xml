@@ -83,7 +83,15 @@
 		</copy>
 	</target>
 	
-	<target name="test.compile" depends="core.compile">
+	<target name="test.instrument" unless="skip.instrument">
+		<instrument verbose="false" finalArgs="true">
+			<fileset dir="testsrc">
+				<include name="com/exedio/cope/live/DraftedItem.java" />
+			</fileset>
+		</instrument>
+	</target>
+	
+	<target name="test.compile" depends="core.compile, test.instrument">
 		<ljavac srcdir="testsrc" destdir="build/testclasses">
 			<classpath>
 				<pathelement location="build/classes" />
@@ -222,7 +230,7 @@
 	
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	
-	<target name="instrument" depends="webtest.instrument" />
+	<target name="instrument" depends="test.instrument, webtest.instrument" />
 	
 	<target name="compile" depends="core.compile, webtest.web, test.compile" />
 	
