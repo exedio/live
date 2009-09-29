@@ -84,7 +84,7 @@
 	</target>
 	
 	<target name="test.instrument" unless="skip.instrument">
-		<instrument verbose="false" finalArgs="true">
+		<instrument verbose="false">
 			<fileset dir="testsrc">
 				<include name="com/exedio/cope/live/DraftedItem.java" />
 			</fileset>
