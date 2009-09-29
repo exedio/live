@@ -18,6 +18,7 @@
 
 package com.exedio.cope.live;
 
+import com.exedio.cope.ActivationParameters;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.ItemField;
@@ -26,7 +27,6 @@ import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
 import com.exedio.cope.UniqueConstraint;
 import com.exedio.cope.pattern.PartOf;
-import com.exedio.cope.util.ReactivationConstructorDummy;
 
 public final class DraftItem extends Item
 {
@@ -66,9 +66,9 @@ public final class DraftItem extends Item
 		super(setValues);
 	}
 	
-	@SuppressWarnings("unused") private DraftItem(final ReactivationConstructorDummy d, final int pk)
+	@SuppressWarnings("unused") private DraftItem(final ActivationParameters ap)
 	{
-		super(d,pk);
+		super(ap);
 	}
 	
 	Draft getParent()

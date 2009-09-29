@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import com.exedio.cope.ActivationParameters;
 import com.exedio.cope.Cope;
 import com.exedio.cope.DateField;
 import com.exedio.cope.Item;
@@ -30,7 +31,6 @@ import com.exedio.cope.SetValue;
 import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
 import com.exedio.cope.pattern.MapField;
-import com.exedio.cope.util.ReactivationConstructorDummy;
 
 public final class Draft extends Item
 {
@@ -120,9 +120,9 @@ public final class Draft extends Item
 		super(setValues);
 	}
 	
-	@SuppressWarnings("unused") private Draft(final ReactivationConstructorDummy d, final int pk)
+	@SuppressWarnings("unused") private Draft(final ActivationParameters ap)
 	{
-		super(d,pk);
+		super(ap);
 	}
 	
 	private static final long serialVersionUID = 1l;
