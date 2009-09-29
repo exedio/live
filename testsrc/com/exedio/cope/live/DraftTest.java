@@ -18,8 +18,8 @@
 
 package com.exedio.cope.live;
 
-import com.exedio.cope.junit.CopeTest;
 import com.exedio.cope.Model;
+import com.exedio.cope.junit.CopeTest;
 
 public class DraftTest extends CopeTest
 {
