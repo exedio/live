@@ -30,6 +30,7 @@ import com.exedio.cope.Query;
 import com.exedio.cope.SetValue;
 import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
+import com.exedio.cope.TypesBound;
 import com.exedio.cope.pattern.MapField;
 
 public final class Draft extends Item
@@ -127,5 +128,5 @@ public final class Draft extends Item
 	
 	private static final long serialVersionUID = 1l;
 
-	public static final Type<Draft> TYPE = newType(Draft.class);
+	public static final Type<Draft> TYPE = TypesBound.newType(Draft.class);
 }

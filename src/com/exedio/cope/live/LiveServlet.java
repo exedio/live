@@ -29,7 +29,6 @@ import javax.servlet.http.HttpSession;
 
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
-import com.exedio.cope.Type;
 import com.exedio.cope.util.ConnectToken;
 import com.exedio.cope.util.ServletUtil;
 import com.exedio.cops.CopsServlet;
@@ -60,21 +59,13 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		if(model==null)
 			throw new NullPointerException("model");
-		final boolean draftsEnabled = draftsEnabled(model);
+		final boolean draftsEnabled = model.containsTypeSet(Draft.TYPE, DraftItem.TYPE);
 		
 		this.model = model;
 		this.login = new LoginServlet(model, draftsEnabled, this);
 		this.bar = new Bar(model, this);
 		this.management = new Management(model, draftsEnabled, this);
 		this.media = new MediaServlet(model, this);
-	}
-	
-	private static boolean draftsEnabled(final Model model)
-	{
-		for(final Type<?> type : model.getTypes())
-			if(type==DraftItem.TYPE) // DraftItem implies Draft because of the parent field
-				return true;
-		return false;
 	}
 	
 	private ConnectToken connectToken = null;

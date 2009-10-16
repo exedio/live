@@ -25,6 +25,7 @@ import com.exedio.cope.ItemField;
 import com.exedio.cope.SetValue;
 import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
+import com.exedio.cope.TypesBound;
 import com.exedio.cope.UniqueConstraint;
 import com.exedio.cope.pattern.PartOf;
 
@@ -113,5 +114,5 @@ public final class DraftItem extends Item
 	
 	private static final long serialVersionUID = 1l;
 	
-	public static final Type<DraftItem> TYPE = newType(DraftItem.class);
+	public static final Type<DraftItem> TYPE = TypesBound.newType(DraftItem.class);
 }
