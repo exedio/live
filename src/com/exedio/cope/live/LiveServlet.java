@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -160,25 +159,6 @@ public abstract class LiveServlet extends CopsServlet
 			{
 				model.rollbackIfNotCommitted();
 			}
-		}
-	}
-	
-	static final void writeBody(
-			final StringBuilder out,
-			final HttpServletResponse response)
-		throws IOException
-	{
-		ServletOutputStream outStream = null;
-		try
-		{
-			outStream = response.getOutputStream();
-			final byte[] outBytes = out.toString().getBytes(UTF8);
-			outStream.write(outBytes);
-		}
-		finally
-		{
-			if(outStream!=null)
-				outStream.close();
 		}
 	}
 }

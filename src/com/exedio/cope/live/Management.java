@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
 import com.exedio.cope.StringField;
+import com.exedio.cops.BodySender;
 import com.exedio.cops.Cop;
 
 final class Management
@@ -246,6 +247,6 @@ final class Management
 		}
 		
 		response.setContentType("text/html; charset="+UTF8);
-		LiveServlet.writeBody(out, response);
+		BodySender.send(response, out, UTF8);
 	}
 }

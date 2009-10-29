@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.exedio.cope.Model;
+import com.exedio.cops.BodySender;
 import com.exedio.cops.Cop;
 
 final class LoginServlet
@@ -99,6 +100,6 @@ final class LoginServlet
 	{
 		final StringBuilder out = new StringBuilder();
 		Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), user);
-		LiveServlet.writeBody(out, response);
+		BodySender.send(response, out, UTF8);
 	}
 }

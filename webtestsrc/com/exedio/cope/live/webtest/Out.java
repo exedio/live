@@ -21,7 +21,6 @@ package com.exedio.cope.live.webtest;
 import java.io.IOException;
 import java.util.Date;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +31,7 @@ import com.exedio.cope.live.Session;
 import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
+import com.exedio.cops.BodySender;
 import com.exedio.cops.CopsServlet;
 
 abstract class Out
@@ -88,18 +88,6 @@ abstract class Out
 	
 	final void sendBody() throws IOException
 	{
-		final String s = bf.toString();
-		ServletOutputStream stream = null;
-		try
-		{
-			stream = response.getOutputStream();
-			final byte[] bytes = s.getBytes(CopsServlet.UTF8);
-			stream.write(bytes);
-		}
-		finally
-		{
-			if(stream!=null)
-				stream.close();
-		}
+		BodySender.send(response, bf, CopsServlet.UTF8);
 	}
 }
