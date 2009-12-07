@@ -28,8 +28,8 @@ import javax.servlet.http.HttpSession;
 
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
-import com.exedio.cope.util.ConnectToken;
-import com.exedio.cope.util.ServletUtil;
+import com.exedio.cope.misc.ConnectToken;
+import com.exedio.cope.misc.ServletUtil;
 import com.exedio.cops.CopsServlet;
 import com.exedio.cops.Resource;
 

@@ -29,8 +29,8 @@ import com.exedio.cope.Model;
 import com.exedio.cope.live.Draft;
 import com.exedio.cope.live.DraftItem;
 import com.exedio.cope.pattern.Media;
-import com.exedio.cope.util.ConnectToken;
-import com.exedio.cope.util.ServletUtil;
+import com.exedio.cope.misc.ConnectToken;
+import com.exedio.cope.misc.ServletUtil;
 
 public final class EditedServlet extends HttpServlet
 {
