@@ -78,10 +78,14 @@ public final class EditedServlet extends HttpServlet
 				number,
 				"item" + number,
 				"item" + number + "fieldBlock\nsecond line\r\nthird line",
+				Media.toValue(EditedServlet.class.getResourceAsStream(image), imageContentType),
+				number+100,
+				"COMPUTED" + number,
 				Media.toValue(EditedServlet.class.getResourceAsStream(image), imageContentType));
 		item1.setMap(1, "item" + number + "map1");
 		item1.setMap(2, "item" + number + "map2");
 		item1.setMapBlock(1, "item" + number + "map1Block\nsecond line\r\nthird line");
+		item1.setComputedMap(1, "COMPUTED" + number + "map");
 		return item1;
 	}
 

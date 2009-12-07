@@ -78,6 +78,10 @@ final class EditedServlet_Jspm
 	<body><%
 		out.writeEditorBar();
 		%>
+		<h3>Contents</h3>
+		<ul>
+			<li><a href="#computed">Computed</a></li>
+		</ul>
 		isLoggedIn:<%=out.isEditorLoggedIn()%>
 		isBordersEnabled:<%=out.isEditorBordersEnabled()%>
 		getSession:<%=out.getEditorSession()%>
@@ -121,6 +125,29 @@ final class EditedServlet_Jspm
 					}
 					%>
 				</ul>
+			</li><%
+		}
+		%>
+		</ol>
+		<h3><a name="computed">Computed</a></h3>
+		<ol><%
+		swapIcon = false;
+		for(final EditedItem item : items)
+		{
+			swapIcon = !swapIcon;
+			%>
+			<li>
+				COMPUTED:
+				(<%=item.getComputedPosition()%>,<%
+					if(swapIcon)
+						out.swapIcon(item.computedPosition, item);
+					else
+						out.swapText(item.computedPosition, item);
+				%>)
+				<%= item.getComputedField(), item.computedField, item %>
+				<%= item.getComputedMap(1), item.computedMap, item, 1 %>
+				<img src="<%=item.getComputedImageURL()%>"<% out.edit(item.computedImage, item); %> height="40">
+				<img src="<%=item.getComputedThumbnailURL()%>"<% out.edit(item.computedThumbnail, item); %>>
 			</li><%
 		}
 		%>

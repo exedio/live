@@ -31,6 +31,7 @@ import com.exedio.cope.Feature;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
+import com.exedio.cope.misc.Computed;
 import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
@@ -120,6 +121,8 @@ public final class LiveRequest
 	public <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
 	{
 		checkEdit(feature, item);
+		if(feature.isAnnotationPresent(Computed.class))
+			return content + "<img src=\"" + anchor.errorButtonURL + "\" title=\"ignoring @Computed MapField " + feature + "\">";
 		
 		return edit(
 				content,
@@ -132,6 +135,8 @@ public final class LiveRequest
 		checkEdit(feature, item);
 		if(feature.isFinal())
 			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
+		if(feature.isAnnotationPresent(Computed.class))
+			return content + "<img src=\"" + anchor.errorButtonURL + "\" title=\"ignoring @Computed StringField " + feature + "\">";
 		
 		if(!anchor.borders)
 		{
@@ -238,6 +243,8 @@ public final class LiveRequest
 		checkEdit(feature, item);
 		if(feature.isFinal())
 			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
+		if(feature.isAnnotationPresent(Computed.class))
+			return "<img src=\"" + anchor.errorButtonURL + "\" title=\"ignoring @Computed IntegerField " + feature + "\">";
 		
 		final Item previousItem = registerPositionItem(feature, item);
 		if(previousItem==null)

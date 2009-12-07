@@ -42,6 +42,7 @@ final class Anchor implements Serializable // for session persistence
 	final String borderEnableButtonURL;
 	final String hideButtonURL;
 	final String closeButtonURL;
+	final String errorButtonURL;
 	final String servletPath;
 	
 	final String user;
@@ -66,6 +67,7 @@ final class Anchor implements Serializable // for session persistence
 		this.borderEnableButtonURL  = LiveServlet.borderEnable .getURL(request);
 		this.hideButtonURL          = LiveServlet.hide         .getURL(request);
 		this.closeButtonURL         = LiveServlet.close        .getURL(request);
+		this.errorButtonURL         = LiveServlet.error        .getURL(request);
 		this.servletPath = request.getContextPath() + request.getServletPath() + '/'; // TODO remove trailing slash
 		
 		this.user = user;

@@ -43,6 +43,7 @@ public abstract class LiveServlet extends CopsServlet
 	static final Resource borderEnable  = new Resource("borderEnable.png");
 	static final Resource hide          = new Resource("hide.png");
 	static final Resource close         = new Resource("close.png");
+	static final Resource error         = new Resource("error.png");
 	
 	private final Model model;
 	private final LoginServlet login;

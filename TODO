@@ -7,3 +7,4 @@ TODO for cope live editor
 - let filter provide css as external resources
 - make sure, History is maintained everywhere, also when saving drafts etc.
 - allow drafts for position swapping
+- obey @Computed for Media and MediaFilter as well
