@@ -35,7 +35,6 @@ abstract class Modification implements Serializable // for session persistence
 		this.feature = feature.getID(); // id is serializable
 		this.item = item;
 		
-		assert feature!=null;
 		assert item!=null;
 	}
 	
