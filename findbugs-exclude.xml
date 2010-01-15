@@ -27,6 +27,6 @@
 		<!-- TODO -->
 		<!-- HTTP Response splitting vulnerability -->
 		<Bug pattern="HRS_REQUEST_PARAMETER_TO_HTTP_HEADER" />
-		<Class name="com.exedio.cope.live.Bar" />
+		<Method type="com.exedio.cope.live.Bar" name="doRequest" />
 	</Match>
 </FindBugsFilter>
