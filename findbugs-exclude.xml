@@ -24,8 +24,11 @@
 		</Or>
 	</Match>
 	<Match>
-		<!-- TODO -->
 		<!-- HTTP Response splitting vulnerability -->
+		<!--
+			tomcat is immune against such attacks,
+			it replaces dangerous characters by white space
+		-->
 		<Bug pattern="HRS_REQUEST_PARAMETER_TO_HTTP_HEADER" />
 		<Method type="com.exedio.cope.live.Bar" name="doRequest" />
 	</Match>
