@@ -119,7 +119,7 @@ final class EditedServlet_Jspm
 					<li>HE: "<%=event.getDate()%>", "<%=event.getAuthor()%>"<%if(event.isNew()){%> NEW<%}%><%
 						for(final History.Feature feature : event.getFeatures())
 						{
-							%><b><%=feature.getId()%></b> "<%=feature.getName()%>" "<%=feature.getOld()%>" "<%=feature.getNew()%>"<%
+							%><b><%=feature.getFeatureID()%></b> "<%=feature.getName()%>" "<%=feature.getOld()%>" "<%=feature.getNew()%>"<%
 						}
 						%></li><%
 					}
