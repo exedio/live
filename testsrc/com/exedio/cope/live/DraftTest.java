@@ -19,9 +19,9 @@
 package com.exedio.cope.live;
 
 import com.exedio.cope.Model;
-import com.exedio.cope.junit.CopeTest;
+import com.exedio.cope.junit.CopeModelTest;
 
-public class DraftTest extends CopeTest
+public class DraftTest extends CopeModelTest
 {
 	static final Model MODEL = new Model(DraftedItem.TYPE, Draft.TYPE, DraftItem.TYPE);
 	
@@ -39,10 +39,10 @@ public class DraftTest extends CopeTest
 	public void setUp() throws Exception
 	{
 		super.setUp();
-		i1 = deleteOnTearDown(new DraftedItem());
-		i2 = deleteOnTearDown(new DraftedItem());
-		dn = deleteOnTearDown(new Draft("userNull", null, "commentNull"));
-		d  = deleteOnTearDown(new Draft("user", "name", "comment"));
+		i1 = new DraftedItem();
+		i2 = new DraftedItem();
+		dn = new Draft("userNull", null, "commentNull");
+		d  = new Draft("user", "name", "comment");
 	}
 	
 	public void testIt()
@@ -94,5 +94,7 @@ public class DraftTest extends CopeTest
 		assertEquals(i2.getCopeID(), d1.getItem());
 		assertEquals("oldString3", d1.getOldValue());
 		assertEquals("newString3", d1.getNewValue());
+		
+		model.commit();
 	}
 }

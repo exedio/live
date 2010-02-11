@@ -18,9 +18,9 @@
 
 package com.exedio.cope.live;
 
-import com.exedio.cope.junit.CopeTest;
+import com.exedio.cope.junit.CopeModelTest;
 
-public class SaveTest extends CopeTest
+public class SaveTest extends CopeModelTest
 {
 	public SaveTest()
 	{
@@ -43,8 +43,8 @@ public class SaveTest extends CopeTest
 	public void setUp() throws Exception
 	{
 		super.setUp();
-		item = deleteOnTearDown(new DraftedItem());
-		draft = deleteOnTearDown(new Draft("user", "name", "comment"));
+		item = new DraftedItem();
+		draft = new Draft("user", "name", "comment");
 		item.setString("oldString1");
 		anchor = new Anchor(true, new CopsDummyRequest(), "anchorUser", SESSION, "anchorSessionName");
 		anchor.modify("newString1", DraftedItem.string, item);
@@ -82,7 +82,7 @@ public class SaveTest extends CopeTest
 		assertContains(draft, Draft.TYPE.search());
 		
 		TargetNewDraft.INSTANCE.save(anchor);
-		final Draft newDraft = deleteOnTearDown(Draft.TYPE.searchSingleton(Draft.TYPE.getThis().notEqual(draft)));
+		final Draft newDraft = Draft.TYPE.searchSingleton(Draft.TYPE.getThis().notEqual(draft));
 		assertEquals("anchorSessionName", newDraft.getAuthor());
 		assertEquals("new draft", newDraft.getComment());
 		assertEquals("anchorSessionName - new draft", newDraft.getDropDownSummary());
@@ -97,5 +97,7 @@ public class SaveTest extends CopeTest
 		assertContains(draft, newDraft, Draft.TYPE.search());
 		assertEquals(0, draft.getItemsCount());
 		assertEquals("oldString1", item.getString());
+		
+		model.commit();
 	}
 }
