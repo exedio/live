@@ -27,12 +27,12 @@ abstract class Modification implements Serializable // for session persistence
 {
 	private static final long serialVersionUID = 1l;
 
-	private final String feature;
+	private final Feature feature;
 	final Item item;
 	
 	Modification(final Feature feature, final Item item)
 	{
-		this.feature = feature.getID(); // id is serializable
+		this.feature = feature;
 		this.item = item;
 		
 		assert item!=null;
@@ -40,12 +40,12 @@ abstract class Modification implements Serializable // for session persistence
 	
 	Feature getFeature()
 	{
-		return item.getCopeType().getModel().getFeature(feature);
+		return feature;
 	}
 	
 	final String getID()
 	{
-		return feature + '/' + item.getCopeID();
+		return feature.getID() + '/' + item.getCopeID();
 	}
 	
 	abstract void publish();
@@ -70,6 +70,6 @@ abstract class Modification implements Serializable // for session persistence
 	@Override
 	public final String toString()
 	{
-		return feature + '-' + item.getCopeID();
+		return feature.getID() + '-' + item.getCopeID();
 	}
 }

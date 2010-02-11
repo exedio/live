@@ -40,6 +40,11 @@ public final class EditedServlet extends HttpServlet
 	
 	public static final Model model = new Model(EditedItem.TYPE, Draft.TYPE, DraftItem.TYPE);
 	
+	static
+	{
+		model.enableSerialization(EditedServlet.class, "model");
+	}
+	
 	private ConnectToken connectToken = null;
 	
 	@Override
