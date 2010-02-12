@@ -7,6 +7,8 @@ omit bug fixes.
 The items are sorted inversely, i.e. lastest items are on top
 
 --------------------------------------------------------------------------
+* session serialization relies on a serializable model to be edited,
+	use Model.enableSerialization
 * increase z-index of editor bar from 1 to 1000
 * obey @Computed for string and positions
 * bugfix: redirect to home after login
