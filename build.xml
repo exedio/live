@@ -140,7 +140,7 @@
 		</instrument>
 	</target>
 	
-	<target name="webtest.compile"
+	<target name="webtestsrc.compile"
 			depends="webtestsrc.jspm, webtestsrc.instrument, src.compile">
 		<ljavac srcdir="webtestsrc">
 			<classpath>
@@ -153,7 +153,7 @@
 	</target>
 
 	<target name="webtest.web"
-			  depends="src.compile, webtest.compile">
+			  depends="src.compile, webtestsrc.compile">
 		<copy todir="webtestweb/WEB-INF/classes">
 			<fileset dir="build/classes/src" />
 			<fileset dir="build/classes/webtestsrc" />
