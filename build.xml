@@ -58,7 +58,7 @@
 		</ljavac>
 	</target>
 	
-	<target name="test.instrument" unless="skip.instrument">
+	<target name="testsrc.instrument" unless="skip.instrument">
 		<instrument verbose="false">
 			<fileset dir="testsrc">
 				<include name="com/exedio/cope/live/DraftedItem.java" />
@@ -66,7 +66,7 @@
 		</instrument>
 	</target>
 	
-	<target name="compile.testsrc" depends="src.compile, test.instrument">
+	<target name="compile.testsrc" depends="src.compile, testsrc.instrument">
 		<ljavac srcdir="testsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -201,7 +201,7 @@
 	
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	
-	<target name="instrument" depends="test.instrument, webtest.instrument" />
+	<target name="instrument" depends="testsrc.instrument, webtest.instrument" />
 	
 	<target name="compile" depends="src.compile, webtest.web, compile.testsrc" />
 	
