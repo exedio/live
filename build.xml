@@ -5,6 +5,8 @@
 	<property file="local.properties" />
 	<property name="build.file.tag" value="unlabeled" />
 	
+	<import file="macros.xml" />
+	
 	<taskdef
 			resource="com/exedio/jspm/ant.properties"
 			classpath="lib/exedio-jspm.jar" />
@@ -15,28 +17,6 @@
 			<pathelement location="lib/exedio-cope-instrument.jar" />
 		</classpath>
 	</taskdef>
-	
-	<macrodef name="ljavac">
-		<attribute name="srcdir" />
-		<attribute name="destdir" />
-		<element name="classpath" optional="true" implicit="true" />
-		<sequential>
-			<!--echo message="local compile @{srcdir} to @{destdir}" /-->
-			<mkdir dir="@{destdir}" />
-			<javac srcdir="@{srcdir}"
-					 destdir="@{destdir}"
-					 includeAntRuntime="false"
-					 source="1.5"
-					 deprecation="on"
-					 debug="on"
-					 optimize="off">
-				<classpath />
-				<compilerarg value="-Xlint" />
-				<compilerarg value="-encoding" />
-				<compilerarg value="ascii" />
-			</javac>
-		</sequential>
-	</macrodef>
 	
 	<target name="catalina">
 		<property name="catalina.root" value="apache-tomcat-6.0.16" />
@@ -68,7 +48,7 @@
 	</target>
 	
 	<target name="core.compile" depends="core.jspm">
-		<ljavac srcdir="src" destdir="build/classes">
+		<ljavac srcdir="src">
 			<classpath>
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
@@ -76,11 +56,6 @@
 				<pathelement location="lib/exedio-cope.jar" />
 			</classpath>
 		</ljavac>
-		<copy todir="build/classes">
-			<fileset dir="src">
-				<include name="**/*.png" />
-			</fileset>
-		</copy>
 	</target>
 	
 	<target name="test.instrument" unless="skip.instrument">
@@ -92,9 +67,9 @@
 	</target>
 	
 	<target name="test.compile" depends="core.compile, test.instrument">
-		<ljavac srcdir="testsrc" destdir="build/testclasses">
+		<ljavac srcdir="testsrc">
 			<classpath>
-				<pathelement location="build/classes" />
+				<pathelement location="build/classes/src" />
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
@@ -112,8 +87,8 @@
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />
 			<classpath>
-				<pathelement location="build/classes" />
-				<pathelement location="build/testclasses" />
+				<pathelement location="build/classes/src" />
+				<pathelement location="build/classes/testsrc" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/jdbc/hsqldb.jar" />
 				<pathelement location="lib/junit.jar" />
@@ -127,7 +102,7 @@
 	
 	<target name="jar" depends="core.compile">
 		<jar jarfile="build/exedio-cope-live.jar" filesonly="true" duplicate="fail" level="9">
-			<fileset dir="build/classes" />
+			<fileset dir="build/classes/src" />
 			<manifest>
 				<attribute name="Specification-Title" value="exedio cope live" />
 				<attribute name="Specification-Version" value="${build.tag}" />
@@ -169,7 +144,7 @@
 			depends="webtest.jspm, webtest.instrument, core.compile">
 		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
 			<classpath>
-				<pathelement location="build/classes" />
+				<pathelement location="build/classes/src" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
 			</classpath>
@@ -178,21 +153,17 @@
 
 	<target name="webtest.web"
 			  depends="core.compile, webtest.instrument, webtest.jspm">
-		<copy todir="webtestweb/WEB-INF/classes">
-			<fileset dir="build/classes" />
-		</copy>
-		<ljavac srcdir="webtestsrc" destdir="webtestweb/WEB-INF/classes">
+		<ljavac srcdir="webtestsrc">
 			<classpath>
+				<pathelement location="build/classes/src" />
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 			</classpath>
 		</ljavac>
 		<copy todir="webtestweb/WEB-INF/classes">
-			<fileset dir="webtestsrc">
-				<include name="**/*.jpg" />
-				<include name="**/*.png" />
-			</fileset>
+			<fileset dir="build/classes/src" />
+			<fileset dir="build/classes/webtestsrc" />
 		</copy>
 		<copy todir="webtestweb/WEB-INF/lib">
 			<fileset file="lib/trove.jar" />
@@ -323,9 +294,9 @@
 					excludeFilter="findbugs-exclude.xml"
 					effort="max"
 					reportlevel="low">
-			<class location="${basedir}/build/classes" />
-			<class location="${basedir}/build/testclasses" />
-			<class location="${basedir}/webtestweb/WEB-INF/classes" />
+			<class location="${basedir}/build/classes/src" />
+			<class location="${basedir}/build/classes/testsrc" />
+			<class location="${basedir}/build/classes/webtestsrc" />
 			<auxclasspath>
 				<pathelement location="${basedir}/lib/exedio-cope.jar" />
 				<pathelement location="${basedir}/lib/exedio-cops.jar" />
