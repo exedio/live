@@ -128,7 +128,7 @@
 		</jspm>
 	</target>
 	
-	<target name="webtest.instrument" unless="skip.instrument">
+	<target name="webtestsrc.instrument" unless="skip.instrument">
 		<instrument verbose="false">
 			<fileset dir="webtestsrc">
 				<include name="**/*.java" />
@@ -141,7 +141,7 @@
 	</target>
 	
 	<target name="webtest.compile"
-			depends="webtestsrc.jspm, webtest.instrument, src.compile">
+			depends="webtestsrc.jspm, webtestsrc.instrument, src.compile">
 		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -152,7 +152,7 @@
 	</target>
 
 	<target name="webtest.web"
-			  depends="src.compile, webtest.instrument, webtestsrc.jspm">
+			  depends="src.compile, webtestsrc.instrument, webtestsrc.jspm">
 		<ljavac srcdir="webtestsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -201,7 +201,7 @@
 	
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	
-	<target name="instrument" depends="testsrc.instrument, webtest.instrument" />
+	<target name="instrument" depends="testsrc.instrument, webtestsrc.instrument" />
 	
 	<target name="compile" depends="src.compile, webtest.web, testsrc.compile" />
 	
