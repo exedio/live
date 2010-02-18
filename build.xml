@@ -122,7 +122,7 @@
 		</zip>
 	</target>
 
-	<target name="webtest.jspm">
+	<target name="webtestsrc.jspm">
 		<jspm method="write">
 			<fileset dir="webtestsrc" includes="**/*.jspm" />
 		</jspm>
@@ -141,7 +141,7 @@
 	</target>
 	
 	<target name="webtest.compile"
-			depends="webtest.jspm, webtest.instrument, src.compile">
+			depends="webtestsrc.jspm, webtest.instrument, src.compile">
 		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -152,7 +152,7 @@
 	</target>
 
 	<target name="webtest.web"
-			  depends="src.compile, webtest.instrument, webtest.jspm">
+			  depends="src.compile, webtest.instrument, webtestsrc.jspm">
 		<ljavac srcdir="webtestsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -197,7 +197,7 @@
 		<delete dir="tomcat" />
 	</target>
 	
-	<target name="jspm" depends="src.jspm, webtest.jspm" />
+	<target name="jspm" depends="src.jspm, webtestsrc.jspm" />
 	
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	
