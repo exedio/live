@@ -41,13 +41,13 @@
 		</copy>
 	</target>
 	
-	<target name="core.jspm">
+	<target name="src.jspm">
 		<jspm>
 			<fileset dir="src" includes="**/*.jspm" />
 		</jspm>
 	</target>
 	
-	<target name="compile.src" depends="core.jspm">
+	<target name="compile.src" depends="src.jspm">
 		<ljavac srcdir="src">
 			<classpath>
 				<pathelement location="lib/servlet-api.jar" />
@@ -197,7 +197,7 @@
 		<delete dir="tomcat" />
 	</target>
 	
-	<target name="jspm" depends="core.jspm, webtest.jspm" />
+	<target name="jspm" depends="src.jspm, webtest.jspm" />
 	
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	
