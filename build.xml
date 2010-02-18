@@ -66,7 +66,7 @@
 		</instrument>
 	</target>
 	
-	<target name="compile.testsrc" depends="src.compile, testsrc.instrument">
+	<target name="testsrc.compile" depends="src.compile, testsrc.instrument">
 		<ljavac srcdir="testsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -78,7 +78,7 @@
 		</ljavac>
 	</target>
 	
-	<target name="test" depends="compile.testsrc">
+	<target name="test" depends="testsrc.compile">
 		<mkdir dir="build/testresults" />
 		<junit taskname="junit" fork="yes"
 					haltonerror="true" haltonfailure="true"
@@ -203,7 +203,7 @@
 	
 	<target name="instrument" depends="testsrc.instrument, webtest.instrument" />
 	
-	<target name="compile" depends="src.compile, webtest.web, compile.testsrc" />
+	<target name="compile" depends="src.compile, webtest.web, testsrc.compile" />
 	
 	<target name="web" depends="webtest.web" />
 	
