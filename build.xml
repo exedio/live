@@ -196,7 +196,7 @@
 	
 	<target name="instrument" depends="testsrc.instrument, webtestsrc.instrument" />
 	
-	<target name="compile" depends="src.compile, webtest.web, testsrc.compile" />
+	<target name="compile" depends="src.compile, webtestsrc.compile, testsrc.compile" />
 	
 	<target name="web" depends="webtest.web" />
 	
