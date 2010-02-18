@@ -47,7 +47,7 @@
 		</jspm>
 	</target>
 	
-	<target name="core.compile" depends="core.jspm">
+	<target name="compile.src" depends="core.jspm">
 		<ljavac srcdir="src">
 			<classpath>
 				<pathelement location="lib/servlet-api.jar" />
@@ -66,7 +66,7 @@
 		</instrument>
 	</target>
 	
-	<target name="test.compile" depends="core.compile, test.instrument">
+	<target name="test.compile" depends="compile.src, test.instrument">
 		<ljavac srcdir="testsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -100,7 +100,7 @@
 		</junit>
 	</target>
 	
-	<target name="jar" depends="core.compile">
+	<target name="jar" depends="compile.src">
 		<jar jarfile="build/exedio-cope-live.jar" filesonly="true" duplicate="fail" level="9">
 			<fileset dir="build/classes/src" />
 			<manifest>
@@ -141,7 +141,7 @@
 	</target>
 	
 	<target name="webtest.compile"
-			depends="webtest.jspm, webtest.instrument, core.compile">
+			depends="webtest.jspm, webtest.instrument, compile.src">
 		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -152,7 +152,7 @@
 	</target>
 
 	<target name="webtest.web"
-			  depends="core.compile, webtest.instrument, webtest.jspm">
+			  depends="compile.src, webtest.instrument, webtest.jspm">
 		<ljavac srcdir="webtestsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
@@ -203,7 +203,7 @@
 	
 	<target name="instrument" depends="test.instrument, webtest.instrument" />
 	
-	<target name="compile" depends="core.compile, webtest.web, test.compile" />
+	<target name="compile" depends="compile.src, webtest.web, test.compile" />
 	
 	<target name="web" depends="webtest.web" />
 	
