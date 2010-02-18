@@ -142,25 +142,18 @@
 	
 	<target name="webtest.compile"
 			depends="webtestsrc.jspm, webtestsrc.instrument, src.compile">
-		<ljavac srcdir="webtestsrc" destdir="build/webtestclasses">
+		<ljavac srcdir="webtestsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
 				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
 			</classpath>
 		</ljavac>
 	</target>
 
 	<target name="webtest.web"
-			  depends="src.compile, webtestsrc.instrument, webtestsrc.jspm">
-		<ljavac srcdir="webtestsrc">
-			<classpath>
-				<pathelement location="build/classes/src" />
-				<pathelement location="lib/exedio-cope.jar" />
-				<pathelement location="lib/exedio-cops.jar" />
-				<pathelement location="lib/servlet-api.jar" />
-			</classpath>
-		</ljavac>
+			  depends="src.compile, webtest.compile">
 		<copy todir="webtestweb/WEB-INF/classes">
 			<fileset dir="build/classes/src" />
 			<fileset dir="build/classes/webtestsrc" />
