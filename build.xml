@@ -313,4 +313,6 @@
 		<copy file="CHANGELOG" tofile="${basedir}/cruise/exedio-cope-live.jar-CHANGELOG" />
 	</target>
 	
+	<target name="hudson" depends="clean, all" />
+	
 </project>
