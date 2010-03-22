@@ -42,7 +42,7 @@
 	</target>
 	
 	<target name="src.jspm">
-		<jspm>
+		<jspm method="append"><!-- TODO use defaults -->
 			<fileset dir="src" includes="**/*.jspm" />
 		</jspm>
 	</target>
@@ -123,7 +123,7 @@
 	</target>
 
 	<target name="webtestsrc.jspm">
-		<jspm method="write">
+		<jspm method="write"><!-- TODO use defaults -->
 			<fileset dir="webtestsrc" includes="**/*.jspm" />
 		</jspm>
 	</target>
