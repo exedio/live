@@ -20,7 +20,7 @@
 package com.exedio.cope.live;
 
 import static com.exedio.cops.CopsServlet.UTF8;
-import static com.exedio.cops.XMLEncoder.encode;
+import static com.exedio.cope.util.XMLEncoder.encode;
 
 import java.util.List;
 import java.util.Set;

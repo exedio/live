@@ -35,7 +35,7 @@ import com.exedio.cope.misc.Computed;
 import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
-import com.exedio.cops.XMLEncoder;
+import com.exedio.cope.util.XMLEncoder;
 
 public final class LiveRequest
 {
