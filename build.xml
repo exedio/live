@@ -100,7 +100,7 @@
 	</target>
 	
 	<target name="jar" depends="src.compile">
-		<jar jarfile="build/exedio-cope-live.jar" filesonly="true" duplicate="fail" level="9">
+		<jar jarfile="build/exedio-cope-live.jar" filesonly="true" duplicate="fail" strict="fail" level="9">
 			<fileset dir="build/classes/src" />
 			<manifest>
 				<attribute name="Specification-Title" value="exedio cope live" />
