@@ -28,6 +28,7 @@ import com.exedio.cope.Type;
 import com.exedio.cope.TypesBound;
 import com.exedio.cope.UniqueConstraint;
 import com.exedio.cope.pattern.PartOf;
+import com.exedio.cope.reflect.FeatureField;
 
 public final class DraftItem extends Item
 {
@@ -36,9 +37,9 @@ public final class DraftItem extends Item
 	static final PartOf<Draft> items = PartOf.newPartOf(parent);
 	static final UniqueConstraint parentAndPosition = new UniqueConstraint(parent, position);
 	
-	static final StringField feature = new StringField().toFinal();
+	static final FeatureField<StringField> feature = FeatureField.newField(StringField.class).toFinal();
 	static final StringField item = new StringField().toFinal();
-	static final UniqueConstraint parentFeatureAndItem = new UniqueConstraint(parent, feature, item);
+	static final UniqueConstraint parentFeatureAndItem = new UniqueConstraint(parent, feature.getIdField(), item);
 	
 	static final StringField oldValue = new StringField().toFinal().lengthMax(50000);
 	static final StringField newValue = new StringField().lengthMax(50000);
@@ -55,7 +56,7 @@ public final class DraftItem extends Item
 		this(new com.exedio.cope.SetValue[]{
 			DraftItem.parent.map(parent),
 			DraftItem.position.map(position),
-			DraftItem.feature.map(feature.getID()),
+			DraftItem.feature.map(feature),
 			DraftItem.item.map(item.getCopeID()),
 			DraftItem.oldValue.map(oldValue),
 			DraftItem.newValue.map(newValue),
@@ -84,7 +85,7 @@ public final class DraftItem extends Item
 	
 	String getFeature()
 	{
-		return feature.get(this);
+		return feature.getId(this);
 	}
 	
 	String getItem()

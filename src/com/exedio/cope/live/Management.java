@@ -32,7 +32,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
-import com.exedio.cope.StringField;
 import com.exedio.cops.BodySender;
 import com.exedio.cops.Cop;
 
@@ -168,7 +167,7 @@ final class Management
 					for(final DraftItem i : draft.getItems())
 						anchor.modify(
 								DraftItem.newValue.get(i),
-								(StringField)model.getFeature(DraftItem.feature.get(i)),
+								DraftItem.feature.get(i),
 								model.getItem(DraftItem.item.get(i)));
 				}
 				catch(NoSuchIDException e)
