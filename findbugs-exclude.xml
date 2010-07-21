@@ -30,6 +30,6 @@
 			it replaces dangerous characters by white space
 		-->
 		<Bug pattern="HRS_REQUEST_PARAMETER_TO_HTTP_HEADER" />
-		<Method type="com.exedio.cope.live.Bar" name="doRequest" />
+		<And><Class name="com.exedio.cope.live.Bar" /><Method name="doRequest" /></And>
 	</Match>
 </FindBugsFilter>
