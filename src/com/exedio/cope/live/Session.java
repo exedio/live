@@ -25,4 +25,5 @@ package com.exedio.cope.live;
 public interface Session
 {
 	String getName();
+	String getHome();
 }

@@ -51,6 +51,13 @@ public final class Live extends LiveServlet
 			return nameIsNull ? null : "getName(" + user + ')';
 		}
 
+		public String getHome()
+		{
+			assertTransaction();
+
+			return "edited";
+		}
+
 		@Override
 		public String toString()
 		{
@@ -67,14 +74,6 @@ public final class Live extends LiveServlet
 			return new Session(user);
 
 		return null;
-	}
-
-	@Override
-	protected String getHome()
-	{
-		assertTransaction();
-
-		return "edited";
 	}
 
 	static final void assertTransaction()

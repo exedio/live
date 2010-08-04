@@ -74,7 +74,7 @@ final class LoginServlet
 				{
 					httpSession.setAttribute(ANCHOR,
 							new Anchor(draftsEnabled, request, user, session, session.getName()));
-					servlet.redirectHome(request, response);
+					LiveServlet.redirectHome(session, request, response);
 				}
 				else
 				{

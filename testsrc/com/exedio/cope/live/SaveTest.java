@@ -33,6 +33,10 @@ public class SaveTest extends CopeModelTest
 		{
 			throw new RuntimeException();
 		}
+		public String getHome()
+		{
+			throw new RuntimeException();
+		}
 	};
 
 	DraftedItem item;
