@@ -31,6 +31,7 @@ final class EditedServlet_Jspm
 			final Out out,
 			final HttpServletResponse response,
 			final String loginURL,
+			final String loginURLSlash,
 			final String duplicateURL,
 			final List<EditedItem> items)
 	{
@@ -89,6 +90,7 @@ final class EditedServlet_Jspm
 		<br>
 		to login page:
 		<a href="<%=loginURL%>">get</a>
+		(<a href="<%=loginURLSlash%>">slash</a>)
 		<form action="<%=loginURL%>" method="POST">
 			<input type="submit" name="something" value="post text">
 		</form>
