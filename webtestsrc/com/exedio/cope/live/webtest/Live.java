@@ -31,12 +31,6 @@ public final class Live extends LiveServlet
 		super(EditedServlet.model);
 	}
 
-	static final void assertTransaction()
-	{
-		if(!EditedServlet.model.hasCurrentTransaction())
-			throw new IllegalStateException("transaction required");
-	}
-
 	private static class Session implements com.exedio.cope.live.Session, Serializable
 	{
 		private static final long serialVersionUID = 1l;
@@ -81,5 +75,11 @@ public final class Live extends LiveServlet
 		assertTransaction();
 
 		return "edited";
+	}
+
+	static final void assertTransaction()
+	{
+		if(!EditedServlet.model.hasCurrentTransaction())
+			throw new IllegalStateException("transaction required");
 	}
 }
