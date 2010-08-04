@@ -20,6 +20,7 @@ package com.exedio.cope.live.webtest;
 
 import java.io.Serializable;
 
+import com.exedio.cope.live.AbstractSession;
 import com.exedio.cope.live.LiveServlet;
 
 public final class Live extends LiveServlet
@@ -31,7 +32,7 @@ public final class Live extends LiveServlet
 		super(EditedServlet.model);
 	}
 
-	private static class Session implements com.exedio.cope.live.Session, Serializable
+	private static class Session extends AbstractSession implements Serializable
 	{
 		private static final long serialVersionUID = 1l;
 
@@ -51,11 +52,13 @@ public final class Live extends LiveServlet
 			return nameIsNull ? null : "getName(" + user + ')';
 		}
 
+		@Override
 		public String getHome()
 		{
 			assertTransaction();
 
 			return "edited";
+			//return super.getHome();
 		}
 
 		@Override
