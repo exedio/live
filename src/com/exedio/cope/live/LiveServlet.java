@@ -128,7 +128,7 @@ public abstract class LiveServlet extends CopsServlet
 			final HttpServletResponse response)
 	throws IOException
 	{
-		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + '/' + session.getHome()));
+		response.sendRedirect(response.encodeRedirectURL(session.getHome(request)));
 	}
 
 	final Target getTarget(final String id)

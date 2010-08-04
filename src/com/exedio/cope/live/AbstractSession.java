@@ -18,10 +18,12 @@
 
 package com.exedio.cope.live;
 
+import javax.servlet.http.HttpServletRequest;
+
 public abstract class AbstractSession implements Session
 {
-	public String getHome()
+	public String getHome(final HttpServletRequest request)
 	{
-		return "";
+		return request.getContextPath() + '/';
 	}
 }

@@ -18,6 +18,8 @@
 
 package com.exedio.cope.live;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.exedio.cope.junit.CopeModelTest;
 
 public class SaveTest extends CopeModelTest
@@ -33,7 +35,7 @@ public class SaveTest extends CopeModelTest
 		{
 			throw new RuntimeException();
 		}
-		public String getHome()
+		public String getHome(final HttpServletRequest request)
 		{
 			throw new RuntimeException();
 		}

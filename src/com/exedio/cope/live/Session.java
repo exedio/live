@@ -18,6 +18,8 @@
 
 package com.exedio.cope.live;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * If you want persistent http sessions,
  * make implementions of this interface serializable.
@@ -25,5 +27,5 @@ package com.exedio.cope.live;
 public interface Session
 {
 	String getName();
-	String getHome();
+	String getHome(HttpServletRequest request);
 }

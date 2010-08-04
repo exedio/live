@@ -20,6 +20,8 @@ package com.exedio.cope.live.webtest;
 
 import java.io.Serializable;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.exedio.cope.live.AbstractSession;
 import com.exedio.cope.live.LiveServlet;
 
@@ -53,12 +55,12 @@ public final class Live extends LiveServlet
 		}
 
 		@Override
-		public String getHome()
+		public String getHome(final HttpServletRequest request)
 		{
 			assertTransaction();
 
-			return "edited";
-			//return super.getHome();
+			return request.getContextPath() + "/edited";
+			//return super.getHome(request);
 		}
 
 		@Override
