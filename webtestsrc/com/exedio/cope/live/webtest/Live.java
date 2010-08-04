@@ -59,8 +59,10 @@ public final class Live extends LiveServlet
 		{
 			assertTransaction();
 
-			return request.getContextPath() + "/edited";
-			//return super.getHome(request);
+			return
+				"abstractHome".equals(user)
+				? super.getHome(request)
+				: request.getContextPath() + "/edited";
 		}
 
 		@Override
