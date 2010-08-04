@@ -18,6 +18,7 @@
 
 package com.exedio.cope.live;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
@@ -159,6 +160,14 @@ final class Anchor implements Serializable // for session persistence
 	String getHistoryAuthor()
 	{
 		return (sessionName!=null ? sessionName : user) + " (live)";
+	}
+
+	void redirectHome(
+			final HttpServletRequest request,
+			final HttpServletResponse response)
+	throws IOException
+	{
+		response.sendRedirect(response.encodeRedirectURL(session.getHome(request)));
 	}
 
 	@Override

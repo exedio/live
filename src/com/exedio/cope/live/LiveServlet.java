@@ -122,15 +122,6 @@ public abstract class LiveServlet extends CopsServlet
 		}
 	}
 
-	static final void redirectHome(
-			final Session session,
-			final HttpServletRequest request,
-			final HttpServletResponse response)
-	throws IOException
-	{
-		response.sendRedirect(response.encodeRedirectURL(session.getHome(request)));
-	}
-
 	final Target getTarget(final String id)
 	{
 		if(TargetLive.ID.equals(id))

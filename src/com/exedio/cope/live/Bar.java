@@ -106,7 +106,7 @@ final class Bar
 			try
 			{
 				startTransaction("redirectHome");
-				LiveServlet.redirectHome(anchor.session, request, response);
+				anchor.redirectHome(request, response);
 				model.commit();
 			}
 			finally
