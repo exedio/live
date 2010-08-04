@@ -26,7 +26,7 @@ public class SaveTest extends CopeModelTest
 	{
 		super(DraftTest.MODEL);
 	}
-	
+
 	static final Session SESSION = new Session()
 	{
 		public String getName()
@@ -34,11 +34,11 @@ public class SaveTest extends CopeModelTest
 			throw new RuntimeException();
 		}
 	};
-	
+
 	DraftedItem item;
 	Draft draft;
 	Anchor anchor;
-	
+
 	@Override
 	public void setUp() throws Exception
 	{
@@ -49,11 +49,11 @@ public class SaveTest extends CopeModelTest
 		anchor = new Anchor(true, new CopsDummyRequest(), "anchorUser", SESSION, "anchorSessionName");
 		anchor.modify("newString1", DraftedItem.string, item);
 	}
-	
+
 	public void testDraft()
 	{
 		assertEquals(list(), draft.getItems());
-		
+
 		new TargetDraft(draft).save(anchor);
 		assertEquals(1, draft.getItemsCount());
 		final DraftItem di1 = draft.getItems().get(0);
@@ -61,26 +61,26 @@ public class SaveTest extends CopeModelTest
 		assertEquals(item.getCopeID(), di1.getItem());
 		assertEquals("oldString1", di1.getOldValue());
 		assertEquals("newString1", di1.getNewValue());
-		
+
 		assertEquals("oldString1", item.getString());
 		assertContains(draft, Draft.TYPE.search());
 	}
-	
+
 	public void testLive()
 	{
 		assertEquals("oldString1", item.getString());
-		
+
 		TargetLive.INSTANCE.save(anchor);
 		assertEquals("newString1", item.getString());
-		
+
 		assertEquals(0, draft.getItemsCount());
 		assertContains(draft, Draft.TYPE.search());
 	}
-	
+
 	public void testNewDraft()
 	{
 		assertContains(draft, Draft.TYPE.search());
-		
+
 		TargetNewDraft.INSTANCE.save(anchor);
 		final Draft newDraft = Draft.TYPE.searchSingleton(Draft.TYPE.getThis().notEqual(draft));
 		assertEquals("anchorSessionName", newDraft.getAuthor());
@@ -93,11 +93,11 @@ public class SaveTest extends CopeModelTest
 		assertEquals("oldString1", di1.getOldValue());
 		assertEquals("newString1", di1.getNewValue());
 
-		
+
 		assertContains(draft, newDraft, Draft.TYPE.search());
 		assertEquals(0, draft.getItemsCount());
 		assertEquals("oldString1", item.getString());
-		
+
 		model.commit();
 	}
 }

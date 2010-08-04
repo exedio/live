@@ -29,44 +29,44 @@ abstract class Modification implements Serializable // for session persistence
 
 	private final Feature feature;
 	final Item item;
-	
+
 	Modification(final Feature feature, final Item item)
 	{
 		this.feature = feature;
 		this.item = item;
-		
+
 		assert item!=null;
 	}
-	
+
 	Feature getFeature()
 	{
 		return feature;
 	}
-	
+
 	final String getID()
 	{
 		return feature.getID() + '/' + item.getCopeID();
 	}
-	
+
 	abstract void publish();
 	abstract void saveTo(final Draft draft);
-	
+
 	@Override
 	public final int hashCode()
 	{
 		return feature.hashCode() ^ item.hashCode();
 	}
-	
+
 	@Override
 	public final boolean equals(final Object other)
 	{
 		if(!(other instanceof Modification))
 			return false;
-		
+
 		final Modification o = (Modification)other;
 		return feature.equals(o.feature) && item.equals(o.item);
 	}
-	
+
 	@Override
 	public final String toString()
 	{

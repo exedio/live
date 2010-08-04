@@ -46,19 +46,19 @@ public final class LiveRequest
 		final HttpSession session = request.getSession(false);
 		if(session==null)
 			return null;
-		
+
 		final Object anchor = session.getAttribute(LoginServlet.ANCHOR);
 		if(anchor==null)
 			return null;
-		
+
 		return new LiveRequest(request, response, (Anchor)anchor);
 	}
-	
+
 	private final HttpServletRequest request;
 	private final HttpServletResponse response;
 	private final Anchor anchor;
 	private HashMap<IntegerField, Item> positionItems = null;
-	
+
 	private LiveRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
@@ -67,39 +67,39 @@ public final class LiveRequest
 		this.request = request;
 		this.response = response;
 		this.anchor = anchor;
-		
+
 		assert request!=null;
 		assert response!=null;
 		assert anchor!=null;
 	}
-	
+
 	Item registerPositionItem(final IntegerField feature, final Item item)
 	{
 		final Integer next = feature.get(item);
 		if(next==null)
 			return null;
-		
+
 		if(positionItems==null)
 			positionItems = new HashMap<IntegerField, Item>();
-		
+
 		final Item result = positionItems.put(feature, item);
 		if(result==null)
 			return null;
-		
+
 		final Integer previous = feature.get(result);
 		return (previous!=null && previous.intValue()<next.intValue()) ? result : null;
 	}
-	
+
 	public boolean isBordersEnabled()
 	{
 		return anchor.borders;
 	}
-	
+
 	public Session getSession()
 	{
 		return anchor.session;
 	}
-	
+
 	private static void checkEdit(final Feature feature, final Item item)
 	{
 		if(feature==null)
@@ -109,7 +109,7 @@ public final class LiveRequest
 		if(!feature.getType().isAssignableFrom(item.getCopeType()))
 			throw new IllegalArgumentException("item " + item.getCopeID() + " does not belong to type of feature " + feature.getID());
 	}
-	
+
 	private static <K> Item getItem(final MapField<K, String> feature, final K key, final Item item)
 	{
 		return
@@ -117,19 +117,19 @@ public final class LiveRequest
 						feature.getKey().equal(key).and(
 						Cope.equalAndCast(feature.getParent(), item)));
 	}
-	
+
 	public <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
 	{
 		checkEdit(feature, item);
 		if(feature.isAnnotationPresent(Computed.class))
 			return content + "<img src=\"" + anchor.errorButtonURL + "\" title=\"ignoring @Computed MapField " + feature + "\">";
-		
+
 		return edit(
 				content,
 				(StringField)feature.getValue(),
 				getItem(feature, key, item));
 	}
-	
+
 	public String edit(final String content, final StringField feature, final Item item)
 	{
 		checkEdit(feature, item);
@@ -137,13 +137,13 @@ public final class LiveRequest
 			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
 		if(feature.isAnnotationPresent(Computed.class))
 			return content + "<img src=\"" + anchor.errorButtonURL + "\" title=\"ignoring @Computed StringField " + feature + "\">";
-		
+
 		if(!anchor.borders)
 		{
 			final String modification = anchor.getModification(feature, item);
 			return (modification!=null) ? modification : content;
 		}
-		
+
 		final boolean block = feature.getMaximumLength()>StringField.DEFAULT_LENGTH;
 		final String savedContent = feature.get(item);
 		final String pageContent;
@@ -164,7 +164,7 @@ public final class LiveRequest
 			pageContent = content;
 			editorContent = savedContent;
 		}
-		
+
 		final String tag = block ? "div" : "span";
 		final String editorContentEncoded = XMLEncoder.encode(editorContent);
 		final StringBuilder bf = new StringBuilder();
@@ -185,30 +185,30 @@ public final class LiveRequest
 			append("</").
 			append(tag).
 			append('>');
-		
+
 		return bf.toString();
 	}
-	
+
 	public String edit(final Media feature, final Item item)
 	{
 		return edit(feature, item, true);
 	}
-	
+
 	private String edit(final Media feature, final Item item, final boolean modifiable)
 	{
 		checkEdit(feature, item);
 		if(feature.isFinal())
 			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
-		
+
 		final String modificationURL = modifiable ? anchor.getModificationURL(feature, item, response) : null;
 		final String onload =
 			modificationURL!=null
 				? (" onload=\"this.src='" + XMLEncoder.encode(response.encodeURL(modificationURL)) + "';\"")
 				: "";
-		
+
 		if(!anchor.borders)
 			return onload;
-		
+
 		final StringBuilder bf = new StringBuilder();
 		bf.append(
 				" class=\"" + Bar.CSS_EDIT + "\"" +
@@ -221,35 +221,35 @@ public final class LiveRequest
 						append("','").
 						append(XMLEncoder.encode(feature.getURL(item))).
 					append("'," + modifiable + ");\"");
-		
+
 		return bf.toString();
 	}
-	
+
 	public String edit(final MediaFilter feature, final Item item)
 	{
 		if(!anchor.borders)
 			return "";
-		
+
 		checkEdit(feature, item);
-		
+
 		return edit(feature.getSource(), item, false);
 	}
-	
+
 	public String swap(final IntegerField feature, final Item item, final String buttonURL)
 	{
 		if(!anchor.borders)
 			return "";
-		
+
 		checkEdit(feature, item);
 		if(feature.isFinal())
 			throw new IllegalArgumentException("feature " + feature.getID() + " must not be final");
 		if(feature.isAnnotationPresent(Computed.class))
 			return "<img src=\"" + anchor.errorButtonURL + "\" title=\"ignoring @Computed IntegerField " + feature + "\">";
-		
+
 		final Item previousItem = registerPositionItem(feature, item);
 		if(previousItem==null)
 			return "";
-		
+
 		return
 			"<form action=\"" + action() + "\" method=\"POST\" class=\"" + Bar.CSS_SWAP + "\">" +
 				"<input type=\"hidden\" name=\"" + Bar.REFERER   + "\" value=\"" + referer()                + "\">" +
@@ -263,14 +263,14 @@ public final class LiveRequest
 				) +
 			"</form>";
 	}
-	
+
 	public String getHead()
 	{
 		final StringBuilder out = new StringBuilder();
 		Bar_Jspm.writeHead(out, anchor.borders);
 		return out.toString();
 	}
-	
+
 	public String getBar()
 	{
 		final ArrayList<Target> targets = new ArrayList<Target>();
@@ -299,26 +299,26 @@ public final class LiveRequest
 				anchor.sessionName);
 		return out.toString();
 	}
-	
+
 	private String action()
 	{
 		return response.encodeURL(anchor.servletPath);
 	}
-	
+
 	private String referer()
 	{
 		final StringBuilder bf = new StringBuilder();
 		bf.append(request.getContextPath());
 		bf.append(request.getServletPath());
-		
+
 		final String pathInfo = request.getPathInfo();
 		if(pathInfo!=null)
 			bf.append(pathInfo);
-		
+
 		final String queryString = request.getQueryString();
 		if(queryString!=null)
 			bf.append('?').append(queryString);
-		
+
 		return bf.toString();
 	}
 }

@@ -26,55 +26,55 @@ final class TargetLive implements Target
 	// TODO serialization should not create multiple instances
 	static final TargetLive INSTANCE = new TargetLive();
 	static final String ID = "Live";
-	
+
 	private TargetLive()
 	{
 		// prevent public instantiation
 	}
-	
+
 	public String getID()
 	{
 		return ID;
 	}
-	
+
 	public boolean exists()
 	{
 		return true;
 	}
-	
+
 	public String getDescription()
 	{
 		return "Live Site";
 	}
-	
+
 	public boolean isLive()
 	{
 		return true;
 	}
-	
+
 	public String get(final StringField feature, final Item item)
 	{
 		return null;
 	}
-	
+
 	public void save(final Anchor anchor)
 	{
 		for(final Modification m : anchor.getModifications())
 			m.publish();
 		// TODO maintain history
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return getClass().hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(final Object other)
 	{
 		return (other!=null) && (other instanceof TargetLive);
 	}
-	
+
 	private static final long serialVersionUID = 1l;
 }

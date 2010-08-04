@@ -40,19 +40,19 @@ final class Management
 	private final Model model;
 	private final boolean draftsEnabled;
 	private final LiveServlet servlet;
-	
+
 	Management(final Model model, final boolean draftsEnabled, final LiveServlet servlet)
 	{
 		this.model = model;
 		this.draftsEnabled = draftsEnabled;
 		this.servlet = servlet;
 	}
-	
+
 	private void startTransaction(final String name)
 	{
 		servlet.startTransaction(name);
 	}
-	
+
 	static final String PATH_INFO = "management";
 	static final String MODIFICATION_PUBLISH = "modification.publish";
 	static final String MODIFICATION_DISCARD = "modification.discard";
@@ -67,7 +67,7 @@ final class Management
 	static final String DRAFT_COMMENT= "draft.comment";
 	static final String TARGET_ID   = "target.id";
 	static final String TARGET_OPEN = "target.load";
-	
+
 	void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
@@ -214,7 +214,7 @@ final class Management
 				anchor.setTarget(servlet.getTarget(request.getParameter(TARGET_ID)));
 			}
 		}
-		
+
 		final StringBuilder out = new StringBuilder();
 		try
 		{
@@ -244,7 +244,7 @@ final class Management
 		{
 			model.rollbackIfNotCommitted();
 		}
-		
+
 		response.setContentType("text/html; charset="+UTF8);
 		BodySender.send(response, out, UTF8);
 	}

@@ -24,54 +24,54 @@ import com.exedio.cope.StringField;
 final class TargetDraft implements Target
 {
 	final Draft draft;
-	
+
 	TargetDraft(final Draft draft)
 	{
 		if(draft==null)
 			throw new NullPointerException();
-		
+
 		this.draft = draft;
 	}
-	
+
 	public String getID()
 	{
 		return draft.getCopeID();
 	}
-	
+
 	public boolean exists()
 	{
 		return draft.existsCopeItem();
 	}
-	
+
 	public String getDescription()
 	{
 		return "Draft \"" + draft.getComment() + "\" by " + draft.getAuthor();
 	}
-	
+
 	public boolean isLive()
 	{
 		return false;
 	}
-	
+
 	public String get(final StringField feature, final Item item)
 	{
 		final DraftItem i = DraftItem.forParentFeatureAndItem(draft, feature, item);
 		return i!=null ? i.getNewValue() : null;
 	}
-	
+
 	public void save(final Anchor anchor)
 	{
 		for(final Modification m : anchor.getModifications())
 			m.saveTo(draft);
 		// TODO maintain some special draft history
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return draft.hashCode() ^ 238652836;
 	}
-	
+
 	@Override
 	public boolean equals(final Object other)
 	{
@@ -80,6 +80,6 @@ final class TargetDraft implements Target
 
 		return draft.equals(((TargetDraft)other).draft);
 	}
-	
+
 	private static final long serialVersionUID = 1l;
 }

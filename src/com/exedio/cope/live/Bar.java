@@ -48,52 +48,52 @@ final class Bar
 {
 	private final Model model;
 	private final LiveServlet servlet;
-	
+
 	Bar(final Model model, final LiveServlet servlet)
 	{
 		this.model = model;
 		this.servlet = servlet;
 	}
-	
+
 	private void startTransaction(final String name)
 	{
 		servlet.startTransaction(name);
 	}
-	
+
 	static final String AVOID_COLLISION = "contentEditorBar823658617";
-	
+
 	static final String CSS_EDIT        = "copeLive-edit";
 	static final String CSS_EDIT_ACTIVE = "copeLive-editActive";
 	static final String CSS_SWAP        = "copeLive-swap";
-	
+
 	static final String EDIT_METHOD_LINE = AVOID_COLLISION + "line";
 	static final String EDIT_METHOD_FILE = AVOID_COLLISION + "file";
 	static final String EDIT_METHOD_AREA = AVOID_COLLISION + "area";
-	
+
 	static final String REFERER = "referer";
 	static final String BORDERS_ON  = "borders.on";
 	static final String BORDERS_OFF = "borders.off";
 	static final String CLOSE = "close";
 	static final String SWITCH_TARGET = "target.switch";
 	static final String SAVE_TARGET   = "target.save";
-	
+
 	static final String FEATURE = "feature";
 	static final String ITEM    = "item";
 	static final String TEXT    = "text";
 	static final String FILE    = "file";
 	static final String ITEM_FROM = "itemPrevious";
 	static final String PUBLISH_NOW = "publishNow";
-	
+
 	private static final String CLOSE_IMAGE       = CLOSE       + ".x";
 	private static final String BORDERS_ON_IMAGE  = BORDERS_ON  + ".x";
 	private static final String BORDERS_OFF_IMAGE = BORDERS_OFF + ".x";
-	
+
 	@SuppressWarnings("deprecation")
 	private static boolean isMultipartContent(final HttpServletRequest request)
 	{
 		return ServletFileUpload.isMultipartContent(request);
 	}
-	
+
 	void doRequest(
 			final HttpServletRequest request,
 			final HttpSession httpSession,
@@ -106,9 +106,9 @@ final class Bar
 			servlet.redirectHome(request, response);
 			return;
 		}
-		
+
 		final String referer;
-		
+
 		if(isMultipartContent(request))
 		{
 			final HashMap<String, String> fields = new HashMap<String, String>();
@@ -131,25 +131,25 @@ final class Bar
 			{
 				throw new RuntimeException(e);
 			}
-			
+
 			final String featureID = fields.get(FEATURE);
 			if(featureID==null)
 				throw new NullPointerException();
-			
+
 			final Media feature = (Media)model.getFeature(featureID);
 			if(feature==null)
 				throw new NullPointerException(featureID);
-			
+
 			final String itemID = fields.get(ITEM);
 			if(itemID==null)
 				throw new NullPointerException();
-			
+
 			final FileItem file = files.get(FILE);
-		
+
 			try
 			{
 				startTransaction("publishFile(" + featureID + ',' + itemID + ')');
-				
+
 				final Item item = model.getItem(itemID);
 
 				if(fields.get(PUBLISH_NOW)!=null)
@@ -162,7 +162,7 @@ final class Bar
 								feature.isNull(item) ? null : ("file type=" + feature.getContentType(item) + " size=" + feature.getLength(item)),
 								"file name=" + file.getName() + " type=" + file.getContentType() + " size=" + file.getSize());
 					}
-					
+
 					// TODO use more efficient setter with File or byte[]
 					feature.set(item, file.getInputStream(), file.getContentType());
 				}
@@ -170,7 +170,7 @@ final class Bar
 				{
 					anchor.modify(file, feature, item);
 				}
-				
+
 				model.commit();
 			}
 			catch(NoSuchIDException e)
@@ -181,7 +181,7 @@ final class Bar
 			{
 				model.rollbackIfNotCommitted();
 			}
-			
+
 			referer = fields.get(REFERER);
 		}
 		else // isMultipartContent
@@ -221,26 +221,26 @@ final class Bar
 				final String featureID = request.getParameter(FEATURE);
 				if(featureID==null)
 					throw new NullPointerException();
-				
+
 				final Feature featureO = model.getFeature(featureID);
 				if(featureO==null)
 					throw new NullPointerException(featureID);
-				
+
 				final String itemID = request.getParameter(ITEM);
 				if(itemID==null)
 					throw new NullPointerException();
-				
+
 				if(featureO instanceof StringField)
 				{
 					final StringField feature = (StringField)featureO;
 					final String value = request.getParameter(TEXT);
-				
+
 					try
 					{
 						startTransaction("barText(" + featureID + ',' + itemID + ')');
-						
+
 						final Item item = model.getItem(itemID);
-	
+
 						if(request.getParameter(PUBLISH_NOW)!=null)
 						{
 							String v = value;
@@ -258,7 +258,7 @@ final class Bar
 						{
 							anchor.modify(value, feature, item);
 						}
-						
+
 						model.commit();
 					}
 					catch(NoSuchIDException e)
@@ -276,20 +276,20 @@ final class Bar
 					final String itemIDFrom = request.getParameter(ITEM_FROM);
 					if(itemIDFrom==null)
 						throw new NullPointerException();
-					
+
 					try
 					{
 						startTransaction("swapPosition(" + featureID + ',' + itemIDFrom + ',' + itemID + ')');
-						
+
 						final Item itemFrom = model.getItem(itemIDFrom);
 						final Item itemTo   = model.getItem(itemID);
-	
+
 						final Integer positionFrom = feature.get(itemFrom);
 						final Integer positionTo   = feature.get(itemTo);
 						feature.set(itemFrom, feature.getMinimum());
 						feature.set(itemTo,   positionFrom);
 						feature.set(itemFrom, positionTo);
-						
+
 						for(final History history : History.getHistories(itemFrom.getCopeType()))
 						{
 							final History.Event event = history.createEvent(itemFrom, anchor.getHistoryAuthor(), false);
@@ -300,7 +300,7 @@ final class Bar
 							final History.Event event = history.createEvent(itemTo, anchor.getHistoryAuthor(), false);
 							event.createFeature(feature, feature.getName(), positionTo, positionFrom);
 						}
-						
+
 						model.commit();
 					}
 					catch(NoSuchIDException e)
@@ -313,10 +313,10 @@ final class Bar
 					}
 				}
 			}
-			
+
 			referer = request.getParameter(REFERER);
 		}
-		
+
 		if(referer!=null)
 			response.sendRedirect(response.encodeRedirectURL(referer));
 	}

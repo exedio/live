@@ -39,45 +39,45 @@ public final class Draft extends Item
 	static final StringField name = new StringField().toFinal().optional();
 	static final DateField date = new DateField().toFinal().defaultToNow();
 	static final StringField comment = new StringField().toFinal();
-	
+
 	String getDate()
 	{
 		return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault()).format(date.get(this));
 	}
-	
+
 	String getAuthor()
 	{
 		final String name = Draft.name.get(this);
 		return name!=null ? name : Draft.user.get(this);
 	}
-	
+
 	String getComment()
 	{
 		return Draft.comment.get(this);
 	}
-	
+
 	String getDropDownSummary()
 	{
 		return getAuthor() + " - " + getComment();
 	}
-	
+
 	List<DraftItem> getItems()
 	{
 		return DraftItem.TYPE.search(DraftItem.parent.equal(this));
 	}
-	
+
 	int getItemsCount()
 	{
 		return new Query<DraftItem>(DraftItem.TYPE.getThis(), DraftItem.parent.equal(this)).total();
 	}
-	
+
 	private int nextPosition()
 	{
 		final Query<Integer> q = new Query<Integer>(DraftItem.position.max(), DraftItem.parent.equal(this));
 		final Integer position = q.searchSingleton();
 		return position!=null ? (position.intValue()+1) : 0;
 	}
-	
+
 	public DraftItem addItem(final StringField feature, final Item item, final String value)
 	{
 		final DraftItem i = DraftItem.forParentFeatureAndItem(this, feature, item);
@@ -91,7 +91,7 @@ public final class Draft extends Item
 			return i;
 		}
 	}
-	
+
 	public <K> DraftItem addItem(
 			final MapField<K, String> feature,
 			final K key,
@@ -103,7 +103,7 @@ public final class Draft extends Item
 				Cope.equalAndCast(feature.getParent(), item)));
 		return addItem((StringField)feature.getValue(), ritem, value);
 	}
-	
+
 	public Draft(
 			final String user,
 			final String name,
@@ -115,17 +115,17 @@ public final class Draft extends Item
 			Draft.comment.map(comment),
 		});
 	}
-	
+
 	private Draft(final SetValue... setValues)
 	{
 		super(setValues);
 	}
-	
+
 	@SuppressWarnings("unused") private Draft(final ActivationParameters ap)
 	{
 		super(ap);
 	}
-	
+
 	private static final long serialVersionUID = 1l;
 
 	public static final Type<Draft> TYPE = TypesBound.newType(Draft.class);

@@ -36,15 +36,15 @@ public final class DraftItem extends Item
 	static final IntegerField position = new IntegerField().toFinal();
 	static final PartOf<Draft> items = PartOf.newPartOf(parent);
 	static final UniqueConstraint parentAndPosition = new UniqueConstraint(parent, position);
-	
+
 	static final FeatureField<StringField> feature = FeatureField.newField(StringField.class).toFinal();
 	static final StringField item = new StringField().toFinal();
 	static final UniqueConstraint parentFeatureAndItem = new UniqueConstraint(parent, feature.getIdField(), item);
-	
+
 	static final StringField oldValue = new StringField().toFinal().lengthMax(50000);
 	static final StringField newValue = new StringField().lengthMax(50000);
-	
-	
+
+
 	DraftItem(
 			final Draft parent,
 			final int position,
@@ -62,58 +62,58 @@ public final class DraftItem extends Item
 			DraftItem.newValue.map(newValue),
 		});
 	}
-	
+
 	private DraftItem(final SetValue... setValues)
 	{
 		super(setValues);
 	}
-	
+
 	@SuppressWarnings("unused") private DraftItem(final ActivationParameters ap)
 	{
 		super(ap);
 	}
-	
+
 	Draft getParent()
 	{
 		return parent.get(this);
 	}
-	
+
 	int getPosition()
 	{
 		return position.getMandatory(this);
 	}
-	
+
 	String getFeature()
 	{
 		return feature.getId(this);
 	}
-	
+
 	String getItem()
 	{
 		return item.get(this);
 	}
-	
+
 	static DraftItem forParentFeatureAndItem(final Draft parent, final StringField feature, final Item item)
 	{
 		return parentFeatureAndItem.search(DraftItem.class, parent, feature.getID(), item.getCopeID());
 	}
-	
+
 	String getOldValue()
 	{
 		return oldValue.get(this);
 	}
-	
+
 	String getNewValue()
 	{
 		return newValue.get(this);
 	}
-	
+
 	void setNewValue(final String newValue)
 	{
 		DraftItem.newValue.set(this, newValue);
 	}
-	
+
 	private static final long serialVersionUID = 1l;
-	
+
 	public static final Type<DraftItem> TYPE = TypesBound.newType(DraftItem.class);
 }

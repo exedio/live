@@ -24,17 +24,17 @@ import com.exedio.cope.junit.CopeModelTest;
 public class DraftTest extends CopeModelTest
 {
 	static final Model MODEL = new Model(DraftedItem.TYPE, Draft.TYPE, DraftItem.TYPE);
-	
+
 	public DraftTest()
 	{
 		super(MODEL);
 	}
-	
+
 	DraftedItem i1;
 	DraftedItem i2;
 	Draft dn;
 	Draft d;
-	
+
 	@Override
 	public void setUp() throws Exception
 	{
@@ -44,7 +44,7 @@ public class DraftTest extends CopeModelTest
 		dn = new Draft("userNull", null, "commentNull");
 		d  = new Draft("user", "name", "comment");
 	}
-	
+
 	public void testIt()
 	{
 		assertEquals("userNull", dn.getAuthor());
@@ -52,13 +52,13 @@ public class DraftTest extends CopeModelTest
 		assertEquals("userNull - commentNull", dn.getDropDownSummary());
 		assertEquals(list(), dn.getItems());
 		assertEquals(0, dn.getItemsCount());
-		
+
 		assertEquals("name", d.getAuthor());
 		assertEquals("comment", d.getComment());
 		assertEquals("name - comment", d.getDropDownSummary());
 		assertEquals(list(), d.getItems());
 		assertEquals(0, d.getItemsCount());
-		
+
 		i1.setString("oldString1");
 		final DraftItem d0 = d.addItem(DraftedItem.string, i1, "newString1");
 		assertEquals(list(d0), d.getItems());
@@ -72,7 +72,7 @@ public class DraftTest extends CopeModelTest
 		assertEquals(i1.getCopeID(), d0.getItem());
 		assertEquals("oldString1", d0.getOldValue());
 		assertEquals("newString1", d0.getNewValue());
-		
+
 		i1.setString("oldString2");
 		assertSame(d0, d.addItem(DraftedItem.string, i1, "newString2"));
 		assertEquals(list(d0), d.getItems());
@@ -83,7 +83,7 @@ public class DraftTest extends CopeModelTest
 		assertEquals(i1.getCopeID(), d0.getItem());
 		assertEquals("oldString1", d0.getOldValue());
 		assertEquals("newString2", d0.getNewValue());
-		
+
 		i2.setString("oldString3");
 		final DraftItem d1 = d.addItem(DraftedItem.string, i2, "newString3");
 		assertEquals(list(d0, d1), d.getItems());
@@ -94,7 +94,7 @@ public class DraftTest extends CopeModelTest
 		assertEquals(i2.getCopeID(), d1.getItem());
 		assertEquals("oldString3", d1.getOldValue());
 		assertEquals("newString3", d1.getNewValue());
-		
+
 		model.commit();
 	}
 }

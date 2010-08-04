@@ -25,46 +25,46 @@ import com.exedio.cope.live.LiveServlet;
 public final class Live extends LiveServlet
 {
 	private static final long serialVersionUID = 1l;
-	
+
 	public Live()
 	{
 		super(EditedServlet.model);
 	}
-	
+
 	private static class Session implements com.exedio.cope.live.Session, Serializable
 	{
 		private static final long serialVersionUID = 1l;
-		
+
 		private final String user;
 		private final boolean nameIsNull;
-		
+
 		Session(final String user)
 		{
 			this.user = user;
 			this.nameIsNull = "noname".equals(user);
 		}
-		
+
 		public String getName()
 		{
 			return nameIsNull ? null : "getName(" + user + ')';
 		}
-		
+
 		@Override
 		public String toString()
 		{
 			return "toString(" + user + ')';
 		}
 	}
-	
+
 	@Override
 	protected Session login(final String user, final String password)
 	{
 		if(password.equals(user+"1234"))
 			return new Session(user);
-		
+
 		return null;
 	}
-	
+
 	@Override
 	protected String getHome()
 	{

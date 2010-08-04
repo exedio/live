@@ -26,37 +26,37 @@ final class TargetNewDraft implements Target
 	// TODO serialization should not create multiple instances
 	static final TargetNewDraft INSTANCE = new TargetNewDraft();
 	static final String ID = "New";
-	
+
 	private TargetNewDraft()
 	{
 		// prevent public instantiation
 	}
-	
+
 	public String getID()
 	{
 		return ID;
 	}
-	
+
 	public boolean exists()
 	{
 		return true;
 	}
-	
+
 	public String getDescription()
 	{
 		return "New Draft";
 	}
-	
+
 	public boolean isLive()
 	{
 		return false;
 	}
-	
+
 	public String get(final StringField feature, final Item item)
 	{
 		return null;
 	}
-	
+
 	public void save(final Anchor anchor)
 	{
 		final Draft draft = new Draft(anchor.user, anchor.sessionName, "new draft");
@@ -65,18 +65,18 @@ final class TargetNewDraft implements Target
 		anchor.setTarget(new TargetDraft(draft));
 		// TODO maintain some special draft history
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return getClass().hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(final Object other)
 	{
 		return (other!=null) && (other instanceof TargetNewDraft);
 	}
-	
+
 	private static final long serialVersionUID = 1l;
 }

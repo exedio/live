@@ -44,12 +44,12 @@ public final class LiveFilter implements Filter
 	{
 		// do nothing
 	}
-	
+
 	public final void destroy()
 	{
 		// do nothing
 	}
-	
+
 	public final void doFilter(
 			final ServletRequest request,
 			final ServletResponse response,
@@ -61,7 +61,7 @@ public final class LiveFilter implements Filter
 			chain.doFilter(request, response);
 			return;
 		}
-		
+
 		final LiveRequest liveRequest = LiveRequest.get((HttpServletRequest)request, (HttpServletResponse)response);
 		if(liveRequest!=null)
 		{
@@ -80,86 +80,86 @@ public final class LiveFilter implements Filter
 			chain.doFilter(request, response);
 		}
 	}
-	
+
 	private static final ThreadLocal<LiveRequest> threadLocal = new ThreadLocal<LiveRequest>();
-	
+
 	public static final boolean isLoggedIn()
 	{
 		return threadLocal.get()!=null;
 	}
-	
+
 	public static final boolean isBordersEnabled()
 	{
 		final LiveRequest tl = threadLocal.get();
 		return tl!=null && tl.isBordersEnabled();
 	}
-	
+
 	public static final Session getSession()
 	{
 		final LiveRequest tl = threadLocal.get();
 		return tl!=null ? tl.getSession() : null;
 	}
-	
+
 	public static final <K> String edit(final String content, final MapField<K, String> feature, final Item item, final K key)
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return content;
-		
+
 		return tl.edit(content, feature, item, key);
 	}
-	
+
 	public static final String edit(final String content, final StringField feature, final Item item)
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return content;
-		
+
 		return tl.edit(content, feature, item);
 	}
-	
+
 	public static final String edit(final Media feature, final Item item)
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
-		
+
 		return tl.edit(feature, item);
 	}
-	
+
 	public static final String edit(final MediaFilter feature, final Item item)
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
-		
+
 		return tl.edit(feature, item);
 	}
-	
+
 	public static final String edit(final IntegerField feature, final Item item, final String buttonURL)
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
-		
+
 		return tl.swap(feature, item, buttonURL);
 	}
-	
+
 	public static final String getHead()
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
-		
+
 		return tl.getHead();
 	}
-	
+
 	public static final String getBar()
 	{
 		final LiveRequest tl = threadLocal.get();
 		if(tl==null)
 			return "";
-		
+
 		return tl.getBar();
 	}
 }

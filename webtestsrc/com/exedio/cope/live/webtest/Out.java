@@ -39,7 +39,7 @@ abstract class Out
 	protected final StringBuilder bf;
 	protected final HttpServletRequest request;
 	private final HttpServletResponse response;
-	
+
 	Out(
 			final HttpServletRequest request,
 			final HttpServletResponse response)
@@ -48,32 +48,32 @@ abstract class Out
 		this.request = request;
 		this.response = response;
 	}
-	
+
 	final void write(final String s)
 	{
 		bf.append(s);
 	}
-	
+
 	final void write(final Date d)
 	{
 		bf.append(d);
 	}
-	
+
 	final void write(final Session s)
 	{
 		bf.append(s);
 	}
-	
+
 	final void write(final boolean b)
 	{
 		bf.append(b);
 	}
-	
+
 	final void write(final int i)
 	{
 		bf.append(i);
 	}
-	
+
 	abstract boolean isEditorLoggedIn();
 	abstract boolean isEditorBordersEnabled();
 	abstract Session getEditorSession();
@@ -85,7 +85,7 @@ abstract class Out
 	abstract void edit(final MediaFilter feature, final Item item);
 	abstract void swapIcon(final IntegerField feature, final Item item);
 	abstract void swapText(final IntegerField feature, final Item item);
-	
+
 	final void sendBody() throws IOException
 	{
 		BodySender.send(response, bf, CopsServlet.UTF8);

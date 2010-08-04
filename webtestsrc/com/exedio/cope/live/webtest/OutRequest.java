@@ -33,7 +33,7 @@ import com.exedio.cope.pattern.MediaFilter;
 final class OutRequest extends Out
 {
 	private final LiveRequest live;
-	
+
 	OutRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response)
@@ -41,72 +41,72 @@ final class OutRequest extends Out
 		super(request, response);
 		this.live = LiveRequest.get(request, response);
 	}
-	
+
 	@Override
 	boolean isEditorLoggedIn()
 	{
 		return live!=null;
 	}
-	
+
 	@Override
 	boolean isEditorBordersEnabled()
 	{
 		return live!=null && live.isBordersEnabled();
 	}
-	
+
 	@Override
 	Session getEditorSession()
 	{
 		return live!=null ? live.getSession() : null;
 	}
-	
+
 	@Override
 	void writeEditorHead()
 	{
 		if(live!=null)
 			bf.append(live.getHead());
 	}
-	
+
 	@Override
 	void writeEditorBar()
 	{
 		if(live!=null)
 			bf.append(live.getBar());
 	}
-	
+
 	@Override
 	void write(final String s, final StringField feature, final Item item)
 	{
 		bf.append(live!=null ? live.edit(s, feature, item) : s);
 	}
-	
+
 	@Override
 	<K> void write(final String s, final MapField<K, String> feature, final Item item, final K key)
 	{
 		bf.append(live!=null ? live.edit(s, feature, item, key) : s);
 	}
-	
+
 	@Override
 	void edit(final Media feature, final Item item)
 	{
 		if(live!=null)
 			bf.append(live.edit(feature, item));
 	}
-	
+
 	@Override
 	void edit(final MediaFilter feature, final Item item)
 	{
 		if(live!=null)
 			bf.append(live.edit(feature, item));
 	}
-	
+
 	@Override
 	void swapIcon(final IntegerField feature, final Item item)
 	{
 		if(live!=null)
 			bf.append(live.swap(feature, item, request.getContextPath() + "/previous.png"));
 	}
-	
+
 	@Override
 	void swapText(final IntegerField feature, final Item item)
 	{

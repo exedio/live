@@ -38,67 +38,67 @@ final class OutFilter extends Out
 	{
 		super(request, response);
 	}
-	
+
 	@Override
 	boolean isEditorLoggedIn()
 	{
 		return LiveFilter.isLoggedIn();
 	}
-	
+
 	@Override
 	boolean isEditorBordersEnabled()
 	{
 		return LiveFilter.isBordersEnabled();
 	}
-	
+
 	@Override
 	Session getEditorSession()
 	{
 		return LiveFilter.getSession();
 	}
-	
+
 	@Override
 	void writeEditorHead()
 	{
 		bf.append(LiveFilter.getHead());
 	}
-	
+
 	@Override
 	void writeEditorBar()
 	{
 		bf.append(LiveFilter.getBar());
 	}
-	
+
 	@Override
 	void write(final String s, final StringField feature, final Item item)
 	{
 		bf.append(LiveFilter.edit(s, feature, item));
 	}
-	
+
 	@Override
 	<K> void write(final String s, final MapField<K, String> feature, final Item item, final K key)
 	{
 		bf.append(LiveFilter.edit(s, feature, item, key));
 	}
-	
+
 	@Override
 	void edit(final Media feature, final Item item)
 	{
 		bf.append(LiveFilter.edit(feature, item));
 	}
-	
+
 	@Override
 	void edit(final MediaFilter feature, final Item item)
 	{
 		bf.append(LiveFilter.edit(feature, item));
 	}
-	
+
 	@Override
 	void swapIcon(final IntegerField feature, final Item item)
 	{
 		bf.append(LiveFilter.edit(feature, item, request.getContextPath() + "/previous.png"));
 	}
-	
+
 	@Override
 	void swapText(final IntegerField feature, final Item item)
 	{

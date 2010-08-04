@@ -35,25 +35,25 @@ final class LoginServlet
 	private final Model model;
 	private final boolean draftsEnabled;
 	private final LiveServlet servlet;
-	
+
 	LoginServlet(final Model model, final boolean draftsEnabled, final LiveServlet servlet)
 	{
 		this.model = model;
 		this.draftsEnabled = draftsEnabled;
 		this.servlet = servlet;
 	}
-	
+
 	private void startTransaction(final String name)
 	{
 		servlet.startTransaction(name);
 	}
-	
+
 	static final String ANCHOR = Session.class.getName();
-	
+
 	static final String SUBMIT   = "login.submit";
 	static final String USER     = "login.user";
 	static final String PASSWORD = "login.password";
-	
+
 	void doRequest(
 			final HttpServletRequest request,
 			final HttpSession httpSession,
@@ -91,7 +91,7 @@ final class LoginServlet
 			write(request, response, null);
 		}
 	}
-	
+
 	private void write(
 			final HttpServletRequest request,
 			final HttpServletResponse response,

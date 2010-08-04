@@ -35,23 +35,23 @@ import com.exedio.cope.misc.ServletUtil;
 public final class EditedServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1l;
-	
+
 	static final String ENCODING = "utf-8";
-	
+
 	public static final Model model = new Model(EditedItem.TYPE, Draft.TYPE, DraftItem.TYPE);
-	
+
 	static
 	{
 		model.enableSerialization(EditedServlet.class, "model");
 	}
-	
+
 	private ConnectToken connectToken = null;
-	
+
 	@Override
 	public void init() throws ServletException
 	{
 		super.init();
-		
+
 		connectToken = ServletUtil.connect(model, getServletConfig(), "EditedServlet#init");
 		model.createSchema();
 		try
@@ -74,7 +74,7 @@ public final class EditedServlet extends HttpServlet
 			model.rollbackIfNotCommitted();
 		}
 	}
-	
+
 	private static final EditedItem createItem(
 			final int number,
 			final String image, final String imageContentType)
@@ -102,7 +102,7 @@ public final class EditedServlet extends HttpServlet
 		connectToken = null;
 		super.destroy();
 	}
-	
+
 	@Override
 	protected void doGet(
 			final HttpServletRequest request,
@@ -118,7 +118,7 @@ public final class EditedServlet extends HttpServlet
 		response.addHeader("Cache-Control", "must-revalidate");
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", System.currentTimeMillis());
-		
+
 		final Out out = new OutRequest(request, response);
 		try
 		{
@@ -137,7 +137,7 @@ public final class EditedServlet extends HttpServlet
 			model.rollbackIfNotCommitted();
 		}
 	}
-	
+
 	@Override
 	protected void doPost(
 			final HttpServletRequest request,

@@ -31,26 +31,26 @@ import com.exedio.cope.pattern.Media;
 final class ModificationMedia extends Modification
 {
 	private static final long serialVersionUID = 1l;
-	
+
 	final FileItem value;
-	
+
 	ModificationMedia(final Media feature, final Item item)
 	{
 		this(feature, item, null);
 	}
-	
+
 	ModificationMedia(final Media feature, final Item item, final FileItem value)
 	{
 		super(feature, item);
 		this.value = value;
 	}
-	
+
 	@Override
 	Media getFeature()
 	{
 		return (Media)super.getFeature();
 	}
-	
+
 	String getURL(final HttpServletRequest request, final HttpServletResponse response)
 	{
 		return
@@ -59,7 +59,7 @@ final class ModificationMedia extends Modification
 					request.getServletPath() + '/' +
 					MediaServlet.makeURL(getFeature(), item));
 	}
-	
+
 	String getURL(final Anchor anchor, final HttpServletResponse response)
 	{
 		return
@@ -67,7 +67,7 @@ final class ModificationMedia extends Modification
 					anchor.servletPath +
 					MediaServlet.makeURL(getFeature(), item));
 	}
-	
+
 	@Override
 	void publish()
 	{
@@ -80,7 +80,7 @@ final class ModificationMedia extends Modification
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
 	void saveTo(final Draft draft)
 	{

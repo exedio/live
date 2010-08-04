@@ -24,37 +24,37 @@ import com.exedio.cope.StringField;
 final class ModificationString extends Modification
 {
 	private static final long serialVersionUID = 1l;
-	
+
 	String value;
-	
+
 	ModificationString(final StringField feature, final Item item)
 	{
 		this(feature, item, null);
 	}
-	
+
 	ModificationString(final StringField feature, final Item item, final String value)
 	{
 		super(feature, item);
 		this.value = value;
 	}
-	
+
 	@Override
 	StringField getFeature()
 	{
 		return (StringField)super.getFeature();
 	}
-	
+
 	String getOldValue()
 	{
 		return getFeature().get(item);
 	}
-	
+
 	@Override
 	void publish()
 	{
 		getFeature().set(item, value);
 	}
-	
+
 	@Override
 	void saveTo(final Draft draft)
 	{

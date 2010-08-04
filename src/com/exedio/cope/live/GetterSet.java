@@ -27,9 +27,9 @@ import java.util.Set;
 final class GetterSet<E> implements Set<E>, Serializable // for session persistence
 {
 	private static final long serialVersionUID = 1l;
-	
+
 	private final LinkedHashMap<E,E> map = new LinkedHashMap<E,E>();
-	
+
 	@SuppressWarnings("unchecked") <X extends E> X get(final X e) // OK map consistency is maintained by GetterSet
 	{
 		return (X)map.get(e);
@@ -105,19 +105,19 @@ final class GetterSet<E> implements Set<E>, Serializable // for session persiste
 	{
 		throw new RuntimeException();
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return map.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(final Object other)
 	{
 		return (other instanceof GetterSet) && map.equals(((GetterSet)other).map);
 	}
-	
+
 	@Override
 	public String toString()
 	{

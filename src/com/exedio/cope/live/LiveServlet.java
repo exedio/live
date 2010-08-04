@@ -38,19 +38,19 @@ public abstract class LiveServlet extends CopsServlet
 	private static final long serialVersionUID = 1l;
 
 	static final Resource logo = new Resource("logo.png");
-	
+
 	static final Resource borderDisable = new Resource("borderDisable.png");
 	static final Resource borderEnable  = new Resource("borderEnable.png");
 	static final Resource hide          = new Resource("hide.png");
 	static final Resource close         = new Resource("close.png");
 	static final Resource error         = new Resource("error.png");
-	
+
 	private final Model model;
 	private final LoginServlet login;
 	private final Bar bar;
 	private final Management management;
 	private final MediaServlet media;
-	
+
 	/**
 	 * Subclasses must define a public no-args constructor
 	 * providing the model.
@@ -60,30 +60,30 @@ public abstract class LiveServlet extends CopsServlet
 		if(model==null)
 			throw new NullPointerException("model");
 		final boolean draftsEnabled = model.containsTypeSet(Draft.TYPE, DraftItem.TYPE);
-		
+
 		this.model = model;
 		this.login = new LoginServlet(model, draftsEnabled, this);
 		this.bar = new Bar(model, this);
 		this.management = new Management(model, draftsEnabled, this);
 		this.media = new MediaServlet(model, this);
 	}
-	
+
 	private ConnectToken connectToken = null;
-	
+
 	@Override
 	public final void init(final ServletConfig config) throws ServletException
 	{
 		super.init(config);
-		
+
 		connectToken = ServletUtil.connect(model, config, getClass().getName());
 		model.reviseIfSupported();
 	}
-	
+
 	final void startTransaction(final String name)
 	{
 		model.startTransaction(getClass().getName() + '#' + name);
 	}
-	
+
 	@Override
 	public final void destroy()
 	{
@@ -92,17 +92,17 @@ public abstract class LiveServlet extends CopsServlet
 			connectToken.returnIt();
 			connectToken = null;
 		}
-		
+
 		super.destroy();
 	}
-	
+
 	protected abstract Session login(String user, String password);
-	
+
 	protected String getHome()
 	{
 		return "";
 	}
-	
+
 	@Override
 	public final void doRequest(
 			final HttpServletRequest request,
@@ -112,7 +112,7 @@ public abstract class LiveServlet extends CopsServlet
 		request.setCharacterEncoding(UTF8);
 		final HttpSession httpSession = request.getSession(true);
 		final Object anchor = httpSession.getAttribute(LoginServlet.ANCHOR);
-		
+
 		if(anchor==null)
 			login.doRequest(request, httpSession, response);
 		else
@@ -126,7 +126,7 @@ public abstract class LiveServlet extends CopsServlet
 				bar.doRequest(request, httpSession, response, (Anchor)anchor);
 		}
 	}
-	
+
 	final void redirectHome(
 			final HttpServletRequest request,
 			final HttpServletResponse response)
@@ -134,7 +134,7 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + '/' + getHome()));
 	}
-	
+
 	final Target getTarget(final String id)
 	{
 		if(TargetLive.ID.equals(id))

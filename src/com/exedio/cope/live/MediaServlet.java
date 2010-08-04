@@ -36,22 +36,22 @@ final class MediaServlet
 {
 	private final Model model;
 	private final LiveServlet servlet;
-	
+
 	MediaServlet(final Model model, final LiveServlet servlet)
 	{
 		this.model = model;
 		this.servlet = servlet;
 	}
-	
+
 	private void startTransaction(final String name)
 	{
 		servlet.startTransaction(name);
 	}
-	
+
 	static final String PATH_INFO = "media";
 	private static final String FEATURE = "f";
 	private static final String ITEM    = "i";
-	
+
 	static String makeURL(final Media feature, final Item item)
 	{
 		return
@@ -59,7 +59,7 @@ final class MediaServlet
 			'?' + MediaServlet.FEATURE + '=' + feature.getID() +
 			'&' + MediaServlet.ITEM + '=' + item.getCopeID();
 	}
-	
+
 	void doRequest(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
@@ -71,11 +71,11 @@ final class MediaServlet
 		final Media feature = (Media)model.getFeature(featureID);
 		if(feature==null)
 			throw new NullPointerException(featureID);
-		
+
 		final String itemID = request.getParameter(ITEM);
 		if(itemID==null)
 			throw new NullPointerException();
-		
+
 		final Item item;
 		try
 		{
@@ -91,20 +91,20 @@ final class MediaServlet
 		{
 			model.rollbackIfNotCommitted();
 		}
-		
+
 		final FileItem fi = anchor.getModification(feature, item);
 		if(fi==null)
 			throw new NullPointerException(featureID + '-' + itemID);
 		response.setContentType(fi.getContentType());
 		response.setContentLength((int)fi.getSize());
-		
+
 		InputStream in = null;
 		ServletOutputStream out = null;
 		try
 		{
 			in  = fi.getInputStream();
 			out = response.getOutputStream();
-			
+
 			final byte[] b = new byte[20*1024];
 			for(int len = in.read(b); len>=0; len = in.read(b))
 				out.write(b, 0, len);

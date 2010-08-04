@@ -28,7 +28,7 @@ public class DraftedItem extends Item
 	static final StringField string = new StringField().optional();
 	static final StringField string2 = new StringField().optional();
 	static final MapField<Integer, String> map = MapField.newMap(new IntegerField(), new StringField().optional());
-	
+
 	/**
 
 	 **
