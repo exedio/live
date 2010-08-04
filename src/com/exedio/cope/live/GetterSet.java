@@ -41,7 +41,7 @@ final class GetterSet<E> implements Set<E>, Serializable // for session persiste
 	}
 
 	@Deprecated
-	public boolean addAll(Collection<? extends E> c)
+	public boolean addAll(final Collection<? extends E> c)
 	{
 		throw new RuntimeException();
 	}
@@ -51,13 +51,13 @@ final class GetterSet<E> implements Set<E>, Serializable // for session persiste
 		map.clear();
 	}
 
-	public boolean contains(Object o)
+	public boolean contains(final Object o)
 	{
 		return map.containsKey(o);
 	}
 
 	@Deprecated
-	public boolean containsAll(Collection<?> c)
+	public boolean containsAll(final Collection<?> c)
 	{
 		throw new RuntimeException();
 	}
@@ -78,13 +78,13 @@ final class GetterSet<E> implements Set<E>, Serializable // for session persiste
 	}
 
 	@Deprecated
-	public boolean removeAll(Collection<?> c)
+	public boolean removeAll(final Collection<?> c)
 	{
 		throw new RuntimeException();
 	}
 
 	@Deprecated
-	public boolean retainAll(Collection<?> c)
+	public boolean retainAll(final Collection<?> c)
 	{
 		throw new RuntimeException();
 	}
@@ -101,7 +101,7 @@ final class GetterSet<E> implements Set<E>, Serializable // for session persiste
 	}
 
 	@Deprecated
-	public <T> T[] toArray(T[] a)
+	public <T> T[] toArray(final T[] a)
 	{
 		throw new RuntimeException();
 	}
