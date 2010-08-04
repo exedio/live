@@ -26,6 +26,18 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Session
 {
+	/**
+	 * Returns a display name of the person logged in.
+	 * This method is guaranteed to be called within a cope
+	 * transaction.
+	 */
 	String getName();
+
+	/**
+	 * Returns the url, the login page should redirect to
+	 * after a successful login.
+	 * This method is guaranteed to be called within a cope
+	 * transaction.
+	 */
 	String getHome(HttpServletRequest request);
 }
