@@ -23,7 +23,7 @@ import com.exedio.cope.StringField;
 
 final class TargetNewDraft implements Target
 {
-	// TODO serialization should not create multiple instances 
+	// TODO serialization should not create multiple instances
 	static final TargetNewDraft INSTANCE = new TargetNewDraft();
 	static final String ID = "New";
 	

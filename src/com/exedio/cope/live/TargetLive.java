@@ -23,7 +23,7 @@ import com.exedio.cope.StringField;
 
 final class TargetLive implements Target
 {
-	// TODO serialization should not create multiple instances 
+	// TODO serialization should not create multiple instances
 	static final TargetLive INSTANCE = new TargetLive();
 	static final String ID = "Live";
 	
