@@ -139,7 +139,7 @@ final class Management
 					}
 					model.commit();
 				}
-				catch(NoSuchIDException e)
+				catch(final NoSuchIDException e)
 				{
 					throw new RuntimeException(e);
 				}
@@ -170,7 +170,7 @@ final class Management
 								DraftItem.feature.get(i),
 								model.getItem(DraftItem.item.get(i)));
 				}
-				catch(NoSuchIDException e)
+				catch(final NoSuchIDException e)
 				{
 					throw new RuntimeException(e);
 				}
@@ -187,7 +187,7 @@ final class Management
 					((Draft)model.getItem(request.getParameter(DRAFT_ID))).deleteCopeItem();
 					model.commit();
 				}
-				catch(NoSuchIDException e)
+				catch(final NoSuchIDException e)
 				{
 					throw new RuntimeException(e);
 				}

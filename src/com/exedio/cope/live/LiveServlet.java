@@ -152,7 +152,7 @@ public abstract class LiveServlet extends CopsServlet
 				startTransaction("findDraft");
 				return new TargetDraft((Draft)model.getItem(id));
 			}
-			catch(NoSuchIDException e)
+			catch(final NoSuchIDException e)
 			{
 				throw new RuntimeException(e);
 			}

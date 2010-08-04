@@ -118,7 +118,7 @@ final class Bar
 			upload.setHeaderEncoding(UTF8);
 			try
 			{
-				for(Iterator<?> i = upload.parseRequest(request).iterator(); i.hasNext(); )
+				for(final Iterator<?> i = upload.parseRequest(request).iterator(); i.hasNext(); )
 				{
 					final FileItem item = (FileItem)i.next();
 					if(item.isFormField())
@@ -127,7 +127,7 @@ final class Bar
 						files.put(item.getFieldName(), item);
 				}
 			}
-			catch(FileUploadException e)
+			catch(final FileUploadException e)
 			{
 				throw new RuntimeException(e);
 			}
@@ -173,7 +173,7 @@ final class Bar
 
 				model.commit();
 			}
-			catch(NoSuchIDException e)
+			catch(final NoSuchIDException e)
 			{
 				throw new RuntimeException(e);
 			}
@@ -261,7 +261,7 @@ final class Bar
 
 						model.commit();
 					}
-					catch(NoSuchIDException e)
+					catch(final NoSuchIDException e)
 					{
 						throw new RuntimeException(e);
 					}
@@ -303,7 +303,7 @@ final class Bar
 
 						model.commit();
 					}
-					catch(NoSuchIDException e)
+					catch(final NoSuchIDException e)
 					{
 						throw new RuntimeException(e);
 					}

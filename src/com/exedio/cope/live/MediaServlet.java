@@ -83,7 +83,7 @@ final class MediaServlet
 			item = model.getItem(itemID);
 			model.commit();
 		}
-		catch(NoSuchIDException e)
+		catch(final NoSuchIDException e)
 		{
 			throw new RuntimeException(e);
 		}
@@ -109,7 +109,7 @@ final class MediaServlet
 			for(int len = in.read(b); len>=0; len = in.read(b))
 				out.write(b, 0, len);
 		}
-		catch(IOException e)
+		catch(final IOException e)
 		{
 			throw new RuntimeException(e);
 		}
@@ -121,7 +121,7 @@ final class MediaServlet
 				{
 					in.close();
 				}
-				catch(IOException e)
+				catch(final IOException e)
 				{
 					e.printStackTrace();
 				}
@@ -132,7 +132,7 @@ final class MediaServlet
 				{
 					out.close();
 				}
-				catch(IOException e)
+				catch(final IOException e)
 				{
 					e.printStackTrace();
 				}

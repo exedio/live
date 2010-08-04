@@ -75,7 +75,7 @@ final class ModificationMedia extends Modification
 		{
 			getFeature().set(item, Media.toValue(value.getInputStream(), value.getContentType()));
 		}
-		catch(IOException e)
+		catch(final IOException e)
 		{
 			throw new RuntimeException(e);
 		}
