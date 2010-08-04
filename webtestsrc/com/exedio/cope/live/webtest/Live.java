@@ -31,6 +31,12 @@ public final class Live extends LiveServlet
 		super(EditedServlet.model);
 	}
 
+	static final void assertTransaction()
+	{
+		if(!EditedServlet.model.hasCurrentTransaction())
+			throw new IllegalStateException("transaction required");
+	}
+
 	private static class Session implements com.exedio.cope.live.Session, Serializable
 	{
 		private static final long serialVersionUID = 1l;
@@ -46,6 +52,8 @@ public final class Live extends LiveServlet
 
 		public String getName()
 		{
+			assertTransaction();
+
 			return nameIsNull ? null : "getName(" + user + ')';
 		}
 
@@ -59,6 +67,8 @@ public final class Live extends LiveServlet
 	@Override
 	protected Session login(final String user, final String password)
 	{
+		assertTransaction();
+
 		if(password.equals(user+"1234"))
 			return new Session(user);
 
@@ -68,6 +78,8 @@ public final class Live extends LiveServlet
 	@Override
 	protected String getHome()
 	{
+		assertTransaction();
+
 		return "edited";
 	}
 }

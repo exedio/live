@@ -103,7 +103,16 @@ final class Bar
 	{
 		if(!Cop.isPost(request))
 		{
-			servlet.redirectHome(request, response);
+			try
+			{
+				startTransaction("redirectHome");
+				servlet.redirectHome(request, response);
+				model.commit();
+			}
+			finally
+			{
+				model.rollbackIfNotCommitted();
+			}
 			return;
 		}
 
