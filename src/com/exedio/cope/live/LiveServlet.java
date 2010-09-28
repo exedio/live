@@ -76,6 +76,24 @@ public abstract class LiveServlet extends CopsServlet
 		super.init(config);
 
 		connectToken = ServletUtil.connect(model, config, getClass().getName());
+
+		boolean mustDestroy = true;
+		try
+		{
+			initConnected();
+			mustDestroy = false;
+		}
+		finally
+		{
+			if(mustDestroy)
+				destroy();
+		}
+		// DO NOT WRITE ANYTHING HERE, BUT IN initConnected ONLY
+		// OTHERWISE ConnectTokens MAY BE LOST
+	}
+
+	private void initConnected()
+	{
 		model.reviseIfSupported();
 	}
 
