@@ -58,7 +58,7 @@
 	</target>
 	
 	<target name="testsrc.instrument" unless="skip.instrument">
-		<instrument finalArgs="true" verbose="false">
+		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
 			<fileset dir="testsrc">
 				<include name="com/exedio/cope/live/DraftedItem.java" />
 			</fileset>
@@ -128,7 +128,7 @@
 	</target>
 	
 	<target name="webtestsrc.instrument" unless="skip.instrument">
-		<instrument finalArgs="true" verbose="false">
+		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
 			<fileset dir="webtestsrc">
 				<include name="**/*.java" />
 				<exclude name="**/EditedServlet_Jspm.java" />
