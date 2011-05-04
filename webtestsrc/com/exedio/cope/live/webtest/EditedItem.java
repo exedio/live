@@ -32,10 +32,10 @@ final class EditedItem extends Item
 	static final IntegerField position = new IntegerField();
 
 	static final StringField field = new StringField();
-	static final StringField fieldBlock = new StringField().lengthMax(StringField.DEFAULT_LENGTH+1);
+	static final StringField fieldBlock = new StringField().lengthMax(StringField.DEFAULT_MAXIMUM_LENGTH+1);
 
 	static final MapField<Integer, String> map = MapField.newMap(new IntegerField(), new StringField());
-	static final MapField<Integer, String> mapBlock = MapField.newMap(new IntegerField(), new StringField().lengthMax(StringField.DEFAULT_LENGTH+1));
+	static final MapField<Integer, String> mapBlock = MapField.newMap(new IntegerField(), new StringField().lengthMax(StringField.DEFAULT_MAXIMUM_LENGTH+1));
 
 	static final Media image = new Media().contentType("image/jpeg", "image/png");
 	static final MediaThumbnail thumbnail = new MediaThumbnail(image, 20, 20);

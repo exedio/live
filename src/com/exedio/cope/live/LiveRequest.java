@@ -144,7 +144,7 @@ public final class LiveRequest
 			return (modification!=null) ? modification : content;
 		}
 
-		final boolean block = feature.getMaximumLength()>StringField.DEFAULT_LENGTH;
+		final boolean block = feature.getMaximumLength()>StringField.DEFAULT_MAXIMUM_LENGTH;
 		final String savedContent = feature.get(item);
 		final String pageContent;
 		final String editorContent;
