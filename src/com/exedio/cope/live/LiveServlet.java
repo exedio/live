@@ -29,7 +29,6 @@ import javax.servlet.http.HttpSession;
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
 import com.exedio.cope.misc.ConnectToken;
-import com.exedio.cope.misc.ServletUtil;
 import com.exedio.cops.CopsServlet;
 import com.exedio.cops.Resource;
 
@@ -75,7 +74,7 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		super.init(config);
 
-		connectToken = ServletUtil.connect(model, config, getClass().getName());
+		connectToken = ConnectToken.issue(model, getClass().getName());
 
 		boolean mustDestroy = true;
 		try

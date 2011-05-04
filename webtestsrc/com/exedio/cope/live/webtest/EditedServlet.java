@@ -28,9 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.exedio.cope.Model;
 import com.exedio.cope.live.Draft;
 import com.exedio.cope.live.DraftItem;
-import com.exedio.cope.pattern.Media;
 import com.exedio.cope.misc.ConnectToken;
-import com.exedio.cope.misc.ServletUtil;
+import com.exedio.cope.pattern.Media;
 
 public final class EditedServlet extends HttpServlet
 {
@@ -52,7 +51,7 @@ public final class EditedServlet extends HttpServlet
 	{
 		super.init();
 
-		connectToken = ServletUtil.connect(model, getServletConfig(), "EditedServlet#init");
+		connectToken = ConnectToken.issue(model, getClass().getName());
 		model.createSchema();
 		try
 		{

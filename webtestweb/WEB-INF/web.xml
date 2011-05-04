@@ -15,6 +15,10 @@
 		<param-value>com.exedio.cope.live.webtest.EditedServlet#model</param-value>
 	</context-param>
 	
+	<listener>
+		<listener-class>com.exedio.cope.live.webtest.PropertiesInitializer</listener-class>
+	</listener>
+	
 	<servlet>
 		<servlet-name>edited</servlet-name>
 		<servlet-class>com.exedio.cope.live.webtest.EditedServlet</servlet-class>
