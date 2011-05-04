@@ -58,7 +58,7 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		if(model==null)
 			throw new NullPointerException("model");
-		final boolean draftsEnabled = model.containsTypeSet(Draft.TYPE, DraftItem.TYPE);
+		final boolean draftsEnabled = model.contains(Drafts.types);
 
 		this.model = model;
 		this.login = new LoginServlet(model, draftsEnabled, this);

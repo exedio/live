@@ -26,8 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.exedio.cope.Model;
+import com.exedio.cope.Revisions;
+import com.exedio.cope.TypeSet;
 import com.exedio.cope.live.Draft;
-import com.exedio.cope.live.DraftItem;
+import com.exedio.cope.live.Drafts;
 import com.exedio.cope.misc.ConnectToken;
 import com.exedio.cope.pattern.Media;
 
@@ -38,8 +40,10 @@ public final class EditedServlet extends HttpServlet
 	static final String ENCODING = "utf-8";
 
 	public static final Model model = new Model(
+			(Revisions)null,
+			new TypeSet[]{Drafts.types},
 			EditedItem.TYPE
-			, Draft.TYPE, DraftItem.TYPE
+			//, Draft.TYPE, com.exedio.cope.live.DraftItem.TYPE
 	);
 
 	static
