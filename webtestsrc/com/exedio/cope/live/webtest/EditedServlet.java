@@ -37,7 +37,10 @@ public final class EditedServlet extends HttpServlet
 
 	static final String ENCODING = "utf-8";
 
-	public static final Model model = new Model(EditedItem.TYPE, Draft.TYPE, DraftItem.TYPE);
+	public static final Model model = new Model(
+			EditedItem.TYPE
+			, Draft.TYPE, DraftItem.TYPE
+	);
 
 	static
 	{
