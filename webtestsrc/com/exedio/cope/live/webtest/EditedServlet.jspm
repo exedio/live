@@ -113,7 +113,7 @@ final class EditedServlet_Jspm
 					<li>map(2): <%= item.getMap(2), item.map, item, 2 %> (<%=item.getMap(2)%>)</li>
 					<li>mapBlock(1): <pre><%= item.getMapBlock(1), item.mapBlock, item, 1 %></pre> <pre><%=item.getMapBlock(1)%></pre></li>
 					<li>image: <a href="<%=response.encodeURL("image" + item.getPosition() + ".html")%>"><img src="<%=item.getImageURL()%>"<% out.edit(item.image, item); %> height="50"></a><%=item.getImageContentType()%></li>
-					<li>thumbnail: <img src="<%=item.getThumbnailURL()%>"<% out.edit(item.thumbnail, item); %>><%=item.getThumbnailContentType()%></li>
+					<li>thumbnail: <img src="<%=item.getThumbnailURL()%>"<% out.edit(item.thumbnail, item); %>></li>
 					<%
 					for(final History.Event event : item.getHistoryEvents())
 					{
