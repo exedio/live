@@ -76,16 +76,19 @@ public abstract class LiveServlet extends CopsServlet
 
 		connectToken = ConnectToken.issue(model, getClass().getName());
 
-		boolean mustDestroy = true;
+		boolean mustReturn = true;
 		try
 		{
 			initConnected();
-			mustDestroy = false;
+			mustReturn = false;
 		}
 		finally
 		{
-			if(mustDestroy)
-				destroy();
+			if(mustReturn)
+			{
+				connectToken.returnIt();
+				connectToken = null;
+			}
 		}
 		// DO NOT WRITE ANYTHING HERE, BUT IN initConnected ONLY
 		// OTHERWISE ConnectTokens MAY BE LOST
