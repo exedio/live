@@ -59,7 +59,7 @@ final class TargetNewDraft implements Target
 
 	public void save(final Anchor anchor)
 	{
-		final Draft draft = new Draft(anchor.user, anchor.sessionName, "new draft");
+		final Draft draft = new Draft(anchor.username, anchor.sessionName, "new draft");
 		for(final Modification m : anchor.getModifications())
 			m.saveTo(draft);
 		anchor.setTarget(new TargetDraft(draft));

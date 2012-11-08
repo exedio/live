@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import com.exedio.cope.ActivationParameters;
 import com.exedio.cope.Cope;
+import com.exedio.cope.CopeSchemaName;
 import com.exedio.cope.DateField;
 import com.exedio.cope.Item;
 import com.exedio.cope.Query;
@@ -35,8 +36,8 @@ import com.exedio.cope.pattern.MapField;
 
 public final class Draft extends Item
 {
-	static final StringField user = new StringField().toFinal();
-	static final StringField name = new StringField().toFinal().optional();
+	@CopeSchemaName("user") static final StringField username = new StringField().toFinal();
+	@CopeSchemaName("name") static final StringField realName = new StringField().toFinal().optional();
 	static final DateField date = new DateField().toFinal().defaultToNow();
 	static final StringField comment = new StringField().toFinal();
 
@@ -47,8 +48,8 @@ public final class Draft extends Item
 
 	String getAuthor()
 	{
-		final String name = Draft.name.get(this);
-		return name!=null ? name : Draft.user.get(this);
+		final String name = Draft.realName.get(this);
+		return name!=null ? name : Draft.username.get(this);
 	}
 
 	String getComment()
@@ -105,13 +106,13 @@ public final class Draft extends Item
 	}
 
 	public Draft(
-			final String user,
-			final String name,
+			final String username,
+			final String realName,
 			final String comment)
 	{
 		this(new SetValue[]{
-			Draft.user.map(user),
-			Draft.name.map(name),
+			Draft.username.map(username),
+			Draft.realName.map(realName),
 			Draft.comment.map(comment),
 		});
 	}

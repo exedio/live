@@ -116,7 +116,7 @@ public abstract class LiveServlet extends CopsServlet
 		super.destroy();
 	}
 
-	protected abstract Session login(String user, String password);
+	protected abstract Session login(String username, String password);
 
 	@Override
 	public final void doRequest(

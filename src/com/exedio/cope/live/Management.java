@@ -105,7 +105,7 @@ final class Management
 				try
 				{
 					startTransaction("persistProposals");
-					final Draft parent = new Draft(anchor.user, anchor.sessionName, request.getParameter(MODIFICATION_PERSIST_COMMENT));
+					final Draft parent = new Draft(anchor.username, anchor.sessionName, request.getParameter(MODIFICATION_PERSIST_COMMENT));
 					for(final Iterator<Modification> i = anchor.modifications.iterator(); i.hasNext(); )
 					{
 						final Modification p = i.next();
@@ -201,7 +201,7 @@ final class Management
 				try
 				{
 					startTransaction("newDraft");
-					new Draft(anchor.user, anchor.sessionName, request.getParameter(DRAFT_COMMENT));
+					new Draft(anchor.username, anchor.sessionName, request.getParameter(DRAFT_COMMENT));
 					model.commit();
 				}
 				finally

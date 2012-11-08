@@ -51,7 +51,7 @@ final class LoginServlet
 	static final String ANCHOR = Session.class.getName();
 
 	static final String SUBMIT   = "login.submit";
-	static final String USER     = "login.user";
+	static final String USERNAME = "login.username";
 	static final String PASSWORD = "login.password";
 
 	void doRequest(
@@ -64,22 +64,22 @@ final class LoginServlet
 		response.setContentType("text/html; charset="+UTF8);
 		if(Cop.isPost(request) && request.getParameter(SUBMIT)!=null)
 		{
-			final String user = request.getParameter(USER);
+			final String username = request.getParameter(USERNAME);
 			final String password = request.getParameter(PASSWORD);
 			try
 			{
 				startTransaction("login");
-				final Session session = servlet.login(user, password);
+				final Session session = servlet.login(username, password);
 				if(session!=null)
 				{
 					final Anchor anchor =
-						new Anchor(draftsEnabled, request, user, session, session.getName());
+						new Anchor(draftsEnabled, request, username, session, session.getName());
 					httpSession.setAttribute(ANCHOR, anchor);
 					anchor.redirectHome(request, response);
 				}
 				else
 				{
-					write(request, response, user);
+					write(request, response, username);
 				}
 				model.commit();
 			}
@@ -97,11 +97,11 @@ final class LoginServlet
 	private void write(
 			final HttpServletRequest request,
 			final HttpServletResponse response,
-			final String user)
+			final String username)
 	throws IOException
 	{
 		final StringBuilder out = new StringBuilder();
-		Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), user);
+		Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), username);
 		BodySender.send(response, out, UTF8);
 	}
 }

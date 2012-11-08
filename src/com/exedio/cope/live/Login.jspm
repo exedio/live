@@ -31,7 +31,7 @@ final class Login_Jspm
 			final HttpServletRequest request,
 			final String action,
 			final Package thePackage,
-			final String failureUser)
+			final String failureUsername)
 	{
 %><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -66,7 +66,7 @@ final class Login_Jspm
 	<body>
 		<a href="http://cope.sourceforge.net/" target="_blank"><img src="<%=LiveServlet.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
 		<h1>COPE Live Edit</h1><%
-		if(failureUser!=null)
+		if(failureUsername!=null)
 		{
 		%>
 		<div>Login failed, because either user or password was not correct.</div><%
@@ -76,7 +76,7 @@ final class Login_Jspm
 			<table>
 				<tr>
 					<td>Login</td>
-					<td><input name="<%=LoginServlet.USER%>"<% if(failureUser!=null){%> value="<%=encode(failureUser)%>"<%} %>></td>
+					<td><input name="<%=LoginServlet.USERNAME%>"<% if(failureUsername!=null){%> value="<%=encode(failureUsername)%>"<%} %>></td>
 				</tr>
 				<tr>
 					<td>Password</td>

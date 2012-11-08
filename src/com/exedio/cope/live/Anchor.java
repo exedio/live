@@ -46,7 +46,7 @@ final class Anchor implements Serializable // for session persistence
 	final String errorButtonURL;
 	final String servletPath;
 
-	final String user;
+	final String username;
 	final Session session;
 	final String sessionName;
 
@@ -57,7 +57,7 @@ final class Anchor implements Serializable // for session persistence
 	Anchor(
 			final boolean draftsEnabled,
 			final HttpServletRequest request,
-			final String user,
+			final String username,
 			final Session session,
 			final String sessionName)
 	{
@@ -71,12 +71,12 @@ final class Anchor implements Serializable // for session persistence
 		this.errorButtonURL         = LiveServlet.error        .getURL(request);
 		this.servletPath = request.getContextPath() + request.getServletPath() + '/'; // TODO remove trailing slash
 
-		this.user = user;
+		this.username = username;
 		this.session = session;
 		this.sessionName = sessionName;
 		this.target = defaultTarget;
 		assert defaultTarget!=null;
-		assert user!=null;
+		assert username!=null;
 		assert session!=null;
 	}
 
@@ -159,7 +159,7 @@ final class Anchor implements Serializable // for session persistence
 
 	String getHistoryAuthor()
 	{
-		return (sessionName!=null ? sessionName : user) + " (live)";
+		return (sessionName!=null ? sessionName : username) + " (live)";
 	}
 
 	void redirectHome(
@@ -182,7 +182,7 @@ final class Anchor implements Serializable // for session persistence
 		if(sessionName!=null)
 			bf.append('"').append(sessionName).append('"');
 		else
-			bf.append(user);
+			bf.append(username);
 
 		if(borders)
 			bf.append(" bordered");
