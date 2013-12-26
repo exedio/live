@@ -236,7 +236,7 @@
 	<target name="findbugs" depends="compile">
 		<untar
 				compression="gzip"
-				src="${basedir}/lib/findbugs-1.3.9.tar.gz"
+				src="${basedir}/lib/findbugs.tar.gz"
 				dest="${basedir}/build/findbugs-home" />
 		<taskdef
 				resource="edu/umd/cs/findbugs/anttask/tasks.properties"
