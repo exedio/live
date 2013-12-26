@@ -75,16 +75,17 @@
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/junit.jar" />
+				<pathelement location="lib/cpsuite.jar" />
 			</classpath>
 		</compile>
 	</target>
 	
 	<target name="test" depends="testsrc.compile">
 		<mkdir dir="build/testresults" />
-		<junit taskname="junit" fork="yes"
-					haltonerror="true" haltonfailure="true"
-					dir="${basedir}"
-					showoutput="true" printsummary="true">
+		<mkdir dir="build/testtmpdir" />
+		<junit fork="yes" dir="${basedir}"
+				 haltonerror="true" haltonfailure="true"
+				 showoutput="true" printsummary="true">
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />
 			<classpath>
@@ -93,10 +94,13 @@
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/hsqldb.jar" />
 				<pathelement location="lib/junit.jar" />
+				<pathelement location="lib/cpsuite.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
 			</classpath>
-			<test name="com.exedio.cope.live.PackageTest" todir="build/testresults" outfile="editor" />
+			<test name="${test}" todir="build/testresults" outfile="copelive" />
+			<sysproperty key="java.io.tmpdir" value="${basedir}/build/testtmpdir" />
+			<sysproperty key="java.awt.headless" value="true" />
 			<assertions><enable/></assertions>
 		</junit>
 	</target>

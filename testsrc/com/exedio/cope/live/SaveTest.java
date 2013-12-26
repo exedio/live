@@ -18,11 +18,16 @@
 
 package com.exedio.cope.live;
 
+import static com.exedio.cope.junit.CopeAssert.assertContains;
+import static com.exedio.cope.junit.CopeAssert.list;
+import static junit.framework.Assert.assertEquals;
+
+import com.exedio.cope.live.cope.CopeModel4Test;
 import javax.servlet.http.HttpServletRequest;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.exedio.cope.junit.CopeModelTest;
-
-public class SaveTest extends CopeModelTest
+public class SaveTest extends CopeModel4Test
 {
 	public SaveTest()
 	{
@@ -45,10 +50,9 @@ public class SaveTest extends CopeModelTest
 	Draft draft;
 	Anchor anchor;
 
-	@Override
+	@Before
 	public void setUp() throws Exception
 	{
-		super.setUp();
 		item = new DraftedItem();
 		draft = new Draft("user", "name", "comment");
 		item.setString("oldString1");
@@ -56,7 +60,7 @@ public class SaveTest extends CopeModelTest
 		anchor.modify("newString1", DraftedItem.string, item);
 	}
 
-	public void testDraft()
+	@Test public void testDraft()
 	{
 		assertEquals(list(), draft.getItems());
 
@@ -72,7 +76,7 @@ public class SaveTest extends CopeModelTest
 		assertContains(draft, Draft.TYPE.search());
 	}
 
-	public void testLive()
+	@Test public void testLive()
 	{
 		assertEquals("oldString1", item.getString());
 
@@ -83,7 +87,7 @@ public class SaveTest extends CopeModelTest
 		assertContains(draft, Draft.TYPE.search());
 	}
 
-	public void testNewDraft()
+	@Test public void testNewDraft()
 	{
 		assertContains(draft, Draft.TYPE.search());
 
@@ -104,6 +108,6 @@ public class SaveTest extends CopeModelTest
 		assertEquals(0, draft.getItemsCount());
 		assertEquals("oldString1", item.getString());
 
-		model.commit();
+		DraftTest.MODEL.commit();
 	}
 }

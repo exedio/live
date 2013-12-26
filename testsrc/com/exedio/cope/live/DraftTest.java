@@ -18,10 +18,16 @@
 
 package com.exedio.cope.live;
 
-import com.exedio.cope.Model;
-import com.exedio.cope.junit.CopeModelTest;
+import static com.exedio.cope.junit.CopeAssert.list;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertSame;
 
-public class DraftTest extends CopeModelTest
+import com.exedio.cope.Model;
+import com.exedio.cope.live.cope.CopeModel4Test;
+import org.junit.Before;
+import org.junit.Test;
+
+public class DraftTest extends CopeModel4Test
 {
 	static final Model MODEL = new Model(DraftedItem.TYPE, Draft.TYPE, DraftItem.TYPE);
 
@@ -35,17 +41,16 @@ public class DraftTest extends CopeModelTest
 	Draft dn;
 	Draft d;
 
-	@Override
+	@Before
 	public void setUp() throws Exception
 	{
-		super.setUp();
 		i1 = new DraftedItem();
 		i2 = new DraftedItem();
 		dn = new Draft("userNull", null, "commentNull");
 		d  = new Draft("user", "name", "comment");
 	}
 
-	public void testIt()
+	@Test public void testIt()
 	{
 		assertEquals("userNull", dn.getAuthor());
 		assertEquals("commentNull", dn.getComment());
@@ -95,6 +100,6 @@ public class DraftTest extends CopeModelTest
 		assertEquals("oldString3", d1.getOldValue());
 		assertEquals("newString3", d1.getNewValue());
 
-		model.commit();
+		MODEL.commit();
 	}
 }
