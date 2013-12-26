@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
-<project name="macros" default="fail" basedir=".">
+<project name="compile" default="fail" basedir=".">
 
-	<macrodef name="ljavac">
+	<macrodef name="compile">
 		<attribute name="srcdir" />
 		<element name="classpath" optional="true" implicit="true" />
 		<sequential>
@@ -16,17 +16,14 @@
 					 debug="on"
 					 optimize="off">
 				<classpath />
-				<compilerarg value="-Xlint" />
+				<compilerarg value="-Xlint:all,-path" />
 				<compilerarg value="-encoding" />
 				<compilerarg value="ascii" />
 			</javac>
 			<copy todir="build/classes/@{srcdir}">
 				<fileset dir="@{srcdir}">
-					<include name="**/*.png" />
-					<include name="**/*.jpg" />
-					<include name="**/*.css" />
-					<include name="**/*.js" />
-					<include name="**/*.properties" />
+					<exclude name="**/*.java" />
+					<exclude name="**/*.jspm" />
 				</fileset>
 			</copy>
 		</sequential>
@@ -35,5 +32,5 @@
 	<target name="fail">
 		<fail message="This file contains helper macros only. There are no targets." />
 	</target>
-	
+
 </project>
