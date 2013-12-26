@@ -27,6 +27,7 @@ import com.exedio.cope.live.cope.CopeModel4Test;
 import org.junit.Before;
 import org.junit.Test;
 
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
 public class DraftTest extends CopeModel4Test
 {
 	static final Model MODEL = new Model(DraftedItem.TYPE, Draft.TYPE, DraftItem.TYPE);

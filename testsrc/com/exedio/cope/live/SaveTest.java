@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Before;
 import org.junit.Test;
 
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
 public class SaveTest extends CopeModel4Test
 {
 	public SaveTest()
