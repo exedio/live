@@ -22,6 +22,7 @@ import com.exedio.cope.ActivationParameters;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.ItemField;
+import com.exedio.cope.ItemField.DeletePolicy;
 import com.exedio.cope.SetValue;
 import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
@@ -32,12 +33,12 @@ import com.exedio.cope.reflect.FeatureField;
 
 public final class DraftItem extends Item
 {
-	static final ItemField<Draft> parent = newItemField(Draft.class, CASCADE).toFinal();
+	static final ItemField<Draft> parent = ItemField.create(Draft.class, DeletePolicy.CASCADE).toFinal();
 	static final IntegerField position = new IntegerField().toFinal();
-	static final PartOf<Draft> items = PartOf.newPartOf(parent);
+	static final PartOf<Draft> items = PartOf.create(parent);
 	static final UniqueConstraint parentAndPosition = new UniqueConstraint(parent, position);
 
-	static final FeatureField<StringField> feature = FeatureField.newField(StringField.class).toFinal();
+	static final FeatureField<StringField> feature = FeatureField.create(StringField.class).toFinal();
 	static final StringField item = new StringField().toFinal();
 	static final UniqueConstraint parentFeatureAndItem = new UniqueConstraint(parent, feature.getIdField(), item);
 

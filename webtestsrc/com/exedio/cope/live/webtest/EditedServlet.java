@@ -40,7 +40,7 @@ public final class EditedServlet extends HttpServlet
 	static final String ENCODING = "utf-8";
 
 	public static final Model model = new Model(
-			(Revisions)null,
+			(Revisions.Factory)null,
 			new TypeSet[]{Drafts.types},
 			EditedItem.TYPE
 			//, Draft.TYPE, com.exedio.cope.live.DraftItem.TYPE

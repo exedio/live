@@ -34,15 +34,15 @@ final class EditedItem extends Item
 	static final StringField field = new StringField();
 	static final StringField fieldBlock = new StringField().lengthMax(StringField.DEFAULT_MAXIMUM_LENGTH+1);
 
-	static final MapField<Integer, String> map = MapField.newMap(new IntegerField(), new StringField());
-	static final MapField<Integer, String> mapBlock = MapField.newMap(new IntegerField(), new StringField().lengthMax(StringField.DEFAULT_MAXIMUM_LENGTH+1));
+	static final MapField<Integer, String> map = MapField.create(new IntegerField(), new StringField());
+	static final MapField<Integer, String> mapBlock = MapField.create(new IntegerField(), new StringField().lengthMax(StringField.DEFAULT_MAXIMUM_LENGTH+1));
 
 	static final Media image = new Media().contentType("image/jpeg", "image/png");
 	static final MediaThumbnail thumbnail = new MediaThumbnail(image, 20, 20);
 
 	@Computed() static final IntegerField computedPosition = new IntegerField();
 	@Computed() static final StringField computedField = new StringField();
-	@Computed() static final MapField<Integer, String> computedMap = MapField.newMap(new IntegerField(), new StringField());
+	@Computed() static final MapField<Integer, String> computedMap = MapField.create(new IntegerField(), new StringField());
 	@Computed() static final Media computedImage = new Media().contentType("image/jpeg", "image/png");
 	@Computed() static final MediaThumbnail computedThumbnail = new MediaThumbnail(image, 20, 20);
 

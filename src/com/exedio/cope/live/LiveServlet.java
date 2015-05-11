@@ -96,7 +96,7 @@ public abstract class LiveServlet extends CopsServlet
 
 	private void initConnected()
 	{
-		model.reviseIfSupported();
+		model.reviseIfSupportedAndAutoEnabled();
 	}
 
 	final void startTransaction(final String name)
