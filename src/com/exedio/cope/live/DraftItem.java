@@ -64,7 +64,7 @@ public final class DraftItem extends Item
 		});
 	}
 
-	private DraftItem(final SetValue... setValues)
+	private DraftItem(final SetValue<?>... setValues)
 	{
 		super(setValues);
 	}

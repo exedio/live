@@ -117,7 +117,7 @@ public final class Draft extends Item
 		});
 	}
 
-	private Draft(final SetValue... setValues)
+	private Draft(final SetValue<?>... setValues)
 	{
 		super(setValues);
 	}
