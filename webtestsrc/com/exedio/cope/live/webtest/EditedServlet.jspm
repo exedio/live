@@ -19,10 +19,21 @@
 
 package com.exedio.cope.live.webtest;
 
+import static com.exedio.cope.live.webtest.EditedItem.computedField;
+import static com.exedio.cope.live.webtest.EditedItem.computedImage;
+import static com.exedio.cope.live.webtest.EditedItem.computedMap;
+import static com.exedio.cope.live.webtest.EditedItem.computedPosition;
+import static com.exedio.cope.live.webtest.EditedItem.computedThumbnail;
+import static com.exedio.cope.live.webtest.EditedItem.field;
+import static com.exedio.cope.live.webtest.EditedItem.fieldBlock;
+import static com.exedio.cope.live.webtest.EditedItem.image;
+import static com.exedio.cope.live.webtest.EditedItem.map;
+import static com.exedio.cope.live.webtest.EditedItem.mapBlock;
+import static com.exedio.cope.live.webtest.EditedItem.position;
+import static com.exedio.cope.live.webtest.EditedItem.thumbnail;
+
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import com.exedio.cope.pattern.History;
 
 final class EditedServlet_Jspm
@@ -86,7 +97,7 @@ final class EditedServlet_Jspm
 		isLoggedIn:<%=out.isEditorLoggedIn()%>
 		isBordersEnabled:<%=out.isEditorBordersEnabled()%>
 		getSession:<%=out.getEditorSession()%>
-		duplicate: <%=item1.getCopeID()%>, <a href="<%=duplicateURL%>"><%= item1.getField(), item1.field, item1 %></a> (<%=item1.getField()%>)
+		duplicate: <%=item1.getCopeID()%>, <a href="<%=duplicateURL%>"><%= item1.getField(), field, item1 %></a> (<%=item1.getField()%>)
 		<br>
 		to login page:
 		<a href="<%=loginURL%>">get</a>
@@ -105,15 +116,15 @@ final class EditedServlet_Jspm
 			%>
 			<li>
 				<%=item.getCopeID()%>
-				p(<%=item.getPosition()%>,<% if(swapIcon) out.swapIcon(item.position, item); else out.swapText(item.position, item); %>)
+				p(<%=item.getPosition()%>,<% if(swapIcon) out.swapIcon(position, item); else out.swapText(position, item); %>)
 				<ul>
-					<li>field: <%= item.getField(), item.field, item %> (<%=item.getField()%>) {<%= "---"+item.getField()+"---", item.field, item %>}</li>
-					<li>fieldBlock: <pre><%= item.getFieldBlock(), item.fieldBlock, item %></pre> <pre><%=item.getFieldBlock()%></pre></li>
-					<li>map(1): <%= item.getMap(1), item.map, item, 1 %> (<%=item.getMap(1)%>) {<%= "---"+item.getMap(1)+"---", item.map, item, 1 %>}</li>
-					<li>map(2): <%= item.getMap(2), item.map, item, 2 %> (<%=item.getMap(2)%>)</li>
-					<li>mapBlock(1): <pre><%= item.getMapBlock(1), item.mapBlock, item, 1 %></pre> <pre><%=item.getMapBlock(1)%></pre></li>
-					<li>image: <a href="<%=response.encodeURL("image" + item.getPosition() + ".html")%>"><img src="<%=item.getImageURL()%>"<% out.edit(item.image, item); %> height="50"></a><%=item.getImageContentType()%></li>
-					<li>thumbnail: <img src="<%=item.getThumbnailURL()%>"<% out.edit(item.thumbnail, item); %>></li>
+					<li>field: <%= item.getField(), field, item %> (<%=item.getField()%>) {<%= "---"+item.getField()+"---", field, item %>}</li>
+					<li>fieldBlock: <pre><%= item.getFieldBlock(), fieldBlock, item %></pre> <pre><%=item.getFieldBlock()%></pre></li>
+					<li>map(1): <%= item.getMap(1), map, item, 1 %> (<%=item.getMap(1)%>) {<%= "---"+item.getMap(1)+"---", map, item, 1 %>}</li>
+					<li>map(2): <%= item.getMap(2), map, item, 2 %> (<%=item.getMap(2)%>)</li>
+					<li>mapBlock(1): <pre><%= item.getMapBlock(1), mapBlock, item, 1 %></pre> <pre><%=item.getMapBlock(1)%></pre></li>
+					<li>image: <a href="<%=response.encodeURL("image" + item.getPosition() + ".html")%>"><img src="<%=item.getImageURL()%>"<% out.edit(image, item); %> height="50"></a><%=item.getImageContentType()%></li>
+					<li>thumbnail: <img src="<%=item.getThumbnailURL()%>"<% out.edit(thumbnail, item); %>></li>
 					<%
 					for(final History.Event event : item.getHistoryEvents())
 					{
@@ -142,14 +153,14 @@ final class EditedServlet_Jspm
 				COMPUTED:
 				(<%=item.getComputedPosition()%>,<%
 					if(swapIcon)
-						out.swapIcon(item.computedPosition, item);
+						out.swapIcon(computedPosition, item);
 					else
-						out.swapText(item.computedPosition, item);
+						out.swapText(computedPosition, item);
 				%>)
-				<%= item.getComputedField(), item.computedField, item %>
-				<%= item.getComputedMap(1), item.computedMap, item, 1 %>
-				<img src="<%=item.getComputedImageURL()%>"<% out.edit(item.computedImage, item); %> height="40">
-				<img src="<%=item.getComputedThumbnailURL()%>"<% out.edit(item.computedThumbnail, item); %>>
+				<%= item.getComputedField(), computedField, item %>
+				<%= item.getComputedMap(1), computedMap, item, 1 %>
+				<img src="<%=item.getComputedImageURL()%>"<% out.edit(computedImage, item); %> height="40">
+				<img src="<%=item.getComputedThumbnailURL()%>"<% out.edit(computedThumbnail, item); %>>
 			</li><%
 		}
 		%>
