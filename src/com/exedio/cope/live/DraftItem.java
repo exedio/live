@@ -53,7 +53,7 @@ public final class DraftItem extends Item
 			final String oldValue,
 			final String newValue)
 	{
-		this(new com.exedio.cope.SetValue[]{
+		this(new com.exedio.cope.SetValue<?>[]{
 			DraftItem.parent.map(parent),
 			DraftItem.position.map(position),
 			DraftItem.feature.map(feature),
