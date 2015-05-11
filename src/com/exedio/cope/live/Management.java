@@ -225,7 +225,7 @@ final class Management
 				: null;
 			final ArrayList<Target> targets = new ArrayList<Target>();
 			targets.add(TargetLive.INSTANCE);
-			if(draftsEnabled)
+			if(drafts!=null)
 			{
 				for(final Draft draft : drafts)
 					targets.add(new TargetDraft(draft));
