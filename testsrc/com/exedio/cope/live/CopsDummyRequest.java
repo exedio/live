@@ -62,12 +62,12 @@ final class CopsDummyRequest implements HttpServletRequest
 		throw new RuntimeException();
 	}
 
-	public Enumeration getHeaderNames()
+	public Enumeration<?> getHeaderNames()
 	{
 		throw new RuntimeException();
 	}
 
-	public Enumeration getHeaders(final String arg0)
+	public Enumeration<?> getHeaders(final String arg0)
 	{
 		throw new RuntimeException();
 	}
@@ -163,7 +163,7 @@ final class CopsDummyRequest implements HttpServletRequest
 		throw new RuntimeException();
 	}
 
-	public Enumeration getAttributeNames()
+	public Enumeration<?> getAttributeNames()
 	{
 		throw new RuntimeException();
 	}
@@ -208,7 +208,7 @@ final class CopsDummyRequest implements HttpServletRequest
 		throw new RuntimeException();
 	}
 
-	public Enumeration getLocales()
+	public Enumeration<?> getLocales()
 	{
 		throw new RuntimeException();
 	}
@@ -223,7 +223,7 @@ final class CopsDummyRequest implements HttpServletRequest
 		throw new RuntimeException();
 	}
 
-	public Enumeration getParameterNames()
+	public Enumeration<?> getParameterNames()
 	{
 		throw new RuntimeException();
 	}

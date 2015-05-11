@@ -110,7 +110,7 @@ public final class Draft extends Item
 			final String realName,
 			final String comment)
 	{
-		this(new SetValue[]{
+		this(new SetValue<?>[]{
 			Draft.username.map(username),
 			Draft.realName.map(realName),
 			Draft.comment.map(comment),
