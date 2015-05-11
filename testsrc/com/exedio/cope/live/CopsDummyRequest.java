@@ -218,7 +218,7 @@ final class CopsDummyRequest implements HttpServletRequest
 		throw new RuntimeException();
 	}
 
-	public Map getParameterMap()
+	public Map<?,?> getParameterMap()
 	{
 		throw new RuntimeException();
 	}
