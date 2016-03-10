@@ -2,7 +2,7 @@
 <project name="ivy" default="copy">
 	<import file="common.xml" />
 	<target name="copy" depends="resolve">
-		
+
 		<copy overwrite="true" todir="../lib">
 			<firstmatchmapper>
 				<globmapper from="*-jar.jar" to="*.jar" />

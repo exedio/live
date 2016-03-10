@@ -52,19 +52,19 @@ final class Management_Jspm
 				font-family:sans-serif;
 				font-size:180%;
 			}
-			
+
 			img
 			{
 				border:0;
 			}
-			
+
 			img.logo
 			{
 				float:right;
 				width:198px;
 				height:60px;
 			}
-			
+
 			table caption
 			{
 				font-style:italic;
@@ -75,7 +75,7 @@ final class Management_Jspm
 				border:solid 2px white;
 				border-bottom-width:0px;
 			}
-			
+
 			table th
 			{
 				text-align:left;
@@ -85,7 +85,7 @@ final class Management_Jspm
 				padding:1px 3px;
 				font-weight:normal;
 			}
-			
+
 			table td
 			{
 				text-align:left;
@@ -93,18 +93,18 @@ final class Management_Jspm
 				border:solid 1px #ccc;
 				padding:1px 3px;
 			}
-			
+
 			table td.number
 			{
 				text-align:right;
 			}
-			
+
 			table tr.open td
 			{
 				background-color:#bbd;
 				border-color:#bbd;
 			}
-			
+
 			hr
 			{
 				height:0px;
@@ -117,7 +117,7 @@ final class Management_Jspm
 	<body>
 		<a href="http://cope.sourceforge.net/" target="_blank"><img src="<%=LiveServlet.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
 		<h1>COPE Live Edit</h1><%
-		
+
 	if(draftsEnabled)
 	{
 		%>
@@ -191,7 +191,7 @@ final class Management_Jspm
 		</table>
 		<hr><%
 	}
-	
+
 	if(modifications.isEmpty())
 	{
 		%>
@@ -208,7 +208,7 @@ final class Management_Jspm
 					<th>Old</th>
 					<th>New</th>
 				</tr><%
-				
+
 				for(final Modification m : modifications)
 				{
 				%>
@@ -236,14 +236,14 @@ final class Management_Jspm
 			</table>
 			<input name="<%=Management.MODIFICATION_PUBLISH%>" type="submit" value="Publish">
 			<input name="<%=Management.MODIFICATION_DISCARD%>" type="submit" value="Discard"><%
-			
+
 		if(draftsEnabled)
 		{
 			%>
 			<br>
 			<input name="<%=Management.MODIFICATION_PERSIST%>" type="submit" value="Save as new Draft:">
 			<input name="<%=Management.MODIFICATION_PERSIST_COMMENT%>" type="text"><%
-			
+
 			if(!drafts.isEmpty())
 			{
 			%>

@@ -32,30 +32,30 @@ final class Bar_Jspm
 	private static final String ID_LINE_VALUE   = AVOID_COLLISION + "barLineValue";
 	private static final String ID_LINE_APPLY   = AVOID_COLLISION + "barLineApply";
 	private static final String ID_LINE_PUBLISH = AVOID_COLLISION + "barLinePublish";
-	
+
 	private static final String ID_FILE_FORM    = AVOID_COLLISION + "barFileForm";
 	private static final String ID_FILE_FEATURE = AVOID_COLLISION + "barFileFeature";
 	private static final String ID_FILE_ITEM    = AVOID_COLLISION + "barFileItem";
 	private static final String ID_FILE_VALUE   = AVOID_COLLISION + "barFileValue";
 	private static final String ID_FILE_APPLY   = AVOID_COLLISION + "barFileApply";
 	private static final String ID_FILE_PUBLISH = AVOID_COLLISION + "barFilePublish";
-	
+
 	private static final String ID_AREA_FORM    = AVOID_COLLISION + "barAreaForm";
 	private static final String ID_AREA_FEATURE = AVOID_COLLISION + "barAreaFeature";
 	private static final String ID_AREA_ITEM    = AVOID_COLLISION + "barAreaItem";
 	private static final String ID_AREA_VALUE   = AVOID_COLLISION + "barAreaValue";
 	private static final String ID_AREA_APPLY   = AVOID_COLLISION + "barAreaApply";
 	private static final String ID_AREA_PUBLISH = AVOID_COLLISION + "barAreaPublish";
-	
+
 	private static final String ONKEY_METHOD_LINE = AVOID_COLLISION + "onkeyline";
-	
+
 	static void writeHead(
 			final StringBuilder out,
 			final boolean borders)
 	{
 		%>
 		<style type="text/css">
-			
+
 			div#contentEditorBar
 			{
 				position: fixed; top: 20px; min-width: 350px;
@@ -67,7 +67,7 @@ final class Bar_Jspm
 				font-size: 10pt;
 				color: #002;
 			}
-			
+
 			div#contentEditorBar h1
 			{
 				margin: 0px;
@@ -75,40 +75,40 @@ final class Bar_Jspm
 				padding: 0px;
 				font-size: 12pt;
 			}
-			
+
 			div#contentEditorBar h1 a
 			{
 				color: #000;
 			}
-			
+
 			div#contentEditorBar a
 			{
 				text-decoration: none;
 			}
-			
+
 			div#contentEditorBar input
 			{
 				background: #f0f8ff;
 				font-size: 80%;
 				color: #002;
 			}
-			
+
 			div#contentEditorBar select
 			{
 				background: #f0f8ff;
 				font-size: 80%;
 				color: #002;
 			}
-			
+
 			form#contentEditorBarSwitches
 			{
 				float: right;
 			}<%
-		
+
 		if(borders)
 		{
 		%>
-			
+
 			div#contentEditorBar hr
 			{
 				height: 0px;
@@ -116,17 +116,17 @@ final class Bar_Jspm
 				border-width: 0px;
 				border-top: 1px solid #99d;
 			}
-			
+
 			div#contentEditorBar input.text
 			{
 				width: 80%;
 			}
-			
+
 			div#contentEditorBar input.publishNow
 			{
 				background: #f0d8df;
 			}
-			
+
 			img#<%=ID_FILE_VALUE%>
 			{
 				margin: 0px;
@@ -134,24 +134,24 @@ final class Bar_Jspm
 				border: solid #ccd 5px;
 				height: 40px;
 			}<%
-		
+
 		}
 		%>
-			
+
 		</style><%
-		
+
 		if(borders)
 		{
 		%>
 		<script>
 			var previousBorder = null;
 			var previousModifiable = false;
-			
+
 			function <%=Bar.EDIT_METHOD_LINE%>(border,feature,item,value,modifiable)
 			{
 				if(previousBorder==border)
 					return true;
-				
+
 				document.getElementById("<%=ID_FILE_FORM%>").style.display = "none";
 				document.getElementById("<%=ID_AREA_FORM%>").style.display = "none";
 				document.getElementById("<%=ID_FILE_VALUE%>").value = null;
@@ -163,20 +163,20 @@ final class Bar_Jspm
 				document.getElementById("<%=ID_LINE_PUBLISH%>").style.display = modifiable ? "none" : "inline";
 				document.getElementById("<%=ID_LINE_FORM%>").style.display = "inline";
 				document.getElementById("contentEditorBar").style.display = "block";
-				
+
 				if(previousBorder!=null)
 					previousBorder.className='<%=Bar.CSS_EDIT%>';
 				border.className='<%=Bar.CSS_EDIT_ACTIVE%>';
 				previousBorder = border;
 				previousModifiable = modifiable;
-				
+
 				return false;
 			}
 			function <%=Bar.EDIT_METHOD_FILE%>(border,feature,item,value,modifiable)
 			{
 				if(previousBorder==border)
 					return true;
-				
+
 				document.getElementById("<%=ID_LINE_FORM%>").style.display = "none";
 				document.getElementById("<%=ID_AREA_FORM%>").style.display = "none";
 				document.getElementById("<%=ID_LINE_VALUE%>").value = null;
@@ -188,20 +188,20 @@ final class Bar_Jspm
 				document.getElementById("<%=ID_FILE_PUBLISH%>").style.display = modifiable ? "none" : "inline";
 				document.getElementById("<%=ID_FILE_FORM%>").style.display = "inline";
 				document.getElementById("contentEditorBar").style.display = "block";
-				
+
 				if(previousBorder!=null)
 					previousBorder.className='<%=Bar.CSS_EDIT%>';
 				border.className='<%=Bar.CSS_EDIT_ACTIVE%>';
 				previousBorder = border;
 				previousModifiable = modifiable;
-				
+
 				return false;
 			}
 			function <%=Bar.EDIT_METHOD_AREA%>(border,feature,item,value,modifiable)
 			{
 				if(previousBorder==border)
 					return true;
-				
+
 				document.getElementById("<%=ID_LINE_FORM%>").style.display = "none";
 				document.getElementById("<%=ID_FILE_FORM%>").style.display = "none";
 				document.getElementById("<%=ID_LINE_VALUE%>").value = null;
@@ -213,13 +213,13 @@ final class Bar_Jspm
 				document.getElementById("<%=ID_AREA_PUBLISH%>").style.display = modifiable ? "none" : "inline";
 				document.getElementById("<%=ID_AREA_FORM%>").style.display = "inline";
 				document.getElementById("contentEditorBar").style.display = "block";
-				
+
 				if(previousBorder!=null)
 					previousBorder.className='<%=Bar.CSS_EDIT%>';
 				border.className='<%=Bar.CSS_EDIT_ACTIVE%>';
 				previousBorder = border;
 				previousModifiable = modifiable;
-				
+
 				return false;
 			}
 			function <%=ONKEY_METHOD_LINE%>(line)
@@ -232,7 +232,7 @@ final class Bar_Jspm
 		</script><%
 		}
 	}
-	
+
 	static void write(
 			final StringBuilder out,
 			final Target target,
@@ -278,7 +278,7 @@ final class Bar_Jspm
 				%>
 				</select>
 			</form><%
-			
+
 			if(modificationsCount>0)
 			{
 				final boolean live = target.isLive();

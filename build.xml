@@ -4,10 +4,10 @@
 
 	<property file="local.properties" />
 	<property file="project.properties" />
-	
+
 	<import file="macros/compile.xml" />
 	<import file="macros/findbugs.xml" />
-	
+
 	<taskdef
 			resource="com/exedio/jspm/ant.properties"
 			classpath="lib/exedio-jspm.jar" />
@@ -19,7 +19,7 @@
 			<pathelement location="lib/exedio-cope-instrument.jar" />
 		</classpath>
 	</taskdef>
-	
+
 	<target name="catalina">
 		<property name="catalina.root" value="apache-tomcat-6.0.16" />
 		<untar src="lib/apache-tomcat.tar.gz"
@@ -42,13 +42,13 @@
 			</fileset>
 		</copy>
 	</target>
-	
+
 	<target name="src.jspm">
 		<jspm method="append"><!-- TODO use defaults -->
 			<fileset dir="src" includes="**/*.jspm" />
 		</jspm>
 	</target>
-	
+
 	<target name="src.compile" depends="src.jspm">
 		<compile srcdir="src">
 			<classpath>
@@ -61,7 +61,7 @@
 			</classpath>
 		</compile>
 	</target>
-	
+
 	<target name="testsrc.instrument" unless="skip.instrument">
 		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
 			<fileset dir="testsrc">
@@ -69,7 +69,7 @@
 			</fileset>
 		</instrument>
 	</target>
-	
+
 	<target name="testsrc.compile" depends="src.compile, testsrc.instrument">
 		<compile srcdir="testsrc">
 			<classpath>
@@ -84,7 +84,7 @@
 			</classpath>
 		</compile>
 	</target>
-	
+
 	<target name="test" depends="testsrc.compile">
 		<mkdir dir="build/testresults" />
 		<mkdir dir="build/testtmpdir" />
@@ -110,7 +110,7 @@
 			<assertions><enable/></assertions>
 		</junit>
 	</target>
-	
+
 	<target name="jar" depends="src.compile">
 		<jar jarfile="build/exedio-cope-live.jar" filesonly="true" duplicate="fail" strict="fail" level="9">
 			<fileset dir="build/classes/src" />
@@ -125,7 +125,7 @@
 			</manifest>
 		</jar>
 	</target>
-	
+
 	<target name="jar.src">
 		<mkdir dir="build" />
 		<zip destfile="build/exedio-cope-live-src.zip" filesonly="true" whenempty="fail" duplicate="fail" level="9">
@@ -138,7 +138,7 @@
 			<fileset dir="webtestsrc" includes="**/*.jspm" />
 		</jspm>
 	</target>
-	
+
 	<target name="webtestsrc.instrument" unless="skip.instrument">
 		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
 			<fileset dir="webtestsrc">
@@ -150,7 +150,7 @@
 			</fileset>
 		</instrument>
 	</target>
-	
+
 	<target name="webtestsrc.compile"
 			depends="webtestsrc.jspm, webtestsrc.instrument, src.compile">
 		<compile srcdir="webtestsrc">
@@ -184,12 +184,12 @@
 			<fileset file="lib/log4j-bundle.jar" />
 		</copy>
 	</target>
-	
+
 	<target name="webtest.tomcat" depends="webtest.web, catalina">
 		<copy tofile="tomcat/conf/Catalina/localhost/copelive.xml"
 				file="context.xml" />
 	</target>
-	
+
 	<target name="clean">
 		<delete>
 			<fileset dir="src">
@@ -204,19 +204,19 @@
 		<delete dir="webtestweb/WEB-INF/lib" />
 		<delete dir="tomcat" />
 	</target>
-	
+
 	<target name="jspm" depends="src.jspm, webtestsrc.jspm" />
-	
+
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
-	
+
 	<target name="instrument" depends="testsrc.instrument, webtestsrc.instrument" />
-	
+
 	<target name="compile" depends="src.compile, webtestsrc.compile, testsrc.compile" />
-	
+
 	<target name="web" depends="webtest.web" />
-	
+
 	<target name="tomcat" depends="webtest.tomcat" />
-	
+
 	<target name="api">
 
 		<javadoc
@@ -244,11 +244,11 @@
 			</classpath>
 		</javadoc>
 	</target>
-	
+
 	<target name="build"
 			depends="compile, test, jar, tomcat" />
-	
-	
+
+
 	<target name="findbugs" depends="compile, findbugs.taskdef">
 		<findbugs
 					home="${basedir}/build/findbugs-home"
@@ -272,9 +272,9 @@
 			</auxclasspath>
 		</findbugs>
 	</target>
-	
+
 	<target name="all" depends="build, jar.src, findbugs" />
-	
+
 	<target name="jenkins" depends="all">
 		<copy todir="${basedir}/build/success">
 			<fileset file="${basedir}/build/exedio-cope-live.jar" />
@@ -287,5 +287,5 @@
 			</filterset>
 		</copy>
 	</target>
-	
+
 </project>

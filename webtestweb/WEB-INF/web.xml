@@ -9,16 +9,16 @@
 		<auth-method>BASIC</auth-method>
 		<realm-name>COPE Live by exedio</realm-name>
 	</login-config>
-	
+
 	<context-param>
 		<param-name>model</param-name>
 		<param-value>com.exedio.cope.live.webtest.EditedServlet#model</param-value>
 	</context-param>
-	
+
 	<listener>
 		<listener-class>com.exedio.cope.live.webtest.PropertiesInitializer</listener-class>
 	</listener>
-	
+
 	<servlet>
 		<servlet-name>edited</servlet-name>
 		<servlet-class>com.exedio.cope.live.webtest.EditedServlet</servlet-class>
@@ -27,7 +27,7 @@
 		<servlet-name>edited</servlet-name>
 		<url-pattern>/edited/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>live</servlet-name>
 		<servlet-class>com.exedio.cope.live.webtest.Live</servlet-class>
@@ -44,7 +44,7 @@
 		<web-resource-collection><url-pattern>/edited/livePath/copsResourceStatus.html</url-pattern></web-resource-collection>
 		<auth-constraint><role-name>manager</role-name></auth-constraint>
 	</security-constraint>
-	
+
 	<!-- to be enabled with class OutFilter only filter>
 		<filter-name>liveFilter</filter-name>
 		<filter-class>com.exedio.cope.live.util.LiveFilter</filter-class>
@@ -54,7 +54,7 @@
 		<servlet-name>edited</servlet-name>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping-->
-	
+
 	<servlet>
 		<servlet-name>media</servlet-name>
 		<servlet-class>com.exedio.cope.pattern.MediaServlet</servlet-class>
@@ -63,7 +63,7 @@
 		<servlet-name>media</servlet-name>
 		<url-pattern>/media/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>console</servlet-name>
 		<servlet-class>com.exedio.cope.console.ConsoleServlet</servlet-class>
@@ -72,12 +72,12 @@
 		<servlet-name>console</servlet-name>
 		<url-pattern>/console/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<description>Cope Live Test</description>
 	<display-name>Cope Live Test</display-name>
-	
+
 	<session-config>
 		<session-timeout>30<!--minutes--></session-timeout>
 	</session-config>
-	
+
 </web-app>
