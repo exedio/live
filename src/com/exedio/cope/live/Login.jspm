@@ -64,7 +64,7 @@ final class Login_Jspm
 		</style>
 	</head>
 	<body>
-		<a href="http://cope.sourceforge.net/" target="_blank"><img src="<%=LiveServlet.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
+		<a href="https://exedio.github.io/" target="_blank"><img src="<%=LiveServlet.logo.getURL(request)%>" alt="Exedio Logo" class="logo"></a>
 		<h1>COPE Live Edit</h1><%
 		if(failureUsername!=null)
 		{
