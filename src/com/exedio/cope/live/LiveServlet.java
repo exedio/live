@@ -84,7 +84,7 @@ public abstract class LiveServlet extends CopsServlet
 		{
 			if(mustReturn)
 			{
-				connectToken.returnIt();
+				connectToken.returnItConditionally();
 				connectToken = null;
 			}
 		}
@@ -107,7 +107,7 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		if(connectToken!=null)
 		{
-			connectToken.returnIt();
+			connectToken.returnItConditionally();
 			connectToken = null;
 		}
 
