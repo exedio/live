@@ -18,7 +18,7 @@
 
 package com.exedio.cope.live;
 
-import static com.exedio.cops.CopsServlet.UTF8;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.exedio.cope.Feature;
 import com.exedio.cope.IntegerField;
@@ -121,14 +121,14 @@ final class Bar
 			final HashMap<String, FileItem> files = new HashMap<String, FileItem>();
 			final FileItemFactory factory = new DiskFileItemFactory();
 			final ServletFileUpload upload = new ServletFileUpload(factory);
-			upload.setHeaderEncoding(UTF8);
+			upload.setHeaderEncoding(UTF_8.name());
 			try
 			{
 				for(final Iterator<?> i = upload.parseRequest(request).iterator(); i.hasNext(); )
 				{
 					final FileItem item = (FileItem)i.next();
 					if(item.isFormField())
-						fields.put(item.getFieldName(), item.getString(UTF8));
+						fields.put(item.getFieldName(), item.getString(UTF_8.name()));
 					else
 						files.put(item.getFieldName(), item);
 				}
