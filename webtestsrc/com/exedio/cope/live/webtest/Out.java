@@ -18,6 +18,8 @@
 
 package com.exedio.cope.live.webtest;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
@@ -26,7 +28,6 @@ import com.exedio.cope.pattern.MapField;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cope.pattern.MediaFilter;
 import com.exedio.cops.BodySender;
-import com.exedio.cops.CopsServlet;
 import java.io.IOException;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -86,6 +87,6 @@ abstract class Out
 
 	final void sendBody() throws IOException
 	{
-		BodySender.send(response, bf, CopsServlet.UTF8);
+		BodySender.send(response, bf, UTF_8);
 	}
 }

@@ -15,7 +15,7 @@
 	<taskdef resource="com/exedio/cope/instrument/ant.properties">
 		<classpath>
 			<pathelement location="lib/servlet-api.jar" />
-			<pathelement location="lib/log4j-bundle.jar" />
+			<pathelement location="lib/slf4j-api.jar" />
 			<pathelement location="lib/exedio-cope-instrument.jar" />
 		</classpath>
 	</taskdef>
@@ -63,7 +63,7 @@
 	</target>
 
 	<target name="testsrc.instrument" unless="skip.instrument">
-		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
+		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" annotateGenerated="false" verbose="false">
 			<fileset dir="testsrc">
 				<include name="com/exedio/cope/live/DraftedItem.java" />
 			</fileset>
@@ -74,7 +74,9 @@
 		<compile srcdir="testsrc">
 			<classpath>
 				<pathelement location="build/classes/src" />
+				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
+				<pathelement location="lib/exedio-cope-junit.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/junit.jar" />
@@ -96,13 +98,15 @@
 			<classpath>
 				<pathelement location="build/classes/src" />
 				<pathelement location="build/classes/testsrc" />
+				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/hsqldb.jar" />
-				<pathelement location="lib/log4j-bundle.jar" />
+				<pathelement location="lib/slf4j-api.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="lib/cpsuite.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
+				<pathelement location="lib/exedio-cope-junit.jar" />
 			</classpath>
 			<test name="${test}" todir="build/testresults" outfile="copelive" />
 			<sysproperty key="java.io.tmpdir" value="${basedir}/build/testtmpdir" />
@@ -140,7 +144,7 @@
 	</target>
 
 	<target name="webtestsrc.instrument" unless="skip.instrument">
-		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
+		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" annotateGenerated="false" verbose="false">
 			<fileset dir="webtestsrc">
 				<include name="**/*.java" />
 				<exclude name="**/EditedServlet_Jspm.java" />
@@ -172,7 +176,7 @@
 			<fileset dir="build/classes/webtestsrc" />
 		</copy>
 		<copy todir="webtestweb/WEB-INF/lib">
-			<fileset file="lib/trove.jar" />
+			<fileset file="lib/trove4j.jar" />
 			<fileset file="lib/exedio-cope-util.jar" />
 			<fileset file="lib/exedio-cope-servletutil.jar" />
 			<fileset file="lib/exedio-cops.jar" />
@@ -181,7 +185,7 @@
 			<fileset file="lib/commons-fileupload.jar" />
 			<fileset file="lib/commons-io.jar" />
 			<fileset file="lib/hsqldb.jar" />
-			<fileset file="lib/log4j-bundle.jar" />
+			<fileset file="lib/slf4j-api.jar" />
 		</copy>
 	</target>
 

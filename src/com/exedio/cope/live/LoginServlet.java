@@ -18,7 +18,7 @@
 
 package com.exedio.cope.live;
 
-import static com.exedio.cops.CopsServlet.UTF8;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.exedio.cope.Model;
 import com.exedio.cops.BodySender;
@@ -59,7 +59,7 @@ final class LoginServlet
 	throws IOException
 	{
 		assert httpSession!=null;
-		response.setContentType("text/html; charset="+UTF8);
+		response.setContentType("text/html; charset="+UTF_8.name());
 		if(Cop.isPost(request) && request.getParameter(SUBMIT)!=null)
 		{
 			final String username = request.getParameter(USERNAME);
@@ -100,6 +100,6 @@ final class LoginServlet
 	{
 		final StringBuilder out = new StringBuilder();
 		Login_Jspm.write(out, request, response.encodeURL(request.getContextPath() + request.getServletPath()), LiveServlet.class.getPackage(), username);
-		BodySender.send(response, out, UTF8);
+		BodySender.send(response, out, UTF_8);
 	}
 }

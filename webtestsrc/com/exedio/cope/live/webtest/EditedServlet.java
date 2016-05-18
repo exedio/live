@@ -102,7 +102,7 @@ public final class EditedServlet extends HttpServlet
 	public void destroy()
 	{
 		model.dropSchema();
-		connectToken.returnIt();
+		connectToken.returnItConditionally();
 		connectToken = null;
 		super.destroy();
 	}

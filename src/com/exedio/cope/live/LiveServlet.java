@@ -18,6 +18,8 @@
 
 package com.exedio.cope.live;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
 import com.exedio.cope.misc.ConnectToken;
@@ -84,7 +86,7 @@ public abstract class LiveServlet extends CopsServlet
 		{
 			if(mustReturn)
 			{
-				connectToken.returnIt();
+				connectToken.returnItConditionally();
 				connectToken = null;
 			}
 		}
@@ -107,7 +109,7 @@ public abstract class LiveServlet extends CopsServlet
 	{
 		if(connectToken!=null)
 		{
-			connectToken.returnIt();
+			connectToken.returnItConditionally();
 			connectToken = null;
 		}
 
@@ -122,7 +124,7 @@ public abstract class LiveServlet extends CopsServlet
 			final HttpServletResponse response)
 	throws IOException
 	{
-		request.setCharacterEncoding(UTF8);
+		request.setCharacterEncoding(UTF_8.name());
 		final HttpSession httpSession = request.getSession(true);
 		final Object anchor = httpSession.getAttribute(LoginServlet.ANCHOR);
 

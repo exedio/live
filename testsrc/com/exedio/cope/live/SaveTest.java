@@ -23,6 +23,7 @@ import static com.exedio.cope.junit.CopeAssert.list;
 import static junit.framework.Assert.assertEquals;
 
 import com.exedio.cope.live.cope.CopeModel4Test;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.servlet.http.HttpServletRequest;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,8 +55,18 @@ public class SaveTest extends CopeModel4Test
 	Anchor anchor;
 
 	@Before
+	@SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC_ANON")
 	public void setUp() throws Exception
 	{
+		new LiveServlet(DraftTest.MODEL)
+		{
+			private static final long serialVersionUID = 1l;
+			@Override
+			protected Session login(final String username, final String password)
+			{
+				throw new RuntimeException();
+			}
+		}.init();
 		item = new DraftedItem();
 		draft = new Draft("user", "name", "comment");
 		item.setString("oldString1");
