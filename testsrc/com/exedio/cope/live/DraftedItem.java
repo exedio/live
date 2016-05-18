@@ -23,7 +23,7 @@ import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
 import com.exedio.cope.pattern.MapField;
 
-public class DraftedItem extends Item
+public final class DraftedItem extends Item
 {
 	static final StringField string = new StringField().optional();
 	static final StringField string2 = new StringField().optional();
