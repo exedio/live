@@ -56,6 +56,15 @@ public class SaveTest extends CopeModel4Test
 	@Before
 	public void setUp() throws Exception
 	{
+		new LiveServlet(DraftTest.MODEL)
+		{
+			private static final long serialVersionUID = 1l;
+			@Override
+			protected Session login(final String username, final String password)
+			{
+				throw new RuntimeException();
+			}
+		}.init();
 		item = new DraftedItem();
 		draft = new Draft("user", "name", "comment");
 		item.setString("oldString1");
