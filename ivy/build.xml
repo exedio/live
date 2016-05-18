@@ -3,6 +3,12 @@
 	<import file="common.xml" />
 	<target name="copy" depends="resolve">
 
+		<delete dir="../lib">
+			<include name="*" />
+			<exclude name="cpsuite.jar" />
+			<exclude name="cpsuite-src.zip" />
+			<exclude name="apache-tomcat.tar.gz" />
+		</delete>
 		<copy overwrite="true" todir="../lib">
 			<firstmatchmapper>
 				<globmapper from="*-jar.jar" to="*.jar" />
@@ -11,12 +17,10 @@
 			</firstmatchmapper>
 			<fileset dir="artifacts/lib">
 				<exclude name="bsh-src.jar" />
-				<exclude name="cojen-source.jar" />
 				<exclude name="commons-fileupload-javadoc.jar" />
 				<exclude name="commons-fileupload-source.jar" />
 				<exclude name="portlet-api-jar.jar" />
 				<exclude name="trove-src.jar" />
-				<exclude name="xalan-jar.jar" />
 			</fileset>
 		</copy>
 
