@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public abstract class AbstractSession implements Session
 {
+	@Override
 	public String getHome(final HttpServletRequest request)
 	{
 		return request.getContextPath() + '/';

@@ -35,71 +35,84 @@ final class GetterSet<E> implements Set<E>, Serializable // for session persiste
 		return (X)map.get(e);
 	}
 
+	@Override
 	public boolean add(final E e)
 	{
 		return map.put(e, e)==null;
 	}
 
+	@Override
 	@Deprecated
 	public boolean addAll(final Collection<? extends E> c)
 	{
 		throw new RuntimeException();
 	}
 
+	@Override
 	public void clear()
 	{
 		map.clear();
 	}
 
+	@Override
 	public boolean contains(final Object o)
 	{
 		return map.containsKey(o);
 	}
 
+	@Override
 	@Deprecated
 	public boolean containsAll(final Collection<?> c)
 	{
 		throw new RuntimeException();
 	}
 
+	@Override
 	public boolean isEmpty()
 	{
 		return map.isEmpty();
 	}
 
+	@Override
 	public Iterator<E> iterator()
 	{
 		return map.keySet().iterator();
 	}
 
+	@Override
 	public boolean remove(final Object o)
 	{
 		return map.remove(o)!=null;
 	}
 
+	@Override
 	@Deprecated
 	public boolean removeAll(final Collection<?> c)
 	{
 		throw new RuntimeException();
 	}
 
+	@Override
 	@Deprecated
 	public boolean retainAll(final Collection<?> c)
 	{
 		throw new RuntimeException();
 	}
 
+	@Override
 	public int size()
 	{
 		return map.size();
 	}
 
+	@Override
 	@Deprecated
 	public Object[] toArray()
 	{
 		throw new RuntimeException();
 	}
 
+	@Override
 	@Deprecated
 	public <T> T[] toArray(final T[] a)
 	{

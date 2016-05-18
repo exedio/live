@@ -32,31 +32,37 @@ final class TargetLive implements Target
 		// prevent public instantiation
 	}
 
+	@Override
 	public String getID()
 	{
 		return ID;
 	}
 
+	@Override
 	public boolean exists()
 	{
 		return true;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return "Live Site";
 	}
 
+	@Override
 	public boolean isLive()
 	{
 		return true;
 	}
 
+	@Override
 	public String get(final StringField feature, final Item item)
 	{
 		return null;
 	}
 
+	@Override
 	public void save(final Anchor anchor)
 	{
 		for(final Modification m : anchor.getModifications())

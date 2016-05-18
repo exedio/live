@@ -47,6 +47,7 @@ public final class Live extends LiveServlet
 			this.nameIsNull = "noname".equals(user);
 		}
 
+		@Override
 		public String getName()
 		{
 			assertTransaction();

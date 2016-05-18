@@ -37,10 +37,12 @@ public class SaveTest extends CopeModel4Test
 
 	static final Session SESSION = new Session()
 	{
+		@Override
 		public String getName()
 		{
 			throw new RuntimeException();
 		}
+		@Override
 		public String getHome(final HttpServletRequest request)
 		{
 			throw new RuntimeException();

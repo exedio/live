@@ -40,16 +40,19 @@ import com.exedio.cope.pattern.MediaFilter;
 
 public final class LiveFilter implements Filter
 {
+	@Override
 	public final void init(final FilterConfig config)
 	{
 		// do nothing
 	}
 
+	@Override
 	public final void destroy()
 	{
 		// do nothing
 	}
 
+	@Override
 	public final void doFilter(
 			final ServletRequest request,
 			final ServletResponse response,

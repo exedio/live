@@ -33,32 +33,38 @@ final class TargetDraft implements Target
 		this.draft = draft;
 	}
 
+	@Override
 	public String getID()
 	{
 		return draft.getCopeID();
 	}
 
+	@Override
 	public boolean exists()
 	{
 		return draft.existsCopeItem();
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return "Draft \"" + draft.getComment() + "\" by " + draft.getAuthor();
 	}
 
+	@Override
 	public boolean isLive()
 	{
 		return false;
 	}
 
+	@Override
 	public String get(final StringField feature, final Item item)
 	{
 		final DraftItem i = DraftItem.forParentFeatureAndItem(draft, feature, item);
 		return i!=null ? i.getNewValue() : null;
 	}
 
+	@Override
 	public void save(final Anchor anchor)
 	{
 		for(final Modification m : anchor.getModifications())
