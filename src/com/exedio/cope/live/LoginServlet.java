@@ -20,15 +20,13 @@ package com.exedio.cope.live;
 
 import static com.exedio.cops.CopsServlet.UTF8;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.exedio.cope.Model;
 import com.exedio.cops.BodySender;
 import com.exedio.cops.Cop;
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 final class LoginServlet
 {

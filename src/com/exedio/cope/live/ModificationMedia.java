@@ -18,15 +18,12 @@
 
 package com.exedio.cope.live;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-
 import com.exedio.cope.Item;
 import com.exedio.cope.pattern.Media;
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.fileupload.FileItem;
 
 final class ModificationMedia extends Modification
 {

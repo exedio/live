@@ -18,10 +18,6 @@
 
 package com.exedio.cope.live;
 
-import java.text.DateFormat;
-import java.util.List;
-import java.util.Locale;
-
 import com.exedio.cope.ActivationParameters;
 import com.exedio.cope.Cope;
 import com.exedio.cope.CopeSchemaName;
@@ -33,6 +29,9 @@ import com.exedio.cope.StringField;
 import com.exedio.cope.Type;
 import com.exedio.cope.TypesBound;
 import com.exedio.cope.pattern.MapField;
+import java.text.DateFormat;
+import java.util.List;
+import java.util.Locale;
 
 public final class Draft extends Item
 {

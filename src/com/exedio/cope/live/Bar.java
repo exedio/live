@@ -20,20 +20,6 @@ package com.exedio.cope.live;
 
 import static com.exedio.cops.CopsServlet.UTF8;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import com.exedio.cope.Feature;
 import com.exedio.cope.IntegerField;
 import com.exedio.cope.Item;
@@ -43,6 +29,17 @@ import com.exedio.cope.StringField;
 import com.exedio.cope.pattern.History;
 import com.exedio.cope.pattern.Media;
 import com.exedio.cops.Cop;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 final class Bar
 {

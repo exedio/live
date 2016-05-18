@@ -18,13 +18,6 @@
 
 package com.exedio.cope.live.webtest;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.exedio.cope.Model;
 import com.exedio.cope.Revisions;
 import com.exedio.cope.TypeSet;
@@ -32,6 +25,11 @@ import com.exedio.cope.live.Draft;
 import com.exedio.cope.live.Drafts;
 import com.exedio.cope.misc.ConnectToken;
 import com.exedio.cope.pattern.Media;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public final class EditedServlet extends HttpServlet
 {

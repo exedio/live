@@ -18,19 +18,16 @@
 
 package com.exedio.cope.live;
 
+import com.exedio.cope.Item;
+import com.exedio.cope.StringField;
+import com.exedio.cope.pattern.Media;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.fileupload.FileItem;
-
-import com.exedio.cope.Item;
-import com.exedio.cope.StringField;
-import com.exedio.cope.pattern.Media;
 
 final class Anchor implements Serializable // for session persistence
 {

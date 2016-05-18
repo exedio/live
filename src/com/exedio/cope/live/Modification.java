@@ -18,10 +18,9 @@
 
 package com.exedio.cope.live;
 
-import java.io.Serializable;
-
 import com.exedio.cope.Feature;
 import com.exedio.cope.Item;
+import java.io.Serializable;
 
 abstract class Modification implements Serializable // for session persistence
 {

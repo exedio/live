@@ -18,10 +18,9 @@
 
 package com.exedio.cope.live;
 
-import java.io.Serializable;
-
 import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
+import java.io.Serializable;
 
 interface Target extends Serializable
 {

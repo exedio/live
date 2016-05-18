@@ -20,20 +20,18 @@ package com.exedio.cope.live;
 
 import static com.exedio.cops.CopsServlet.UTF8;
 
+import com.exedio.cope.Model;
+import com.exedio.cope.NoSuchIDException;
+import com.exedio.cops.BodySender;
+import com.exedio.cops.Cop;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.exedio.cope.Model;
-import com.exedio.cope.NoSuchIDException;
-import com.exedio.cops.BodySender;
-import com.exedio.cops.Cop;
 
 final class Management
 {

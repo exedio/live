@@ -18,12 +18,10 @@
 
 package com.exedio.cope.live.webtest;
 
-import java.io.Serializable;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.exedio.cope.live.AbstractSession;
 import com.exedio.cope.live.LiveServlet;
+import java.io.Serializable;
+import javax.servlet.http.HttpServletRequest;
 
 public final class Live extends LiveServlet
 {
