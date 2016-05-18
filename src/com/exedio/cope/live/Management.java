@@ -18,7 +18,7 @@
 
 package com.exedio.cope.live;
 
-import static com.exedio.cops.CopsServlet.UTF8;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.exedio.cope.Model;
 import com.exedio.cope.NoSuchIDException;
@@ -243,7 +243,7 @@ final class Management
 			model.rollbackIfNotCommitted();
 		}
 
-		response.setContentType("text/html; charset="+UTF8);
-		BodySender.send(response, out, UTF8);
+		response.setContentType("text/html; charset="+UTF_8.name());
+		BodySender.send(response, out, UTF_8);
 	}
 }
