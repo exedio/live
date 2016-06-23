@@ -29,7 +29,7 @@
 		</dependency>
 		<dependency org="findbugs-x" name="findbugs" rev="3.0.1" conf="build->default" />
 		<dependency org="com.exedio" name="copeutil" rev="483" conf="runtime->runtime; build->runtime,sources,changelog" />
-		<dependency org="com.exedio" name="cope" rev="8613">
+		<dependency org="com.exedio" name="cope" rev="8919">
 			<conf name="runtime" mapped="runtime" />
 			<conf name="build" mapped="hsqldb,junit,sources,changelog" />
 		</dependency>
