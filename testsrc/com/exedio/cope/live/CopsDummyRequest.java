@@ -19,7 +19,6 @@
 package com.exedio.cope.live;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -29,7 +28,6 @@ import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -368,31 +366,31 @@ final class CopsDummyRequest implements HttpServletRequest
 	}
 
 	@Override
-	public Part getPart(String string) throws IOException, ServletException
+	public Part getPart(final String string)
 	{
 		throw new RuntimeException();
 	}
 
 	@Override
-	public Collection<Part> getParts() throws IOException, ServletException
+	public Collection<Part> getParts()
 	{
 		throw new RuntimeException();
 	}
 
 	@Override
-	public void logout() throws ServletException
+	public void logout()
 	{
 		throw new RuntimeException();
 	}
 
 	@Override
-	public boolean authenticate(HttpServletResponse hsr) throws IOException, ServletException
+	public boolean authenticate(final HttpServletResponse hsr)
 	{
 		throw new RuntimeException();
 	}
 
 	@Override
-	public void login(String string, String string1) throws ServletException
+	public void login(final String string, final String string1)
 	{
 		throw new RuntimeException();
 	}
@@ -404,13 +402,13 @@ final class CopsDummyRequest implements HttpServletRequest
 	}
 
 	@Override
-	public AsyncContext startAsync() throws IllegalStateException
+	public AsyncContext startAsync()
 	{
 		throw new RuntimeException();
 	}
 
 	@Override
-	public AsyncContext startAsync(ServletRequest sr, ServletResponse sr1) throws IllegalStateException
+	public AsyncContext startAsync(final ServletRequest sr, final ServletResponse sr1)
 	{
 		throw new RuntimeException();
 	}
