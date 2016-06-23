@@ -19,15 +19,25 @@
 package com.exedio.cope.live;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 final class CopsDummyRequest implements HttpServletRequest
 {
@@ -68,13 +78,13 @@ final class CopsDummyRequest implements HttpServletRequest
 	}
 
 	@Override
-	public Enumeration<?> getHeaderNames()
+	public Enumeration<String> getHeaderNames()
 	{
 		throw new RuntimeException();
 	}
 
 	@Override
-	public Enumeration<?> getHeaders(final String arg0)
+	public Enumeration<String> getHeaders(final String arg0)
 	{
 		throw new RuntimeException();
 	}
@@ -189,7 +199,7 @@ final class CopsDummyRequest implements HttpServletRequest
 	}
 
 	@Override
-	public Enumeration<?> getAttributeNames()
+	public Enumeration<String> getAttributeNames()
 	{
 		throw new RuntimeException();
 	}
@@ -243,7 +253,7 @@ final class CopsDummyRequest implements HttpServletRequest
 	}
 
 	@Override
-	public Enumeration<?> getLocales()
+	public Enumeration<Locale> getLocales()
 	{
 		throw new RuntimeException();
 	}
@@ -255,13 +265,13 @@ final class CopsDummyRequest implements HttpServletRequest
 	}
 
 	@Override
-	public Map<?,?> getParameterMap()
+	public Map<String,String[]> getParameterMap()
 	{
 		throw new RuntimeException();
 	}
 
 	@Override
-	public Enumeration<?> getParameterNames()
+	public Enumeration<String> getParameterNames()
 	{
 		throw new RuntimeException();
 	}
@@ -353,6 +363,78 @@ final class CopsDummyRequest implements HttpServletRequest
 
 	@Override
 	public void setCharacterEncoding(final String arg0)
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public Part getPart(String string) throws IOException, ServletException
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public Collection<Part> getParts() throws IOException, ServletException
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public void logout() throws ServletException
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public boolean authenticate(HttpServletResponse hsr) throws IOException, ServletException
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public void login(String string, String string1) throws ServletException
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public ServletContext getServletContext()
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public AsyncContext startAsync() throws IllegalStateException
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public AsyncContext startAsync(ServletRequest sr, ServletResponse sr1) throws IllegalStateException
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public boolean isAsyncStarted()
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public boolean isAsyncSupported()
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public AsyncContext getAsyncContext()
+	{
+		throw new RuntimeException();
+	}
+
+	@Override
+	public DispatcherType getDispatcherType()
 	{
 		throw new RuntimeException();
 	}

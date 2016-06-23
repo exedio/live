@@ -8,7 +8,9 @@
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
             <!-- Do not use Project Properties customizer when editing this file manually. -->
             <name>copelive</name>
-            <properties/>
+            <properties>
+					<property name="libraries">lib/javax.servlet-api.jar:lib/exedio-cope.jar:lib/exedio-cope-util.jar:lib/exedio-cope-util.jar-src.zip:lib/commons-fileupload.jar:lib/exedio-cops.jar:lib/junit.jar:lib/cpsuite.jar:lib/exedio-cope-junit.jar:lib/findbugs-annotations.jar</property>
+				</properties>
             <folders>
                 <source-folder>
                     <label>copelive</label>
@@ -76,19 +78,21 @@
             </view>
             <subprojects/>
         </general-data>
-        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
             <compilation-unit>
                 <package-root>src</package-root>
-                <classpath mode="compile">lib/exedio-cope-util.jar:lib/exedio-cope-util.jar-src.zip</classpath>
-                <source-level>1.5</source-level>
+                <classpath mode="compile">${libraries}</classpath>
+                <source-level>1.8</source-level>
             </compilation-unit>
             <compilation-unit>
                 <package-root>testsrc</package-root>
-                <source-level>1.5</source-level>
+                <classpath mode="compile">src:${libraries}</classpath>
+                <source-level>1.8</source-level>
             </compilation-unit>
             <compilation-unit>
                 <package-root>webtestsrc</package-root>
-                <source-level>1.5</source-level>
+                <classpath mode="compile">src:${libraries}</classpath>
+                <source-level>1.8</source-level>
             </compilation-unit>
         </java-data>
     </configuration>
