@@ -27,6 +27,7 @@
 		<dependency org="junit" name="junit" rev="4.9" conf="build->default">
 			<exclude org="org.hamcrest" module="hamcrest-core" />
 		</dependency>
+		<dependency org="cpsuite" name="cpsuite" rev="1.2.7.1" conf="build->default"/>
 		<dependency org="findbugs-x" name="findbugs" rev="3.0.1" conf="build->default" />
 		<dependency org="com.exedio" name="copeutil" rev="483" conf="runtime->runtime; build->runtime,sources,changelog" />
 		<dependency org="com.exedio" name="cope" rev="9028">

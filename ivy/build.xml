@@ -5,8 +5,6 @@
 
 		<delete dir="../lib">
 			<include name="*" />
-			<exclude name="cpsuite.jar" />
-			<exclude name="cpsuite-src.zip" />
 			<exclude name="apache-tomcat.tar.gz" />
 		</delete>
 		<copy overwrite="true" todir="../lib">
