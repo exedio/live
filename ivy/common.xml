@@ -5,8 +5,10 @@
 	<target name="resolve">
 		<delete dir="artifacts" />
 		<mkdir dir="artifacts" />
-		<get src="http://jenkins.exedio.com/job/ivyartifacts/lastSuccessfulBuild/artifact/ivy.jar" dest="artifacts/ivy.jar" />
-		<get src="http://jenkins.exedio.com/job/ivyartifacts/lastSuccessfulBuild/artifact/ivysettings.xml" dest="artifacts/ivysettings.xml" />
+		<get dest="artifacts" retries="1" httpusecaches="false">
+			<url url="https://ivyartifacts.exedio.com/ivy.jar" />
+			<url url="https://ivyartifacts.exedio.com/ivysettings.xml" />
+		</get>
 		<taskdef
 			resource="org/apache/ivy/ant/antlib.xml"
 			classpath="artifacts/ivy.jar"
