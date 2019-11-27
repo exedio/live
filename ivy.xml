@@ -23,7 +23,7 @@
 	</publications>
 	<dependencies>
 		<dependency org="javax.servlet" name="javax.servlet-api" rev="3.0.1" conf="runtime->default; build->sources" />
-		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1"/>
+		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1" conf="runtime->default; build->default,sources" />
 		<dependency org="junit" name="junit" rev="4.9" conf="build->default">
 			<exclude org="org.hamcrest" module="hamcrest-core" />
 		</dependency>
